@@ -2,13 +2,38 @@ package monster;
 
 public abstract class Monster 
 {
-	
-	private int monsterID; //index of monster in monster array 
+	protected int monsterType;
+	protected int monsterID; //index of monster in monster array 
+	protected int time; // number of every 10 seconds past since launch
 	protected int hp;
-	private int speed;
-	private boolean alive;
-	private int locationX;
-	private int locationY;
+	protected int speed;
+	protected boolean alive;
+	protected int locationX;
+	protected int locationY;
+	
+	Monster(int globalTime, int mID, int type)
+	{  
+		monsterType = type;
+		time = globalTime;
+		
+		// set hp and speed according to time elapsed using globalTime
+		
+		locationX = 0;
+		locationY = 0;
+		monsterID = mID;
+		alive = true;
+	}
+	
+	protected void stronger()
+	{
+		if(time != 0 && time % 20 == 0)
+		{
+			//Every 20 seconds, new monsters will have extra 5 HP and extra 10 speed
+			hp = hp + 5;
+			speed = speed + 10;
+		}
+	}
+	
 	
 	void die()
 	{
@@ -18,10 +43,6 @@ public abstract class Monster
 	
 	void nextMove()
 	{}
-	
-	void stronger(int time)
-	{}
-
 	
 	public int getMonsterID() {
 		return monsterID;
@@ -75,6 +96,34 @@ public abstract class Monster
 		this.locationY = locationY;
 	}
 	
+	public void takedamage(int towerType)
+	{
+		//reduce hp by certain amount according to tower type
+		if (hp <= 0)
+			die();
+	}
 	
+	public void printMonsterInfo()
+	{
+		switch(monsterType)
+		{
+			case 1 : 
+				System.out.println("monster Type : Unicorn");
+				break;
+			case 2 : 
+				System.out.println("monster Type : Penguin");
+				break;
+			case 3 : 
+				System.out.println("monster Type : Fox");
+				break;		
+		}
+		System.out.println("monster ID : " + monsterID);
+		System.out.println("time generated : "+time);
+		System.out.println("HP : "+ hp);
+		System.out.println("Speed : "+ speed);
+		System.out.println("IsAlive : " + alive);
+		System.out.println("Location : (" + locationX +", "+locationY+")");
+		System.out.println("-------------------------------------------");
+	}
 	
 }
