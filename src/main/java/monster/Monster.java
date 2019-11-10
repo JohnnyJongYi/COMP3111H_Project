@@ -106,7 +106,7 @@ public abstract class Monster
 		this.locationY = locationY;
 	}
 	
-	public void takedamage(int towerType)
+	public void takedamage(int towerType, int damage)
 	{
 		//reduce hp by certain amount according to tower type
 		if (hp <= 0)
