@@ -5,11 +5,13 @@ public class MonsterGenerator
 {
 	protected ArrayList<Monster> monsterArray;
 	protected int num;
+	protected int[][] MonstersInRange;
 	static protected int globalTime;
 	
 	MonsterGenerator() throws InterruptedException
 	{
 		monsterArray = new ArrayList<Monster>();
+		MonstersInRange = new int[480][480];
 		num = 0;
 		globalTime = 0;
 		generateMonster();
@@ -24,6 +26,13 @@ public class MonsterGenerator
 			generate();
 			
 		}
+	}
+	
+	public int[][] getMonstersInRange() {
+		return MonstersInRange;
+	}
+	public void setMonstersInRange(int[][] monstersInRange) {
+		MonstersInRange = monstersInRange;
 	}
 	
 	public void generate()

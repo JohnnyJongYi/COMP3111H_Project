@@ -10,6 +10,7 @@ public abstract class Monster
 	protected boolean alive;
 	protected int locationX;
 	protected int locationY;
+	protected int distanceToEndpoint;
 	
 	Monster(int globalTime, int mID, int type)
 	{  
@@ -43,6 +44,15 @@ public abstract class Monster
 	
 	void nextMove()
 	{}
+	
+	public int getdistanceToEndpoint() {
+		return distanceToEndpoint;
+	}
+	
+	protected void setdistanceToEndpoint(int distance) {
+		this.distanceToEndpoint = distance;
+	}
+	
 	
 	public int getMonsterID() {
 		return monsterID;
