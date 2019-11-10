@@ -2,6 +2,8 @@ package sample;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.event.*;
 import javafx.fxml.FXML;
@@ -114,6 +116,9 @@ public class MyController {
         target.setText("Drop\nHere");
         Label source1 = labelBasicTower;
         Label source2 = labelIceTower;
+//        Image image1 = new Image(getClass().getResourceAsStream("basicTower.png"));
+
+//        source1.setGraphic(new ImageView(image1));
         source1.setOnDragDetected(new DragEventHandler(source1));
         source2.setOnDragDetected(new DragEventHandler(source2));
 
@@ -173,7 +178,9 @@ class DragEventHandler implements EventHandler<MouseEvent> {
         ClipboardContent content = new ClipboardContent();
         content.putString(source.getText());
         db.setContent(content);
-
+//        Image image1 = new Image(MyController.class.getResourceAsStream("basicTower.png"));
+//        db.setDragView(image1);
+        System.out.println(db.getContentTypes());
         event.consume();
     }
 }
