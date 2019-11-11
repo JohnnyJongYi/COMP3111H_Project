@@ -15,9 +15,10 @@ public class MonsterGenerator
 		timestamp = 0;
 	}
 	
-	public void updateMonster()
+	public void updateMonsterEachTimestamp()
 	{
 		removeDead();
+		checkAnySlower();
 		if(timestamp % 20 == 0)
 		{generate();}
 		moveAllMonsters();
@@ -63,14 +64,19 @@ public class MonsterGenerator
 				size--;
 			}
 		}
-		
+	}
+	
+	protected void checkAnySlower()
+	{
+		for(int i = 0 ; i<monsterArray.size();i++)
+		{
+			monsterArray.get(i).checkIfSlowerNeeded();
+		}
 	}
 
 	public ArrayList<Monster> getMonsterArray() {
 		return monsterArray;
 	}
-
-
 }
 
 

@@ -8,7 +8,8 @@ public class Fox extends Monster
 	{
 		super(time, mID, type);
 		hp = 40;
-		speed = 100;
+		OriginalSpeed = 100;
+		speed = OriginalSpeed;
 		//Default HP, Speed : 40, 100
 		stronger();
 		maxHP = hp;

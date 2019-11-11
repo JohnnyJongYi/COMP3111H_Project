@@ -8,7 +8,8 @@ public class Penguin extends Monster
 	{
 		super(time, mID, type);
 		hp = 50;
-		speed = 70;
+		OriginalSpeed = 70;
+		speed = OriginalSpeed;
 		//Default HP, Speed : 50, 70
 		stronger();
 		maxHP = hp;

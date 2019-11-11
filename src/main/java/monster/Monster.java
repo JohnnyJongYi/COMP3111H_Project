@@ -5,13 +5,18 @@ public abstract class Monster
 {
 	protected int monsterType;
 	protected int monsterID; //monster ID, integer from 0 ~ MAX
-	protected int time; // number of 0.5sec timestamps passed
+	protected int time; // number of 0.5sec timestamps passed when generated
 	protected int hp;
 	protected int maxHP;
 	protected int speed;
+	protected int OriginalSpeed;
 	protected boolean alive;
 	protected Location loc;
 	protected double distanceToEndpoint;
+	
+	protected boolean isSlower;
+	protected int slowerStartTime;
+	protected int slowerDuration;
 
 	
 	Monster(int timestamp, int mID, int type)
@@ -21,6 +26,9 @@ public abstract class Monster
 		loc = new Location(0,480);
 		monsterID = mID;
 		alive = true;
+		isSlower = false;
+		slowerStartTime = Integer.MAX_VALUE;
+		slowerDuration = 0;
 		updateDistanceToEnd();
 	}
 	
@@ -51,11 +59,9 @@ public abstract class Monster
 	{
 		if(towerType == 0)
 		{
-			int newSpeed = speed - 20*damage;
-			if(newSpeed >= 0)
-				speed = newSpeed;
-			else
-				speed = 0;
+			isSlower = true;
+			slowerStartTime = MonsterGenerator.timestamp+1;
+			slowerDuration = 20*damage;
 		}
 		else if(towerType == 1)
 		{
@@ -64,6 +70,24 @@ public abstract class Monster
 				die();
 		}
 		//reduce hp by certain amount according to tower type
+	}
+
+	void checkIfSlowerNeeded()
+	{
+		if(isSlower)
+		{
+			if(MonsterGenerator.timestamp - slowerStartTime <= slowerDuration)
+			{
+				speed = OriginalSpeed / 2; 
+			}
+			else
+			{
+				isSlower = false;
+				slowerStartTime = Integer.MAX_VALUE;
+				slowerDuration = 0;
+				speed = OriginalSpeed;
+			}
+		}
 	}
 	
 	public void printMonsterInfo()
