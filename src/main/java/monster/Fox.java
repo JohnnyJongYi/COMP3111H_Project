@@ -8,16 +8,14 @@ public class Fox extends Monster
 	{
 		super(time, mID, type);
 		hp = 40;
-		OriginalSpeed = 100;
+		OriginalSpeed = 22;
 		speed = OriginalSpeed;
-		//Default HP, Speed : 40, 100
+		//Default HP, Speed : 40, 22;
 		stronger();
 		maxHP = hp;
 		printMonsterInfo();
 	}
 
-	void nextMove() 
-	{
-		//update distance to end
-	}
+	protected void calculatePath()
+	{}
 }

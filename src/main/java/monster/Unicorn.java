@@ -8,9 +8,9 @@ public class Unicorn extends Monster
 	{
 		super(time, mID, type);
 		hp = 70 ;
-		OriginalSpeed = 70 ;
+		OriginalSpeed = 15 ;
 		speed = OriginalSpeed;
-		//Default HP, Speed : 70, 70
+		//Default HP, Speed : 70, 15
 		stronger();
 		maxHP = hp;
 		printMonsterInfo();

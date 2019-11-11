@@ -17,6 +17,10 @@ public abstract class Monster
 	protected boolean isSlower;
 	protected int slowerStartTime;
 	protected int slowerDuration;
+	
+	protected currentGrid = 12¹ø
+	protected nextGrid;
+	
 
 	
 	Monster(int timestamp, int mID, int type)
@@ -38,16 +42,51 @@ public abstract class Monster
 		hp = hp + (10*quotient);
 	}
 	
-	void die()
+	protected void die()
 	{
 		alive = false;
 	}
 	
-	void nextMove()
+	protected void nextMove()
+	{
+		if(time == MonsterGenerator.timestamp || towerConfigChange)
+			calculatePath(); based on current grid
+		
+		fetch nextGrid and update
+		
+		if(currentGrid.ID > nextGrid.ID) //up
+		{
+			loc.update(0, -speed);
+		}
+		else // right
+		{
+			loc.update(speed , 0);
+		}
+		updateDistanceToEnd();
+		
+		if(monsterType == 2 && MonsterGenerator.timestamp % 10 == 0)
+		{
+			if(maxHP - hp >0)
+			{
+				// GUI for heal
+				if(maxHP - hp > 5)
+					hp = hp + 5;
+				else
+					hp = maxHP;	
+			}
+		}
+		
+		
+		if(currentgrid has changed)
+			check if current grid is same as next grid, just to make sure
+			currentgird = nextgrid
+
+	}
+	
+	protected void calculatePath()
 	{
 		
-		//updatedistancetoend
-		//if penguin heal hp every time
+		
 	}
 	
 	protected void updateDistanceToEnd()

@@ -7,12 +7,14 @@ public class MonsterGenerator
 	protected ArrayList<Monster> monsterArray;
 	protected int monsterIDCounter;
 	protected static int timestamp;
+	private MonsterInRange forCatapult; 
 	
 	MonsterGenerator() 
 	{
 		monsterArray = new ArrayList<Monster>();
 		monsterIDCounter = 0;
 		timestamp = 0;
+		forCatapult = new MonsterInRange(monsterArray);
 	}
 	
 	public void updateMonsterEachTimestamp()
@@ -74,8 +76,14 @@ public class MonsterGenerator
 		}
 	}
 
-	public ArrayList<Monster> getMonsterArray() {
+	public ArrayList<Monster> getMonsterArray() 
+	{
 		return monsterArray;
+	}
+	
+	public int[][] getMonsterInRangeArray()
+	{
+		return forCatapult.getRangeArray();
 	}
 }
 
