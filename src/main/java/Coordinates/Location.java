@@ -25,4 +25,11 @@ public class Location
 		x=x+changeInX;
 		y=y+changeInY;
 	}
+	
+	public boolean isEqual(int xCoor, int yCoor)
+	{
+		if(xCoor == x && yCoor == y)
+			return true;
+		return false;
+	}
 }
