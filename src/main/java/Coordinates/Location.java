@@ -5,7 +5,7 @@ public class Location
 	private int x;
 	private int y;
 	
-	Location(int xCoor, int yCoor)
+	public Location(int xCoor, int yCoor)
 	{
 		x=xCoor;
 		y=yCoor;

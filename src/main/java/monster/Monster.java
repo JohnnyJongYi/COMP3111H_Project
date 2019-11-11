@@ -1,116 +1,69 @@
 package monster;
+import Coordinates.Location;
 
 public abstract class Monster 
 {
 	protected int monsterType;
-	protected int monsterID; //index of monster in monster array 
-	protected int time; // number of every 10 seconds past since launch
+	protected int monsterID; //monster ID, integer from 0 ~ MAX
+	protected int time; // number of 0.5sec timestamps passed
 	protected int hp;
+	protected int maxHP;
 	protected int speed;
 	protected boolean alive;
-	protected int locationX;
-	protected int locationY;
-	protected int distanceToEndpoint;
+	protected Location loc;
+	protected double distanceToEndpoint;
+
 	
-	Monster(int globalTime, int mID, int type)
+	Monster(int timestamp, int mID, int type)
 	{  
 		monsterType = type;
-		time = globalTime;
-		
-		// set hp and speed according to time elapsed using globalTime
-		
-		locationX = 0;
-		locationY = 0;
+		time = timestamp;
+		loc = new Location(0,480);
 		monsterID = mID;
 		alive = true;
+		updateDistanceToEnd();
 	}
 	
 	protected void stronger()
 	{
-		if(time != 0 && time % 20 == 0)
-		{
-			//Every 20 seconds, new monsters will have extra 5 HP and extra 10 speed
-			hp = hp + 5;
-			speed = speed + 10;
-		}
+		int quotient = time / 40;
+		hp = hp + (10*quotient);
 	}
-	
 	
 	void die()
 	{
 		alive = false;
-		monsterID = 0; 
 	}
 	
 	void nextMove()
-	{}
-	
-	public int getdistanceToEndpoint() {
-		return distanceToEndpoint;
+	{
+		
+		//updatedistancetoend
+		//if penguin heal hp every time
 	}
 	
-	protected void setdistanceToEndpoint(int distance) {
-		this.distanceToEndpoint = distance;
-	}
-	
-	
-	public int getMonsterID() {
-		return monsterID;
-	}
-	public void setMonsterID(int monsterID) {
-		this.monsterID = monsterID;
-	}
-	
-	
-
-	public int getHp() {
-		return hp;
-	}
-
-	protected void setHp(int hp) {
-		this.hp = hp;
-	}
-
-	public int getSpeed() {
-		return speed;
-	}
-
-	protected void setSpeed(int speed) {
-		this.speed = speed;
-	}
-
-	public boolean isAlive() {
-		return alive;
-	}
-
-	protected void setAlive(boolean alive) {
-		this.alive = alive;
-	}
-	
-	
-	
-
-	public int getLocationX() {
-		return locationX;
-	}
-
-	protected void setLocationX(int locationX) {
-		this.locationX = locationX;
-	}
-
-	public int getLocationY() {
-		return locationY;
-	}
-
-	protected void setLocationY(int locationY) {
-		this.locationY = locationY;
+	protected void updateDistanceToEnd()
+	{
+		distanceToEndpoint = Math.sqrt((0 - loc.getY()) * (0 - loc.getY()) + (480 - loc.getX()) * (480 - loc.getX()));
 	}
 	
 	public void takedamage(int towerType, int damage)
 	{
+		if(towerType == 0)
+		{
+			int newSpeed = speed - 20*damage;
+			if(newSpeed >= 0)
+				speed = newSpeed;
+			else
+				speed = 0;
+		}
+		else if(towerType == 1)
+		{
+			hp = hp - damage;
+			if ( hp <= 0)
+				die();
+		}
 		//reduce hp by certain amount according to tower type
-		if (hp <= 0)
-			die();
 	}
 	
 	public void printMonsterInfo()
@@ -132,8 +85,38 @@ public abstract class Monster
 		System.out.println("HP : "+ hp);
 		System.out.println("Speed : "+ speed);
 		System.out.println("IsAlive : " + alive);
-		System.out.println("Location : (" + locationX +", "+locationY+")");
+		System.out.println("Location : (" + loc.getX() +", "+loc.getY()+")");
 		System.out.println("-------------------------------------------");
 	}
+	
+	
+	public int getMonsterType() {
+		return monsterType;
+	}
+
+	public int getMonsterID() {
+		return monsterID;
+	}
+
+	public int getHp() {
+		return hp;
+	}
+
+	public int getMaxHP() {
+		return maxHP;
+	}
+
+	public boolean isAlive() {
+		return alive;
+	}
+
+	public Location getLoc() {
+		return loc;
+	}
+
+	public double getDistanceToEndpoint() {
+		return distanceToEndpoint;
+	}
+
 	
 }

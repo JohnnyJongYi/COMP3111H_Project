@@ -1,15 +1,17 @@
 package monster;
 // more initial HP
+
 public class Unicorn extends Monster 
 {
 
-	Unicorn(int globalTime, int mID, int type) 
+	Unicorn(int time, int mID, int type) 
 	{
-		super(globalTime, mID, type);
+		super(time, mID, type);
 		hp = 70 ;
-		speed = 80 ;
-		//Default HP, Speed : 70, 80
+		speed = 70 ;
+		//Default HP, Speed : 70, 70
 		stronger();
+		maxHP = hp;
 		printMonsterInfo();
 	}
 

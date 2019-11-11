@@ -1,66 +1,76 @@
 package monster;
 import java.util.ArrayList;
 
+
 public class MonsterGenerator
 {
 	protected ArrayList<Monster> monsterArray;
-	protected int num;
-	protected int[][] MonstersInRange;
-	static protected int globalTime;
+	protected int monsterIDCounter;
+	protected static int timestamp;
 	
-	MonsterGenerator() throws InterruptedException
+	MonsterGenerator() 
 	{
 		monsterArray = new ArrayList<Monster>();
-		MonstersInRange = new int[480][480];
-		num = 0;
-		globalTime = 0;
-		generateMonster();
-		
-		
-	}
-	void generateMonster() throws InterruptedException
-	{
-		while(true)
-		{
-			Thread.sleep(1000);
-			generate();
-			
-		}
+		monsterIDCounter = 0;
+		timestamp = 0;
 	}
 	
-	public int[][] getMonstersInRange() {
-		return MonstersInRange;
+	public void updateMonster()
+	{
+		removeDead();
+		if(timestamp % 20 == 0)
+		{generate();}
+		moveAllMonsters();
+		timestamp++;
 	}
-	public void setMonstersInRange(int[][] monstersInRange) {
-		MonstersInRange = monstersInRange;
+	
+	private void moveAllMonsters()
+	{
+		for(int i = 0; i<monsterArray.size() ; i++)
+			monsterArray.get(i).nextMove();
 	}
 	
 	public void generate()
 	{
-		
-		if(globalTime % 10 == 0) //generate Monster every 10 seconds
+		int type = (int)(Math.random() * 3 + 1);
+		// Randomly choose monster type
+		switch(type)
 		{
-			int type = (int)(Math.random() * 3 + 1);
-			// Randomly choose monster type
-			switch(type)
+			case 1 : 
+				monsterArray.add(new Unicorn(timestamp,monsterIDCounter,type));
+				monsterIDCounter++;
+				break;
+			case 2 : 
+				monsterArray.add(new Penguin(timestamp,monsterIDCounter,type));
+				monsterIDCounter++;
+				break;
+			case 3 : 
+				monsterArray.add(new Fox(timestamp,monsterIDCounter,type));
+				monsterIDCounter++;
+				break;		
+		}
+		
+	}
+	
+	protected void removeDead()
+	{
+		int size = monsterArray.size();
+		for(int i = 0; i<size ; i++)
+		{
+			if(!monsterArray.get(i).isAlive())
 			{
-				case 1 : 
-					monsterArray.add(new Unicorn(globalTime,num,type));
-					num++;
-					break;
-				case 2 : 
-					monsterArray.add(new Penguin(globalTime,num,type));
-					num++;
-					break;
-				case 3 : 
-					monsterArray.add(new Fox(globalTime,num,type));
-					num++;
-					break;		
+				monsterArray.remove(i);
+				size--;
 			}
 		}
-		globalTime ++;
+		
 	}
-}	
 
+	public ArrayList<Monster> getMonsterArray() {
+		return monsterArray;
+	}
+
+
+}
 
 
