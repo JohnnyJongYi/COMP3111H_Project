@@ -13,6 +13,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.geometry.Insets;
 import javafx.scene.paint.Color;
+import monster.Monster;
 
 public class MyController {
     @FXML
@@ -164,6 +165,21 @@ public class MyController {
                 event.consume();
         });
     }
+    
+    // spawn monster at (0,0) according to type and returns the label
+    public Label spawnMonster() {
+    	Label newLabel = new Label("Penguin");
+    	newLabel.setLayoutX(0);
+        newLabel.setLayoutY(0);
+        Image image = new Image(getClass().getResourceAsStream("/penguin.png"));
+        newLabel.setGraphic(new ImageView(image));
+        newLabel.setMinWidth(10);
+        newLabel.setMaxWidth(10);
+        newLabel.setMinHeight(10);
+        newLabel.setMaxHeight(10);
+        paneArena.getChildren().addAll(newLabel);
+    	return newLabel;
+    }
 }
 
 class DragEventHandler implements EventHandler<MouseEvent> {
@@ -201,3 +217,5 @@ class DragDroppedEventHandler implements EventHandler<DragEvent> {
 
     }
 }
+
+
