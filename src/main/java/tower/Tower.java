@@ -3,58 +3,68 @@ package tower;
 public abstract class Tower {
 
 	protected int towerType;
-	protected int towerID; //index of tower in tower array 
-	protected int level;
+	protected int towerID;
+	protected int level = 1;
+	protected int base_power;
+	protected int power;
+	protected int minRange;
+	protected int maxRange;
 	protected int locationX;
 	protected int locationY;
 	
-	public Tower(int type, int ID, int x, int y)
-	{
+	public Tower(int type, int ID, int x, int y) {
 		towerType = type;
 		towerID = ID;
-		level = 0;
 		locationX = x;
 		locationY = y;
 	}
 	
-	public void upgrade()
-	{
+	public void upgrade() {
 		level += 1;
+		power = base_power * level;
 	}
 	
 	public void shoot() {}
 	
-	public int getTowerType()
-	{
+	public int getTowerType() {
 		return towerType;
 	}
 	
-	public int getTowerID()
-	{
+	public int getTowerID() {
 		return towerID;
 	}
 	
-	public void setTowerID(int ID)
-	{
-		towerID = ID;
+	public int getLevel() {
+		return level;
 	}
 	
-	public int getLocationX()
-	{
+	public int getPower() {
+		return power;
+	}
+	
+	public int getMinRange() {
+		return minRange;
+	}
+	
+	public int getMaxRange() {
+		return maxRange;
+	}
+	
+	public int getLocationX() {
 		return locationX;
 	}
 	
-	public int getLocationY()
-	{
+	public int getLocationY() {
 		return locationY;
 	}
 	
-	public void printTowerInfo()
-	{
-		System.out.println("tower type: " + towerType);
-		System.out.println("tower ID : " + towerID);
-		System.out.println("level : "+ level);
-		System.out.println("Location : (" + locationX +", "+locationY+")");
+	public void printTowerInfo() {
+		System.out.println("Tower type: " + towerType);
+		System.out.println("Tower ID: " + towerID);
+		System.out.println("Level : "+ level);
+		System.out.println("Power : " + power);
+		System.out.println("Range : " + getMinRange() + " - " + getMaxRange());
+		System.out.println("Location : (" + locationX + ", " + locationY + ")");
 		System.out.println("-------------------------------------------");
 	}
 }
