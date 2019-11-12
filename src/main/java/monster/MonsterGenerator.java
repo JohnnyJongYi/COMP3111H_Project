@@ -10,6 +10,8 @@ public class MonsterGenerator
 	protected static int monsterIDCounter;
 	protected static int timestamp;
 	private MonsterInRange forCatapult; 
+	protected static boolean monsterHasReached;
+	
 	
 	MonsterGenerator() 
 	{
@@ -17,6 +19,7 @@ public class MonsterGenerator
 		monsterIDCounter = 0;
 		timestamp = 0;
 		forCatapult = new MonsterInRange(monsterArray);
+		monsterHasReached = false;
 	}
 	
 	public void updateMonsterEachTimestamp() throws OutOfArenaException, MovedToWrongGrid
@@ -91,6 +94,11 @@ public class MonsterGenerator
 	public ArrayList<Monster>[][] getMonsterInRangeArray()
 	{
 		return forCatapult.getRangeArray();
+	}
+	
+	public boolean getMonsterHasReachedEnd()
+	{
+		return monsterHasReached;
 	}
 }
 

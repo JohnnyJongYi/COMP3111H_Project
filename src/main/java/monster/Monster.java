@@ -103,7 +103,11 @@ public abstract class Monster
 		if(gridAfterMove != currentGrid)
 		{
 			if(nextGrid == gridAfterMove)
+			{
 				currentGrid = nextGrid;
+				if(currentGrid == monsterGrid[11][0])
+					MonsterGenerator.monsterHasReached = true;
+			}
 			else
 			{
 				MovedToWrongGrid except = new MovedToWrongGrid();
