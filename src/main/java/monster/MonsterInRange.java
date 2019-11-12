@@ -23,10 +23,10 @@ public class MonsterInRange
 			
 			for(int i = xm-25 ; i<= xm+25 ; i++)
 			{
-				if(i>=0)
+				if(i>=0 && i<480)
 				for (int j = ym-25 ; j<= ym+25 ; j++)
 				{
-					if(j>=0)
+					if(j>=0 && j < 480)
 					if(returnDistance(i,j,xm,ym) <=25)
 					{monsterSearch(i,j);}
 				}
@@ -41,10 +41,10 @@ public class MonsterInRange
 		ArrayList<Monster> monsterInRange = new ArrayList<Monster>();
 		for(int r = x0-25 ; r<= x0+25 ; r++)
 		{
-			if(r>=0)
+			if(r>=0 && r<480)
 			for (int c = y0-25 ; c<= y0+25 ; c++)
 			{
-				if(c>=0)
+				if(c>=0 && c<480)
 				if(returnDistance(r,c,x0,y0) <=25)
 				{
 					isMonster(r,c, monsterInRange);

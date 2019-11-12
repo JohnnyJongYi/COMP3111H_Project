@@ -40,11 +40,3 @@ public class Location
 	}
 }
 
-class OutOfArenaException extends Exception
-{
-
-	public OutOfArenaException()
-	{
-		super("Actor has moved outside of the arena");
-	}
-}

@@ -1,11 +1,13 @@
 package monster;
 import java.util.ArrayList;
 
+import Coordinates.OutOfArenaException;
+import tower.TowerHandler;
 
 public class MonsterGenerator
 {
-	protected ArrayList<Monster> monsterArray;
-	protected int monsterIDCounter;
+	protected static ArrayList<Monster> monsterArray;
+	protected static int monsterIDCounter;
 	protected static int timestamp;
 	private MonsterInRange forCatapult; 
 	
@@ -17,7 +19,7 @@ public class MonsterGenerator
 		forCatapult = new MonsterInRange(monsterArray);
 	}
 	
-	public void updateMonsterEachTimestamp()
+	public void updateMonsterEachTimestamp() throws OutOfArenaException, MovedToWrongGrid
 	{
 		removeDead();
 		checkAnySlower();
@@ -26,13 +28,13 @@ public class MonsterGenerator
 		moveAllMonsters();
 		timestamp++;
 		
-		if(true/*existcatapult*/)
+		if(true/*catapultFound*/)
 		{
 			forCatapult.startSearch();
 		}
 	}
 	
-	private void moveAllMonsters()
+	private void moveAllMonsters() throws OutOfArenaException, MovedToWrongGrid
 	{
 		for(int i = 0; i<monsterArray.size() ; i++)
 			monsterArray.get(i).nextMove();

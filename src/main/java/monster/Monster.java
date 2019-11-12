@@ -1,5 +1,7 @@
 package monster;
 import Coordinates.Location;
+import Coordinates.OutOfArenaException;
+
 import java.util.ArrayList;
 
 
@@ -39,8 +41,9 @@ public abstract class Monster
 		slowerDuration = 0;
 		updateDistanceToEnd();
 		
+		monsterGrid = new int[12][12];
 		for(int i = 0 ; i<=11 ; i++)
-			for(int j = 0 ; j < 11 ; j++)
+			for(int j = 0 ; j <= 11 ; j++)
 				monsterGrid[i][j] = i*100 + j;
 		currentGrid = monsterGrid[0][11];
 		nextGrid = 0;
@@ -59,10 +62,10 @@ public abstract class Monster
 		alive = false;
 	}
 	
-	protected void nextMove()
+	protected void nextMove() throws OutOfArenaException, MovedToWrongGrid
 	{
-		if(towerConfigChange)
-			calculatePath(); based on current grid
+		if(true /*tower configuration change*/)
+			calculatePath();//based on current grid
 		
 		for(int i = 0 ; i< path.size(); i++)
 		{
@@ -95,6 +98,7 @@ public abstract class Monster
 		}
 		
 		int gridAfterMove = monsterGrid[(loc.getX() / 40)][(loc.getY() / 40)];
+		System.out.println(gridAfterMove);
 		
 		if(gridAfterMove != currentGrid)
 		{
