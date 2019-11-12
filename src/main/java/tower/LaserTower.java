@@ -25,7 +25,7 @@ public class LaserTower extends Tower{
 		int target = -1;
 		double target_to_end = 680;
 		
-		for (int i = 0; i < monsterArray.size(); i++) {
+		for (int i = 0; i < monsterArray.size(); i++) { // loop all monster, find the monster closest to end point
 			double to_end = monsterArray.get(i).getdistanceToEndpoint();
 			if (to_end < target_to_end) {
 				target = i;
@@ -33,14 +33,14 @@ public class LaserTower extends Tower{
 			}
 		}
 		//consumes some resources
-		int x = monsterArray.get(target).getLocationX();
+		int x = monsterArray.get(target).getLocationX(); // make a line towards the monster
 		int y = monsterArray.get(target).getLocationY();
 		int a = y - locationY;
 		int b = locationX - x;
 		int c = - a * locationX - b * locationY;
 		double divider = Math.sqrt(a * a + b * b);
 		
-		for (int i = 0; i < monsterArray.size(); i++) {
+		for (int i = 0; i < monsterArray.size(); i++) { // loop all monster, damage all monster 3 px away from the line
 			if (Math.abs(a * monsterArray.get(i).getLocationX() + b * monsterArray.get(i).getLocationY() + c) / divider <= 3)
 				monsterArray.get(i).takedamage(1, power);
 		}
