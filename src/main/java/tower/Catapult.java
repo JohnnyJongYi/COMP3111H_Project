@@ -24,7 +24,7 @@ public class Catapult extends Tower{
 		ArrayList<Monster> monsterArray = MonsterGenerator.getMonsterArray();
 		if (monsterArray.size() == 0) return;
 		
-		int[][] MonstersInRange = MonsterGenerator.getMonstersInRange();
+		ArrayList<Integer>[][] MonstersInRange = MonsterGenerator.getMonstersInRange();
 		
 		int target_x = -1;
 		int target_y = -1;
@@ -34,19 +34,16 @@ public class Catapult extends Tower{
 		int x_high = Math.min(480, locationX + maxRange);
 		
 		for (int x = x_low; x <= x_high; x++) {
-			double a = Math.sqrt(maxRange2 - x * x);
-			int y_low = (int) Math.max(0, - Math.ceil(a));
-			int y_high = (int) Math.min(480, Math.ceil(a));
+			int delta_y = (int) Math.floor(Math.sqrt(maxRange2 - Math.pow(Math.abs(locationX - x), 2)));
+			int y_low = Math.max(0, locationY - delta_y);
+			int y_high = Math.min(480, locationY + delta_y);
 			
-			for (int y = y_low; y <= y_high; y++)
-			{
-				
-				if (MonstersInRange[x][y].size() >= max_monster && x * x + y * y >= minRange2) {
+			for (int y = y_low; y <= y_high; y++) { // for all pixel in range
+				if (MonstersInRange[x][y].size() >= max_monster && x * x + y * y >= minRange2) { // find the pixel with most monster in range
 					ArrayList<Integer> indexArray = MonstersInRange[x][y];
-					for (int i = 0; i < indexArray.size(); i++) {
-						double to_end = monsterArray.get(indexArray.get(i)).getdistanceToEndpoint();
-						if (to_end < target_to_end)
-						{
+					for (int i : indexArray) {
+						double to_end = monsterArray.get(i).getdistanceToEndpoint();
+						if (to_end < target_to_end) {
 							target_x = x;
 							target_y = y;
 							max_monster = MonstersInRange[x][y].size();
@@ -56,12 +53,9 @@ public class Catapult extends Tower{
 				}
 			}
 		}
-		if (max_monster > 0)
-		{
-			ArrayList<Integer> indexArray = MonstersInRange[target_x][target_y][1];
-			for (int i = 0; i < indexArray.size(); i++) {
-				monsterArray.get(indexArray.get(i)).takedamage(1, power);
-			}
+		if (max_monster > 0) {
+			ArrayList<Integer> indexArray = MonstersInRange[target_x][target_y];
+			for (int i : indexArray) monsterArray.get(i).takedamage(1, power);
 		}
 	}
 }

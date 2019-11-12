@@ -59,7 +59,20 @@ public abstract class Tower {
 	}
 	
 	public void printTowerInfo() {
-		System.out.println("Tower type: " + towerType);
+		switch(towerType) {
+			case 1 : 
+				System.out.println("Tower ID: Basic Tower");
+				break;
+			case 2 :
+				System.out.println("Tower ID: Ice Tower");
+				break;
+			case 3 :
+				System.out.println("Tower ID: Catapult");
+				break;
+			case 4 :
+				System.out.println("Tower ID: Laser Tower");
+				break;
+		}
 		System.out.println("Tower ID: " + towerID);
 		System.out.println("Level : "+ level);
 		System.out.println("Power : " + power);
