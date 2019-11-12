@@ -1,5 +1,7 @@
 package monster;
 import Coordinates.Location;
+import java.util.ArrayList;
+
 
 public abstract class Monster 
 {
@@ -18,8 +20,10 @@ public abstract class Monster
 	protected int slowerStartTime;
 	protected int slowerDuration;
 	
-	protected currentGrid = 12¹ø
-	protected nextGrid;
+	protected int[][] monsterGrid;
+	protected int currentGrid;
+	protected int nextGrid;
+	protected ArrayList<Integer> path;
 	
 
 	
@@ -27,13 +31,21 @@ public abstract class Monster
 	{  
 		monsterType = type;
 		time = timestamp;
-		loc = new Location(0,480);
+		loc = new Location(0,479);
 		monsterID = mID;
 		alive = true;
 		isSlower = false;
 		slowerStartTime = Integer.MAX_VALUE;
 		slowerDuration = 0;
 		updateDistanceToEnd();
+		
+		for(int i = 0 ; i<=11 ; i++)
+			for(int j = 0 ; j < 11 ; j++)
+				monsterGrid[i][j] = i*100 + j;
+		currentGrid = monsterGrid[0][11];
+		nextGrid = 0;
+		path = new ArrayList<Integer>();
+		calculatePath();
 	}
 	
 	protected void stronger()
@@ -49,12 +61,18 @@ public abstract class Monster
 	
 	protected void nextMove()
 	{
-		if(time == MonsterGenerator.timestamp || towerConfigChange)
+		if(towerConfigChange)
 			calculatePath(); based on current grid
 		
-		fetch nextGrid and update
+		for(int i = 0 ; i< path.size(); i++)
+		{
+			if(currentGrid == path.get(i))
+			{
+				nextGrid = path.get(i+1);
+			}
+		}
 		
-		if(currentGrid.ID > nextGrid.ID) //up
+		if(currentGrid > nextGrid) //up
 		{
 			loc.update(0, -speed);
 		}
@@ -76,10 +94,19 @@ public abstract class Monster
 			}
 		}
 		
+		int gridAfterMove = monsterGrid[(loc.getX() / 40)][(loc.getY() / 40)];
 		
-		if(currentgrid has changed)
-			check if current grid is same as next grid, just to make sure
-			currentgird = nextgrid
+		if(gridAfterMove != currentGrid)
+		{
+			if(nextGrid == gridAfterMove)
+				currentGrid = nextGrid;
+			else
+			{
+				MovedToWrongGrid except = new MovedToWrongGrid();
+				throw except;
+			}
+		}
+			
 
 	}
 	
@@ -180,6 +207,13 @@ public abstract class Monster
 	public double getDistanceToEndpoint() {
 		return distanceToEndpoint;
 	}
+}
 
-	
+class MovedToWrongGrid extends Exception
+{
+
+	public MovedToWrongGrid()
+	{
+		super("One of the monster moved to the wrong grid");
+	}
 }

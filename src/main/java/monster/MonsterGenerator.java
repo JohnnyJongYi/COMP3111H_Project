@@ -25,6 +25,11 @@ public class MonsterGenerator
 		{generate();}
 		moveAllMonsters();
 		timestamp++;
+		
+		if(true/*existcatapult*/)
+		{
+			forCatapult.startSearch();
+		}
 	}
 	
 	private void moveAllMonsters()
@@ -81,7 +86,7 @@ public class MonsterGenerator
 		return monsterArray;
 	}
 	
-	public int[][] getMonsterInRangeArray()
+	public ArrayList<Monster>[][] getMonsterInRangeArray()
 	{
 		return forCatapult.getRangeArray();
 	}

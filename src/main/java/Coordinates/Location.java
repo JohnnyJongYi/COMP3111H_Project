@@ -20,10 +20,16 @@ public class Location
 	public Location getLocation()
 	{return this;}
 	
-	public void update(int changeInX, int changeInY)
+	public void update(int changeInX, int changeInY) throws OutOfArenaException
 	{
 		x=x+changeInX;
 		y=y+changeInY;
+		
+		if(x<0 || x>=480 || y<0 || y>=480)
+		{
+			OutOfArenaException except = new OutOfArenaException();
+			throw except;
+		}
 	}
 	
 	public boolean isEqual(int xCoor, int yCoor)
@@ -31,5 +37,14 @@ public class Location
 		if(xCoor == x && yCoor == y)
 			return true;
 		return false;
+	}
+}
+
+class OutOfArenaException extends Exception
+{
+
+	public OutOfArenaException()
+	{
+		super("Actor has moved outside of the arena");
 	}
 }
