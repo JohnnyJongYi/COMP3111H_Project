@@ -5,7 +5,7 @@ public class Location
 	private int x;
 	private int y;
 	
-	Location(int xCoor, int yCoor)
+	public Location(int xCoor, int yCoor)
 	{
 		x=xCoor;
 		y=yCoor;
@@ -24,5 +24,12 @@ public class Location
 	{
 		x=x+changeInX;
 		y=y+changeInY;
+	}
+	
+	public boolean isEqual(int xCoor, int yCoor)
+	{
+		if(xCoor == x && yCoor == y)
+			return true;
+		return false;
 	}
 }

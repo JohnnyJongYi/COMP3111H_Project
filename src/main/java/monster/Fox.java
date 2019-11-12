@@ -4,16 +4,18 @@ package monster;
 public class Fox extends Monster 
 {
 
-	Fox(int globalTime, int mID, int type) 
+	Fox(int time, int mID, int type) 
 	{
-		super(globalTime, mID, type);
+		super(time, mID, type);
 		hp = 40;
-		speed = 100;
-		//Default HP, Speed : 40, 100
+		OriginalSpeed = 22;
+		speed = OriginalSpeed;
+		//Default HP, Speed : 40, 22;
 		stronger();
+		maxHP = hp;
 		printMonsterInfo();
 	}
 
-	void nextMove() 
+	protected void calculatePath()
 	{}
 }
