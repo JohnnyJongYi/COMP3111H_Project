@@ -1,5 +1,6 @@
-package arena;
+package src.main.java.arena;
 
+import arena.Grid;
 import javafx.scene.control.Label;
 
 public class Arena {
@@ -50,6 +51,9 @@ public class Arena {
 	public void updateArena() {
 
 	}
+	
+	// spawn monster according to type 
+	public void monsterSpawn()
 
 	
 
