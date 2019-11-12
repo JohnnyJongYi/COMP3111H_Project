@@ -7,15 +7,20 @@ import monster.Monster;
 import monster.MonsterGenerator;
 
 public class LaserTower extends Tower{
-
+	protected int towerType = 4;
 	protected int base_power = 10;
 	protected int power = 10;
 	protected int minRange = 0;
 	protected int maxRange = 680;
 	
-	LaserTower(int type, int ID, int x, int y) {
-		super(type, ID, x, y);
+	LaserTower(int ID, int x, int y) {
+		super(ID, x, y);
 		printTowerInfo();
+	}
+	
+	public void printTowerInfo() {
+		System.out.println("Tower type: Laser Tower");
+		super.printTowerInfo();
 	}
 	
 	public void shoot() {

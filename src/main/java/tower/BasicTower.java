@@ -5,17 +5,22 @@ import java.util.ArrayList;
 import monster.Monster;
 import monster.MonsterGenerator;
 
-public class BasicTower extends Tower
-{
+public class BasicTower extends Tower {
+	protected int towerType = 1;
 	protected int base_power = 10;
 	protected int power = 10;
 	protected int minRange = 0;
 	protected int maxRange = 65;
 	protected int range2 = maxRange * maxRange;
 	
-	BasicTower(int type, int ID, int x, int y) {
-		super(type, ID, x, y);
+	BasicTower(int ID, int x, int y) {
+		super(ID, x, y);
 		printTowerInfo();
+	}
+	
+	public void printTowerInfo() {
+		System.out.println("Tower type: Basic Tower");
+		super.printTowerInfo();
 	}
 	
 	public void shoot() {

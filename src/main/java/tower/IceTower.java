@@ -6,16 +6,21 @@ import monster.Monster;
 import monster.MonsterGenerator;
 
 public class IceTower extends Tower{
-	
+	protected int towerType = 2;
 	protected int base_power = 0;
 	protected int power = 0;
 	protected int minRange = 0;
 	protected int maxRange = 65;
 	protected int range2 = maxRange * maxRange;
 	
-	IceTower(int type, int ID, int x, int y) {
-		super(type, ID, x, y);
+	IceTower(int ID, int x, int y) {
+		super(ID, x, y);
 		printTowerInfo();
+	}
+	
+	public void printTowerInfo() {
+		System.out.println("Tower type: IceTower");
+		super.printTowerInfo();
 	}
 	
 	public void shoot() {
