@@ -48,7 +48,6 @@ public abstract class Monster
 		currentGrid = monsterGrid[0][11];
 		nextGrid = 0;
 		path = new ArrayList<Integer>();
-		calculatePath();
 	}
 	
 	protected void stronger()
@@ -64,8 +63,8 @@ public abstract class Monster
 	
 	protected void nextMove() throws OutOfArenaException, MovedToWrongGrid
 	{
-		if(true /*tower configuration change*/)
-			calculatePath();//based on current grid
+		if(time == MonsterGenerator.timestamp /*tower configuration change*/)
+			calculatePath(currentGrid, flagArray);//based on current grid
 		
 		for(int i = 0 ; i< path.size(); i++)
 		{
@@ -118,10 +117,38 @@ public abstract class Monster
 
 	}
 	
-	protected void calculatePath()
+	protected void calculatePath(int currentGridID, boolean [][] flagArray)
 	{
+		path.clear();
+		int counterGrid = currentGridID;
+		boolean reachedEnd = false;
 		
-		
+		while(!reachedEnd)
+		{
+			path.add(counterGrid);
+			
+			int counterX = counterGrid / 100;
+			int counterY = counterGrid % 100;
+			
+			if(counterX+1 >11 || counterY-1 <0)
+				reachedEnd = true;
+			else
+			{
+				if(flagArray[counterX+1][counterY] && flagArray[counterX][counterY-1])
+				{
+					//can go both up or right so choose randomly
+					int direct = (int)(Math.random() * 2 + 1);
+					if(direct == 1)
+						counterGrid = monsterGrid[counterX+1][counterY];
+					else
+						counterGrid = monsterGrid[counterX][counterY-1];
+				}
+				else if(flagArray[counterX+1][counterY])
+					counterGrid = monsterGrid[counterX+1][counterY];
+				else if(flagArray[counterX][counterY-1]) 
+					counterGrid = monsterGrid[counterX][counterY-1];				
+			}
+		}
 	}
 	
 	protected void updateDistanceToEnd()
@@ -211,6 +238,12 @@ public abstract class Monster
 	public Location getLoc() {
 		return loc;
 	}
+	
+	public int getLocationX()
+	{return loc.getX();}
+	
+	public int getLocationY()
+	{return loc.getY();}
 
 	public double getDistanceToEndpoint() {
 		return distanceToEndpoint;

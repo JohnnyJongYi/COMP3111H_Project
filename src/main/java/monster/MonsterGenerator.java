@@ -96,7 +96,7 @@ public class MonsterGenerator
 		return forCatapult.getRangeArray();
 	}
 	
-	public boolean getMonsterHasReachedEnd()
+	public static boolean getMonsterHasReachedEnd()
 	{
 		return monsterHasReached;
 	}
