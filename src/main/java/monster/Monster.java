@@ -3,7 +3,7 @@ import Coordinates.Location;
 import Coordinates.OutOfArenaException;
 
 import java.util.ArrayList;
-
+import java.util.Collections;
 
 public abstract class Monster 
 {
@@ -44,8 +44,8 @@ public abstract class Monster
 		monsterGrid = new int[12][12];
 		for(int i = 0 ; i<=11 ; i++)
 			for(int j = 0 ; j <= 11 ; j++)
-				monsterGrid[i][j] = i*100 + j;
-		currentGrid = monsterGrid[0][11];
+				monsterGrid[i][j] = j*100 + i;
+		currentGrid = monsterGrid[11][0];
 		nextGrid = 0;
 		path = new ArrayList<Integer>();
 	}
@@ -64,7 +64,11 @@ public abstract class Monster
 	protected void nextMove() throws OutOfArenaException, MovedToWrongGrid
 	{
 		if(time == MonsterGenerator.timestamp /*tower configuration change*/)
-			calculatePath(currentGrid, flagArray);//based on current grid
+		{
+			path.clear();
+			calculatePath(currentGrid, flagArray, monsterGrid, path);//based on current grid
+			Collections.reverse(path);
+		}
 		
 		for(int i = 0 ; i< path.size(); i++)
 		{
@@ -96,7 +100,7 @@ public abstract class Monster
 			}
 		}
 		
-		int gridAfterMove = monsterGrid[(loc.getX() / 40)][(loc.getY() / 40)];
+		int gridAfterMove = monsterGrid[(loc.getY() / 40)][(loc.getX() / 40)];
 		System.out.println(gridAfterMove);
 		
 		if(gridAfterMove != currentGrid)
@@ -104,7 +108,7 @@ public abstract class Monster
 			if(nextGrid == gridAfterMove)
 			{
 				currentGrid = nextGrid;
-				if(currentGrid == monsterGrid[11][0])
+				if(currentGrid == monsterGrid[0][11])
 					MonsterGenerator.monsterHasReached = true;
 			}
 			else
@@ -117,38 +121,69 @@ public abstract class Monster
 
 	}
 	
-	protected void calculatePath(int currentGridID, boolean [][] flagArray)
+	
+	protected boolean calculatePath(int grid, boolean[][] flag, int[][] monsterGrid, ArrayList<Integer> path)
 	{
-		path.clear();
-		int counterGrid = currentGridID;
-		boolean reachedEnd = false;
+		int counterX = grid / 100;
+		int counterY = grid % 100;
 		
-		while(!reachedEnd)
+		if(counterY-1 >=0 && flag[counterY-1][counterX])
 		{
-			path.add(counterGrid);
-			
-			int counterX = counterGrid / 100;
-			int counterY = counterGrid % 100;
-			
-			if(counterX+1 >11 || counterY-1 <0)
-				reachedEnd = true;
-			else
+			if(calculatePath(monsterGrid[counterY-1][counterX],flag,monsterGrid, path))
 			{
-				if(flagArray[counterX+1][counterY] && flagArray[counterX][counterY-1])
-				{
-					//can go both up or right so choose randomly
-					int direct = (int)(Math.random() * 2 + 1);
-					if(direct == 1)
-						counterGrid = monsterGrid[counterX+1][counterY];
-					else
-						counterGrid = monsterGrid[counterX][counterY-1];
-				}
-				else if(flagArray[counterX+1][counterY])
-					counterGrid = monsterGrid[counterX+1][counterY];
-				else if(flagArray[counterX][counterY-1]) 
-					counterGrid = monsterGrid[counterX][counterY-1];				
+				path.add(grid);
+				return true;
 			}
 		}
+		
+		if(counterX+1 <12 && flag[counterY][counterX+1])
+		{
+			if(calculatePath(monsterGrid[counterY][counterX+1],flag,monsterGrid,path))
+			{
+				path.add(grid);
+				return true;
+			}
+		}
+		
+		if(grid == 1100)
+		{
+			path.add(1100);
+			return true;
+		}
+		else return false;
+		
+	}
+	
+	protected boolean calculatePath(int grid, boolean[][] flag)
+	{
+		int counterX = grid / 100;
+		int counterY = grid % 100;
+		
+		if(counterY-1 >=0 && flag[counterX][counterY-1])
+		{
+			if(calculatePath(monsterGrid[counterX][counterY-1],flag))
+			{
+				path.add(grid);
+				return true;
+			}
+		}
+		
+		if(counterX+1 <12 && flag[counterX+1][counterY])
+		{
+			if(calculatePath(monsterGrid[counterX+1][counterY],flag))
+			{
+				path.add(grid);
+				return true;
+			}
+		}
+		
+		if(grid == 1100)
+		{
+			path.add(grid);
+			return true;
+		}
+		else return false;
+		
 	}
 	
 	protected void updateDistanceToEnd()
