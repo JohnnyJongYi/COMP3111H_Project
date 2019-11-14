@@ -1,6 +1,7 @@
 package monster;
 import Coordinates.Location;
 import Coordinates.OutOfArenaException;
+import tower.TowerHandler;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -79,7 +80,7 @@ public abstract class Monster
 	
 	protected void nextMove() throws OutOfArenaException, MovedToWrongGrid
 	{
-		if(time == MonsterGenerator.timestamp /*tower configuration change*/)
+		if(time == MonsterGenerator.timestamp||TowerHandler.newTowerBuilt())
 		{
 			path.clear();
 			calculatePath(currentGrid, flagArray, monsterGrid, path);//based on current grid

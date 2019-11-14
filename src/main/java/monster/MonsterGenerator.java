@@ -31,7 +31,7 @@ public class MonsterGenerator
 		moveAllMonsters();
 		timestamp++;
 		
-		if(true/*catapultFound*/)
+		if(TowerHandler.catapultFound())
 		{
 			forCatapult.startSearch();
 		}
