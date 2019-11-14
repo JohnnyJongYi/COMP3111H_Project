@@ -2,6 +2,7 @@ package tower;
 
 import java.util.ArrayList;
 
+import tower.TowerHandler;
 import monster.Monster;
 import monster.MonsterGenerator;
 
@@ -15,7 +16,8 @@ public class BasicTower extends Tower {
 	
 	BasicTower(int ID, int x, int y) {
 		super(ID, x, y);
-		printTowerInfo();
+		TowerHandler.setNOA(locationX, locationY, maxRange, maxRange * maxRange, 0, 1);
+		printTowerInfo();	
 	}
 	
 	public void printTowerInfo() {
@@ -31,7 +33,7 @@ public class BasicTower extends Tower {
 		double target_to_end = 680;
 		
 		for (int i = 0; i < monsterArray.size(); i++) { // loop all monster, find the monster in range and closest to end point
-			double to_end = monsterArray.get(i).getdistanceToEndpoint();
+			double to_end = monsterArray.get(i).getDistanceToEndpoint();
 			if (to_end < target_to_end && Math.pow(monsterArray.get(i).getLocationX() - locationX, 2) + Math.pow(monsterArray.get(i).getLocationY() - locationY, 2) <= range2) {
 				target = i;
 				target_to_end = to_end;
