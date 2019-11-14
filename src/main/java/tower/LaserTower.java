@@ -31,7 +31,7 @@ public class LaserTower extends Tower{
 		double target_to_end = 680;
 		
 		for (int i = 0; i < monsterArray.size(); i++) { // loop all monster, find the monster closest to end point
-			double to_end = monsterArray.get(i).getdistanceToEndpoint();
+			double to_end = monsterArray.get(i).getDistanceToEndpoint();
 			if (to_end < target_to_end) {
 				target = i;
 				target_to_end = to_end;

@@ -31,7 +31,7 @@ public class IceTower extends Tower{
 		double target_to_end = 680;
 		
 		for (int i = 0; i < monsterArray.size(); i++) { // loop all monster, find the monster in range and closest to end point
-			double to_end = monsterArray.get(i).getdistanceToEndpoint();
+			double to_end = monsterArray.get(i).getDistanceToEndpoint();
 			if (to_end < target_to_end && Math.pow(monsterArray.get(i).getLocationX() - locationX, 2) + Math.pow(monsterArray.get(i).getLocationY() - locationY, 2) <= range2) {
 				target = i;
 				target_to_end = to_end;
