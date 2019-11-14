@@ -6,8 +6,8 @@ public class TowerHandler {
 	protected ArrayList<Tower> towerArray = new ArrayList<Tower>();
 	protected int num;
 	protected static int[][] numberOfAttack = new int[480][480];
-	protected static boolean newTowerBuilt;
 	protected static boolean[][] towerGrid =  new boolean[12][12];
+	protected static boolean newTowerBuilt;
 	protected static int catapultCount;
 	protected boolean[][] ART = new boolean[12][12]; // articulation prep
 	protected boolean[][] flag = new boolean[12][12];
@@ -64,7 +64,7 @@ public class TowerHandler {
 			int w_x = v_x + n_x[w];
 			int w_y = v_y + n_y[w];
 			if (w_x < 0 || w_x > 11 || w_y < 0 || w_y > 11) continue; // boundary check
-			if (towerFound(w_x, w_y)) continue; // skip if there is a tower on w
+			if (towerGrid[w_x][w_y]) continue; // skip if there is a tower on w
 			
 			if (!flag[w_x][w_y]) {
 				pred[w_x][w_y][0] = v_x;
@@ -102,6 +102,10 @@ public class TowerHandler {
 		}
 	}
 	
+	public ArrayList<Tower> getTowerArray() {
+		return towerArray;
+	}
+	
 	public static int[][] getNOA() {
 		return numberOfAttack;
 	}
@@ -114,7 +118,7 @@ public class TowerHandler {
 		newTowerBuilt = false;
 	}
 	
-	public static boolean[][] towerFound() {
+	public static boolean[][] towerGrid() {
 		return towerGrid;
 	}
 	
@@ -129,6 +133,7 @@ public class TowerHandler {
 		towerArray.set(ID, towerArray.get(num - 1));
 		towerArray.remove(--num);
 		towerGrid[x][y] = false;
+		newTowerBuilt = true;
 		articulation(0, 11);
 	}
 }
