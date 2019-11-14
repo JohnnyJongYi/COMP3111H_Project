@@ -13,7 +13,7 @@ public class MonsterGenerator
 	protected static boolean monsterHasReached;
 	
 	
-	MonsterGenerator() 
+	public MonsterGenerator() 
 	{
 		monsterArray = new ArrayList<Monster>();
 		monsterIDCounter = 0;
@@ -31,7 +31,7 @@ public class MonsterGenerator
 		moveAllMonsters();
 		timestamp++;
 		
-		if(true/*catapultFound*/)
+		if(TowerHandler.catapultFound())
 		{
 			forCatapult.startSearch();
 		}
@@ -91,7 +91,7 @@ public class MonsterGenerator
 		return monsterArray;
 	}
 	
-	public static ArrayList<Monster>[][] getMonsterInRangeArray()
+	public static ArrayList<Monster>[][] getMonstersInRange()
 	{
 		return forCatapult.getRangeArray();
 	}

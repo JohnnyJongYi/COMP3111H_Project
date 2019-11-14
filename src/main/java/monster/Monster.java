@@ -1,6 +1,7 @@
 package monster;
 import Coordinates.Location;
 import Coordinates.OutOfArenaException;
+import tower.TowerHandler;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,21 +28,7 @@ public abstract class Monster
 	protected int nextGrid;
 	protected ArrayList<Integer> path;
 	
-	protected boolean[][] flagArray = 
-		{
-				{true,true,true,true,true,true,true,true,true,true,true,true},
-				{true,true,true,true,true,true,true,true,true,true,true,true},
-				{true,true,true,true,true,true,true,true,true,true,true,true},
-				{true,true,true,true,true,true,true,true,true,true,true,true},
-				{true,true,true,true,true,true,true,true,true,true,true,true},
-				{true,true,true,true,true,true,true,true,true,true,true,true},
-				{true,true,true,true,true,true,true,true,true,true,true,true},
-				{true,true,true,true,true,true,true,true,true,true,true,true},
-				{true,true,true,true,true,true,true,true,true,true,true,true},
-				{true,true,true,true,true,true,true,true,true,true,true,true},
-				{true,true,true,true,true,true,true,true,true,true,true,true},
-				{true,true,true,true,true,true,true,true,true,true,true,true},
-		};
+	protected boolean[][] flagArray = TowerHandler.towerGrid();
 	
 
 	
@@ -79,12 +66,21 @@ public abstract class Monster
 	
 	protected void nextMove() throws OutOfArenaException, MovedToWrongGrid
 	{
-		if(time == MonsterGenerator.timestamp /*tower configuration change*/)
+		if(time == MonsterGenerator.timestamp)
 		{
 			path.clear();
 			calculatePath(currentGrid, flagArray, monsterGrid, path);//based on current grid
 			Collections.reverse(path);
 		}
+		
+		if(TowerHandler.newTowerBuilt())
+		{
+			path.clear();
+			calculatePath(currentGrid, flagArray, monsterGrid, path);//based on current grid
+			Collections.reverse(path);
+			TowerHandler.resetNewTowerBuilt();
+		}
+		
 		
 		for(int i = 0 ; i< path.size(); i++)
 		{
