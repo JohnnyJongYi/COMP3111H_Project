@@ -129,5 +129,6 @@ public class TowerHandler {
 		towerArray.set(ID, towerArray.get(num - 1));
 		towerArray.remove(--num);
 		towerGrid[x][y] = false;
+		articulation(0, 11);
 	}
 }
