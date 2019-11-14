@@ -6,17 +6,20 @@ import tower.TowerHandler;
 
 public class MonsterGenerator
 {
-	protected static ArrayList<Monster> monsterArray;
-	protected static int monsterIDCounter;
-	protected static int timestamp;
-	private MonsterInRange forCatapult; 
+	protected static  ArrayList<Monster> monsterArray;
+	protected  int monsterIDCounter;
+	protected static  int timestamp;
+	private static MonsterInRange forCatapult; 
+	protected static boolean monsterHasReached;
 	
-	MonsterGenerator() 
+	
+	public MonsterGenerator() 
 	{
 		monsterArray = new ArrayList<Monster>();
 		monsterIDCounter = 0;
 		timestamp = 0;
 		forCatapult = new MonsterInRange(monsterArray);
+		monsterHasReached = false;
 	}
 	
 	public void updateMonsterEachTimestamp() throws OutOfArenaException, MovedToWrongGrid
@@ -28,7 +31,7 @@ public class MonsterGenerator
 		moveAllMonsters();
 		timestamp++;
 		
-		if(true/*catapultFound*/)
+		if(TowerHandler.catapultFound())
 		{
 			forCatapult.startSearch();
 		}
@@ -62,7 +65,7 @@ public class MonsterGenerator
 		
 	}
 	
-	protected void removeDead()
+	protected  void removeDead()
 	{
 		int size = monsterArray.size();
 		for(int i = 0; i<size ; i++)
@@ -83,14 +86,19 @@ public class MonsterGenerator
 		}
 	}
 
-	public ArrayList<Monster> getMonsterArray() 
+	public static ArrayList<Monster> getMonsterArray() 
 	{
 		return monsterArray;
 	}
 	
-	public ArrayList<Monster>[][] getMonsterInRangeArray()
+	public static ArrayList<Monster>[][] getMonstersInRange()
 	{
 		return forCatapult.getRangeArray();
+	}
+	
+	public static boolean getMonsterHasReachedEnd()
+	{
+		return monsterHasReached;
 	}
 }
 

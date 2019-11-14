@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import sample.MyController;
 
 public class Main extends Application {
 
@@ -17,6 +18,7 @@ public class Main extends Application {
         primaryStage.show();
         MyController appController = (MyController)loader.getController();
         appController.createArena();
+        appController.spawnMonster();
     }
 
 
