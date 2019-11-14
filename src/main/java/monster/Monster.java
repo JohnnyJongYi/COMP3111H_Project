@@ -27,7 +27,21 @@ public abstract class Monster
 	protected int nextGrid;
 	protected ArrayList<Integer> path;
 	
-	protected boolean[][] flagArray;
+	protected boolean[][] flagArray = 
+		{
+				{true,true,true,true,true,true,true,true,true,true,true,true},
+				{true,true,true,true,true,true,true,true,true,true,true,true},
+				{true,true,true,true,true,true,true,true,true,true,true,true},
+				{true,true,true,true,true,true,true,true,true,true,true,true},
+				{true,true,true,true,true,true,true,true,true,true,true,true},
+				{true,true,true,true,true,true,true,true,true,true,true,true},
+				{true,true,true,true,true,true,true,true,true,true,true,true},
+				{true,true,true,true,true,true,true,true,true,true,true,true},
+				{true,true,true,true,true,true,true,true,true,true,true,true},
+				{true,true,true,true,true,true,true,true,true,true,true,true},
+				{true,true,true,true,true,true,true,true,true,true,true,true},
+				{true,true,true,true,true,true,true,true,true,true,true,true},
+		};
 	
 
 	
@@ -156,37 +170,6 @@ public abstract class Monster
 		
 	}
 	
-	protected boolean calculatePath(int grid, boolean[][] flag)
-	{
-		int counterX = grid / 100;
-		int counterY = grid % 100;
-		
-		if(counterY-1 >=0 && flag[counterX][counterY-1])
-		{
-			if(calculatePath(monsterGrid[counterX][counterY-1],flag))
-			{
-				path.add(grid);
-				return true;
-			}
-		}
-		
-		if(counterX+1 <12 && flag[counterX+1][counterY])
-		{
-			if(calculatePath(monsterGrid[counterX+1][counterY],flag))
-			{
-				path.add(grid);
-				return true;
-			}
-		}
-		
-		if(grid == 1100)
-		{
-			path.add(grid);
-			return true;
-		}
-		else return false;
-		
-	}
 	
 	protected void updateDistanceToEnd()
 	{
