@@ -16,7 +16,6 @@ public class BasicTower extends Tower {
 	
 	BasicTower(int ID, int x, int y) {
 		super(ID, x, y);
-		TowerHandler.setNOA(locationX, locationY, maxRange, maxRange * maxRange, 0, 1);
 		printTowerInfo();	
 	}
 	

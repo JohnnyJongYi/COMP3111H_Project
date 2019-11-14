@@ -48,7 +48,7 @@ public class Catapult extends Tower{
 				int delta_y = Math.abs(locationY - y);
 				if (MonstersInRange[x][y].size() >= max_monster && delta_x * delta_x + delta_y * delta_y >= minRange2) { // find the pixel with most monster in range
 					for (Monster m : MonstersInRange[x][y]) {
-						double to_end = m.getdistanceToEndpoint();
+						double to_end = m.getDistanceToEndpoint();
 						if (to_end < target_to_end) {
 							target_x = x;
 							target_y = y;
