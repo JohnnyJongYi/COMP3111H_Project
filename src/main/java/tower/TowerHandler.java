@@ -114,8 +114,8 @@ public class TowerHandler {
 		newTowerBuilt = false;
 	}
 	
-	public static boolean towerFound(int x, int y) {
-		return towerGrid[x][y];
+	public static boolean[][] towerFound() {
+		return towerGrid;
 	}
 	
 	public static boolean catapultFound() {
