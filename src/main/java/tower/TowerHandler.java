@@ -5,10 +5,10 @@ import java.util.ArrayList;
 public class TowerHandler {
 	protected ArrayList<Tower> towerArray = new ArrayList<Tower>();
 	protected int num;
-	protected int[][] numberOfAttack = new int[480][480];
-	protected boolean newTowerBuilt;
-	protected boolean[][] towerGrid =  new boolean[12][12];
-	protected int catapultCount;
+	protected static int[][] numberOfAttack = new int[480][480];
+	protected static boolean newTowerBuilt;
+	protected static boolean[][] towerGrid =  new boolean[12][12];
+	protected static int catapultCount;
 	protected boolean[][] ART = new boolean[12][12]; // articulation prep
 	protected boolean[][] flag = new boolean[12][12];
 	protected int time;
@@ -19,7 +19,7 @@ public class TowerHandler {
 	protected int n_y[] = {-1, 0, 1, 0};
 	
 	public boolean build(int type, int x, int y) {
-		if (x == 0 && y == 11 || x == 11 && y == 0 || ART[x][y]) return false; // cannot build on start & end grid
+		if (x == 0 && y == 11 || x == 11 && y == 0 || ART[x][y]) return false; // cannot build on start & end grid & articulation grid
 		
 		switch(type) {
 			case 1 : 
@@ -102,23 +102,23 @@ public class TowerHandler {
 		}
 	}
 	
-	public int[][] getNOA() {
+	public static int[][] getNOA() {
 		return numberOfAttack;
 	}
 	
-	public boolean newTowerBuilt() {
+	public static boolean newTowerBuilt() {
 		return newTowerBuilt;
 	}
 	
-	public void resetNewTowerBuilt() {
+	public static void resetNewTowerBuilt() {
 		newTowerBuilt = false;
 	}
 	
-	public boolean towerFound(int x, int y) {
+	public static boolean towerFound(int x, int y) {
 		return towerGrid[x][y];
 	}
 	
-	public boolean catapultFound() {
+	public static boolean catapultFound() {
 		if (catapultCount == 0) return false;
 		return true;
 	}
@@ -129,5 +129,6 @@ public class TowerHandler {
 		towerArray.set(ID, towerArray.get(num - 1));
 		towerArray.remove(--num);
 		towerGrid[x][y] = false;
+		articulation(0, 11);
 	}
 }
