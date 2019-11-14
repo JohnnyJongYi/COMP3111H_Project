@@ -27,6 +27,8 @@ public abstract class Monster
 	protected int nextGrid;
 	protected ArrayList<Integer> path;
 	
+	protected boolean[][] flagArray;
+	
 
 	
 	Monster(int timestamp, int mID, int type)
