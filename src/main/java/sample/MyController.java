@@ -23,6 +23,8 @@ import javafx.scene.layout.CornerRadii;
 import javafx.geometry.Insets;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
+import monster.MonsterGenerator;
+import tower.TowerHandler;
 //import monster.Monster;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
@@ -90,11 +92,13 @@ public class MyController {
     private static final int MAX_V_NUM_GRID = 12;
     private static final int MONSTER_SIZE = 30;
 
+    private MonsterGenerator monsterGenerator = new MonsterGenerator();
+    
+    private TowerHandler towerHandler = new TowerHandler();
+    
     private Grid grids[][] = new Grid[MAX_V_NUM_GRID][MAX_H_NUM_GRID]; //the grids on arena
     private int x = -1, y = 0; //where is my monster
-    /**
-     * A dummy function to show how button click works
-     */
+    
     
     class Grid extends Label {
     	public Grid() {

@@ -18,7 +18,7 @@ public class Main extends Application {
         primaryStage.show();
         MyController appController = (MyController)loader.getController();
         appController.createArena();
-        appController.spawnMonster();
+//        appController.spawnMonster();
     }
 
 
