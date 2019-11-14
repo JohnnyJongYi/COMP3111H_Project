@@ -1,7 +1,6 @@
 package tower;
 
 public abstract class Tower {
-
 	protected int towerType;
 	protected int towerID;
 	protected int level = 1;
@@ -12,8 +11,7 @@ public abstract class Tower {
 	protected int locationX;
 	protected int locationY;
 	
-	public Tower(int type, int ID, int x, int y) {
-		towerType = type;
+	public Tower(int ID, int x, int y) {
 		towerID = ID;
 		locationX = x;
 		locationY = y;
@@ -59,20 +57,6 @@ public abstract class Tower {
 	}
 	
 	public void printTowerInfo() {
-		switch(towerType) {
-			case 1 : 
-				System.out.println("Tower ID: Basic Tower");
-				break;
-			case 2 :
-				System.out.println("Tower ID: Ice Tower");
-				break;
-			case 3 :
-				System.out.println("Tower ID: Catapult");
-				break;
-			case 4 :
-				System.out.println("Tower ID: Laser Tower");
-				break;
-		}
 		System.out.println("Tower ID: " + towerID);
 		System.out.println("Level : "+ level);
 		System.out.println("Power : " + power);

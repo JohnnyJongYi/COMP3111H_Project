@@ -7,15 +7,20 @@ import monster.Monster;
 import monster.MonsterGenerator;
 
 public class LaserTower extends Tower{
-
+	protected int towerType = 4;
 	protected int base_power = 10;
 	protected int power = 10;
 	protected int minRange = 0;
 	protected int maxRange = 680;
 	
-	LaserTower(int type, int ID, int x, int y) {
-		super(type, ID, x, y);
+	LaserTower(int ID, int x, int y) {
+		super(ID, x, y);
 		printTowerInfo();
+	}
+	
+	public void printTowerInfo() {
+		System.out.println("Tower type: Laser Tower");
+		super.printTowerInfo();
 	}
 	
 	public void shoot() {
@@ -26,7 +31,7 @@ public class LaserTower extends Tower{
 		double target_to_end = 680;
 		
 		for (int i = 0; i < monsterArray.size(); i++) { // loop all monster, find the monster closest to end point
-			double to_end = monsterArray.get(i).getdistanceToEndpoint();
+			double to_end = monsterArray.get(i).getDistanceToEndpoint();
 			if (to_end < target_to_end) {
 				target = i;
 				target_to_end = to_end;
