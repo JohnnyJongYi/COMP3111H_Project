@@ -91,7 +91,7 @@ public class MonsterGenerator
 		return monsterArray;
 	}
 	
-	public static ArrayList<Monster>[][] getMonsterInRangeArray()
+	public static ArrayList<Monster>[][] getMonstersInRange()
 	{
 		return forCatapult.getRangeArray();
 	}
