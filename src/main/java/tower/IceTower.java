@@ -13,8 +13,8 @@ public class IceTower extends Tower{
 	protected int maxRange = 65;
 	protected int range2 = maxRange * maxRange;
 	
-	IceTower(int ID, int x, int y) {
-		super(ID, x, y);
+	IceTower(int x, int y) {
+		super(x, y);
 		printTowerInfo();
 	}
 	
@@ -24,6 +24,7 @@ public class IceTower extends Tower{
 	}
 	
 	public void shoot() {
+		targetX = targetY = 0;
 		ArrayList<Monster> monsterArray = MonsterGenerator.getMonsterArray();
 		if (monsterArray.size() == 0) return;
 		
@@ -37,6 +38,11 @@ public class IceTower extends Tower{
 				target_to_end = to_end;
 			}
 		}
-		if (target != -1) monsterArray.get(target).takedamage(0, level); // slow the monster
+		
+		if (target != -1) {
+			monsterArray.get(target).takedamage(0, level); // slow the monster
+			targetX = monsterArray.get(target).getLocationX();
+			targetY = monsterArray.get(target).getLocationY();
+		}
 	}
 }

@@ -2,7 +2,6 @@ package tower;
 
 public abstract class Tower {
 	protected int towerType;
-	protected int towerID;
 	protected int level = 1;
 	protected int base_power;
 	protected int power;
@@ -10,13 +9,14 @@ public abstract class Tower {
 	protected int maxRange;
 	protected int locationX;
 	protected int locationY;
+	protected int targetX;
+	protected int targetY;
 	
-	public Tower(int ID, int x, int y) {
-		towerID = ID;
+	Tower(int x, int y) {
 		locationX = x;
 		locationY = y;
 	}
-	
+
 	public void upgrade() {
 		level += 1;
 		power = base_power * level;
@@ -24,12 +24,16 @@ public abstract class Tower {
 	
 	public void shoot() {}
 	
-	public int getTowerType() {
-		return towerType;
+	public int getTargetX() {
+		return targetX;
 	}
 	
-	public int getTowerID() {
-		return towerID;
+	public int getTargetY() {
+		return targetY;
+	}
+	
+	public int getTowerType() {
+		return towerType;
 	}
 	
 	public int getLevel() {
@@ -57,7 +61,6 @@ public abstract class Tower {
 	}
 	
 	public void printTowerInfo() {
-		System.out.println("Tower ID: " + towerID);
 		System.out.println("Level : "+ level);
 		System.out.println("Power : " + power);
 		System.out.println("Range : " + getMinRange() + " - " + getMaxRange());
