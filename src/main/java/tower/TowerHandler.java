@@ -23,17 +23,17 @@ public class TowerHandler {
 		
 		switch(type) {
 			case 1 : 
-				towerArray.add(new BasicTower(num, x, y));
+				towerArray.add(new BasicTower(x, y));
 				break;
 			case 2 :
-				towerArray.add(new IceTower(num, x, y));
+				towerArray.add(new IceTower(x, y));
 				break;
 			case 3 :
-				towerArray.add(new Catapult(num, x, y));
+				towerArray.add(new Catapult(x, y));
 				catapultCount++;
 				break;
 			case 4 :
-				towerArray.add(new LaserTower(num, x, y));
+				towerArray.add(new LaserTower(x, y));
 				break;
 		}
 		
@@ -127,11 +127,10 @@ public class TowerHandler {
 		return true;
 	}
 	
-	public void destroy(int ID, int x, int y) {
-		setNOA(towerArray.get(ID), x, y, -1);
-		if (towerArray.get(ID).getTowerType() == 3) catapultCount--;
-		towerArray.set(ID, towerArray.get(num - 1));
-		towerArray.remove(--num);
+	public void destroy(Tower tower, int x, int y) {
+		setNOA(tower, x, y, -1);
+		if (tower.getTowerType() == 3) catapultCount--;
+		towerArray.remove(tower);
 		towerGrid[x][y] = false;
 		newTowerBuilt = true;
 		articulation(0, 11);

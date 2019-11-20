@@ -2,7 +2,6 @@ package tower;
 
 import java.util.ArrayList;
 
-import tower.TowerHandler;
 import monster.Monster;
 import monster.MonsterGenerator;
 
@@ -14,9 +13,9 @@ public class BasicTower extends Tower {
 	protected int maxRange = 65;
 	protected int range2 = maxRange * maxRange;
 	
-	BasicTower(int ID, int x, int y) {
-		super(ID, x, y);
-		printTowerInfo();	
+	BasicTower(int x, int y) {
+		super(x, y);
+		printTowerInfo();
 	}
 	
 	public void printTowerInfo() {
@@ -25,6 +24,7 @@ public class BasicTower extends Tower {
 	}
 	
 	public void shoot() {
+		targetX = targetY = 0;
 		ArrayList<Monster> monsterArray = MonsterGenerator.getMonsterArray();
 		if (monsterArray.size() == 0) return;
 		
@@ -38,6 +38,13 @@ public class BasicTower extends Tower {
 				target_to_end = to_end;
 			}
 		}
-		if (target != -1) monsterArray.get(target).takedamage(1, power); // shoot the monster
+		
+		if (target != -1) {
+			monsterArray.get(target).takedamage(1, power); // shoot the monster
+			targetX = monsterArray.get(target).getLocationX();
+			targetY = monsterArray.get(target).getLocationY();
+		}
 	}
+	
+	
 }
