@@ -8,7 +8,7 @@ public class Main // needs to be integrated into Arena
 	{
 		MonsterGenerator test = new MonsterGenerator();
 		
-		while(true)
+		while(!MonsterGenerator.monsterHasReached)
 		{
 			test.updateMonsterEachTimestamp();
 			Thread.sleep(50);
