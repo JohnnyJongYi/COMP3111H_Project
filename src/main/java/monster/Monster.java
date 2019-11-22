@@ -108,8 +108,8 @@ public abstract class Monster
 			if(maxHP - hp >0)
 			{
 				// GUI for heal
-				if(maxHP - hp > 5)
-					hp = hp + 5;
+				if(maxHP - hp > 2)
+					hp = hp + 2;
 				else
 					hp = maxHP;	
 			}
@@ -132,12 +132,15 @@ public abstract class Monster
 				throw except;
 			}
 		}
-			
-
 	}
 	
 	
-	protected boolean calculatePath(int grid)
+	protected void calculatePath(int grid)
+	{
+		calculatePathNonFox(grid);
+	}
+	
+	protected boolean calculatePathNonFox(int grid)
 	{
 		int counterX = grid / 100;
 		int counterY = grid % 100;
@@ -145,7 +148,7 @@ public abstract class Monster
 		if(counterY-1 >=0 && flagArray[counterY-1][counterX]) // up
 		{
 			flagArray[counterY][counterX] = false;
-			if(calculatePath(monsterGrid[counterY-1][counterX]))
+			if(calculatePathNonFox(monsterGrid[counterY-1][counterX]))
 			{
 				path.add(grid);
 				return true;
@@ -155,7 +158,7 @@ public abstract class Monster
 		if(counterX+1 <12 && flagArray[counterY][counterX+1]) // right
 		{
 			flagArray[counterY][counterX] = false;
-			if(calculatePath(monsterGrid[counterY][counterX+1]))
+			if(calculatePathNonFox(monsterGrid[counterY][counterX+1]))
 			{
 				path.add(grid);
 				return true;
@@ -165,7 +168,7 @@ public abstract class Monster
 		if(counterX-1 >=0 && flagArray[counterY][counterX-1]) // right
 		{
 			flagArray[counterY][counterX] = false;
-			if(calculatePath(monsterGrid[counterY][counterX-1]))
+			if(calculatePathNonFox(monsterGrid[counterY][counterX-1]))
 			{
 				path.add(grid);
 				return true;
@@ -176,7 +179,7 @@ public abstract class Monster
 		if(counterY+1 <12 && flagArray[counterY+1][counterX]) // up
 		{
 			flagArray[counterY][counterX] = false;
-			if(calculatePath(monsterGrid[counterY+1][counterX]))
+			if(calculatePathNonFox(monsterGrid[counterY+1][counterX]))
 			{
 				path.add(grid);
 				return true;

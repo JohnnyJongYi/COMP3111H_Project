@@ -13,14 +13,5 @@ public class Penguin extends Monster
 		stronger();
 		maxHP = hp;
 		printMonsterInfo();
-		
-		isHealing = false;
 	}
-	
-	public boolean getIsHealing()
-	{
-		return isHealing;
-	}
-	
-
 }
