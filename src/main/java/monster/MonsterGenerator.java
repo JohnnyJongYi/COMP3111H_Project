@@ -13,7 +13,7 @@ public class MonsterGenerator
 	protected static boolean monsterHasReached;
 	
 	
-	MonsterGenerator() 
+	public MonsterGenerator() 
 	{
 		monsterArray = new ArrayList<Monster>();
 		monsterIDCounter = 0;

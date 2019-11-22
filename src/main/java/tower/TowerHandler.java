@@ -6,8 +6,8 @@ public class TowerHandler {
 	protected ArrayList<Tower> towerArray = new ArrayList<Tower>();
 	protected int num;
 	protected static int[][] numberOfAttack = new int[480][480];
-	protected static boolean newTowerBuilt;
 	protected static boolean[][] towerGrid =  new boolean[12][12];
+	protected static boolean newTowerBuilt;
 	protected static int catapultCount;
 	protected boolean[][] ART = new boolean[12][12]; // articulation prep
 	protected boolean[][] flag = new boolean[12][12];
@@ -23,17 +23,17 @@ public class TowerHandler {
 		
 		switch(type) {
 			case 1 : 
-				towerArray.add(new BasicTower(num, x, y));
+				towerArray.add(new BasicTower(x, y));
 				break;
 			case 2 :
-				towerArray.add(new IceTower(num, x, y));
+				towerArray.add(new IceTower(x, y));
 				break;
 			case 3 :
-				towerArray.add(new Catapult(num, x, y));
+				towerArray.add(new Catapult(x, y));
 				catapultCount++;
 				break;
 			case 4 :
-				towerArray.add(new LaserTower(num, x, y));
+				towerArray.add(new LaserTower(x, y));
 				break;
 		}
 		
@@ -64,7 +64,7 @@ public class TowerHandler {
 			int w_x = v_x + n_x[w];
 			int w_y = v_y + n_y[w];
 			if (w_x < 0 || w_x > 11 || w_y < 0 || w_y > 11) continue; // boundary check
-			if (towerFound(w_x, w_y)) continue; // skip if there is a tower on w
+			if (towerGrid[w_x][w_y]) continue; // skip if there is a tower on w
 			
 			if (!flag[w_x][w_y]) {
 				pred[w_x][w_y][0] = v_x;
@@ -102,6 +102,10 @@ public class TowerHandler {
 		}
 	}
 	
+	public ArrayList<Tower> getTowerArray() {
+		return towerArray;
+	}
+	
 	public static int[][] getNOA() {
 		return numberOfAttack;
 	}
@@ -114,8 +118,8 @@ public class TowerHandler {
 		newTowerBuilt = false;
 	}
 	
-	public static boolean towerFound(int x, int y) {
-		return towerGrid[x][y];
+	public static boolean[][] towerGrid() {
+		return towerGrid;
 	}
 	
 	public static boolean catapultFound() {
@@ -123,12 +127,12 @@ public class TowerHandler {
 		return true;
 	}
 	
-	public void destroy(int ID, int x, int y) {
-		setNOA(towerArray.get(ID), x, y, -1);
-		if (towerArray.get(ID).getTowerType() == 3) catapultCount--;
-		towerArray.set(ID, towerArray.get(num - 1));
-		towerArray.remove(--num);
+	public void destroy(Tower tower, int x, int y) {
+		setNOA(tower, x, y, -1);
+		if (tower.getTowerType() == 3) catapultCount--;
+		towerArray.remove(tower);
 		towerGrid[x][y] = false;
+		newTowerBuilt = true;
 		articulation(0, 11);
 	}
 }

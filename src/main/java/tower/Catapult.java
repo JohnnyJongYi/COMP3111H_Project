@@ -14,8 +14,8 @@ public class Catapult extends Tower{
 	protected int minRange2 = minRange * minRange;
 	protected int maxRange2 = maxRange * maxRange;
 	
-	Catapult(int ID, int x, int y) {
-		super(ID, x, y);
+	Catapult(int x, int y) {
+		super(x, y);
 		printTowerInfo();
 	}
 	
@@ -26,6 +26,7 @@ public class Catapult extends Tower{
 	
 	public void shoot()
 	{
+		targetX = targetY = 0;
 		ArrayList<Monster> monsterArray = MonsterGenerator.getMonsterArray();
 		if (monsterArray.size() == 0) return;
 		
@@ -59,6 +60,11 @@ public class Catapult extends Tower{
 				}
 			}
 		}
-		if (max_monster != 0) for (Monster m : MonstersInRange[target_x][target_y]) m.takedamage(1, power);
+		
+		if (max_monster != 0) {
+			for (Monster m : MonstersInRange[target_x][target_y]) m.takedamage(1, power);
+			targetX = target_x;
+			targetY = target_y;
+		}
 	}
 }

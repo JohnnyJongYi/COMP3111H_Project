@@ -28,23 +28,7 @@ public abstract class Monster
 	protected int nextGrid;
 	protected ArrayList<Integer> path;
 	
-	protected boolean[][] flagArray = 
-		{
-				{true,true,true,true,true,true,true,true,true,true,true,true},
-				{true,true,true,true,true,true,true,true,true,true,true,true},
-				{true,true,true,true,true,true,true,true,true,true,true,true},
-				{true,true,true,true,true,true,true,true,true,true,true,true},
-				{true,true,true,true,true,true,true,true,true,true,true,true},
-				{true,true,true,true,true,true,true,true,true,true,true,true},
-				{true,true,true,true,true,true,true,true,true,true,true,true},
-				{true,true,true,true,true,true,true,true,true,true,true,true},
-				{true,true,true,true,true,true,true,true,true,true,true,true},
-				{true,true,true,true,true,true,true,true,true,true,true,true},
-				{true,true,true,true,true,true,true,true,true,true,true,true},
-				{true,true,true,true,true,true,true,true,true,true,true,true},
-		};
-	
-
+	protected boolean[][] flagArray;
 	
 	Monster(int timestamp, int mID, int type)
 	{  
@@ -80,29 +64,43 @@ public abstract class Monster
 	
 	protected void nextMove() throws OutOfArenaException, MovedToWrongGrid
 	{
-		if(time == MonsterGenerator.timestamp||TowerHandler.newTowerBuilt())
+		if(time == MonsterGenerator.timestamp)
 		{
 			path.clear();
-			calculatePath(currentGrid, flagArray, monsterGrid, path);//based on current grid
+			flagArray = TowerHandler.towerGrid();
+			calculatePath(currentGrid);//based on current grid
 			Collections.reverse(path);
 		}
 		
+		if(TowerHandler.newTowerBuilt())
+		{
+			path.clear();
+			flagArray = TowerHandler.towerGrid();
+			calculatePath(currentGrid);//based on current grid
+			Collections.reverse(path);
+			TowerHandler.resetNewTowerBuilt();
+		}
+		
+		
 		for(int i = 0 ; i< path.size(); i++)
 		{
-			if(currentGrid == path.get(i))
+			if(currentGrid == path.get(i) && currentGrid != 1100)
 			{
 				nextGrid = path.get(i+1);
 			}
 		}
 		
-		if(currentGrid > nextGrid) //up
-		{
+		
+		
+		if(nextGrid == currentGrid-1) //up
 			loc.update(0, -speed);
-		}
-		else // right
-		{
+		else if(nextGrid == currentGrid+100 )  // right
 			loc.update(speed , 0);
-		}
+		else if (nextGrid == currentGrid - 100) //left
+			loc.update(-speed, 0);
+		else if (nextGrid == currentGrid +1)
+			loc.update(0, speed);
+		
 		updateDistanceToEnd();
 		
 		if(monsterType == 2 && MonsterGenerator.timestamp % 10 == 0)
@@ -139,28 +137,52 @@ public abstract class Monster
 	}
 	
 	
-	protected boolean calculatePath(int grid, boolean[][] flag, int[][] monsterGrid, ArrayList<Integer> path)
+	protected boolean calculatePath(int grid)
 	{
 		int counterX = grid / 100;
 		int counterY = grid % 100;
 		
-		if(counterY-1 >=0 && flag[counterY-1][counterX])
+		if(counterY-1 >=0 && flagArray[counterY-1][counterX]) // up
 		{
-			if(calculatePath(monsterGrid[counterY-1][counterX],flag,monsterGrid, path))
+			flagArray[counterY][counterX] = false;
+			if(calculatePath(monsterGrid[counterY-1][counterX]))
 			{
 				path.add(grid);
 				return true;
 			}
 		}
 		
-		if(counterX+1 <12 && flag[counterY][counterX+1])
+		if(counterX+1 <12 && flagArray[counterY][counterX+1]) // right
 		{
-			if(calculatePath(monsterGrid[counterY][counterX+1],flag,monsterGrid,path))
+			flagArray[counterY][counterX] = false;
+			if(calculatePath(monsterGrid[counterY][counterX+1]))
 			{
 				path.add(grid);
 				return true;
 			}
 		}
+	
+		if(counterX-1 >=0 && flagArray[counterY][counterX-1]) // right
+		{
+			flagArray[counterY][counterX] = false;
+			if(calculatePath(monsterGrid[counterY][counterX-1]))
+			{
+				path.add(grid);
+				return true;
+			}
+		}
+
+		
+		if(counterY+1 <12 && flagArray[counterY+1][counterX]) // up
+		{
+			flagArray[counterY][counterX] = false;
+			if(calculatePath(monsterGrid[counterY+1][counterX]))
+			{
+				path.add(grid);
+				return true;
+			}
+		}
+		
 		
 		if(grid == 1100)
 		{
@@ -168,7 +190,6 @@ public abstract class Monster
 			return true;
 		}
 		else return false;
-		
 	}
 	
 	
