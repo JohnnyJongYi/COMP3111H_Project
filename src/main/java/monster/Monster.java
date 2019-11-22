@@ -30,8 +30,6 @@ public abstract class Monster
 	
 	protected boolean[][] flagArray = TowerHandler.towerGrid();
 	
-
-	
 	Monster(int timestamp, int mID, int type)
 	{  
 		monsterType = type;
@@ -109,6 +107,7 @@ public abstract class Monster
 					hp = hp + 5;
 				else
 					hp = maxHP;	
+				isHealing = true;
 			}
 		}
 		
