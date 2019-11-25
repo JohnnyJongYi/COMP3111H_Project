@@ -30,6 +30,8 @@ public abstract class Monster
 	
 	protected boolean[][] flagArray;
 	
+	protected boolean isHealing;
+	
 	Monster(int timestamp, int mID, int type)
 	{  
 		monsterType = type;
@@ -49,6 +51,8 @@ public abstract class Monster
 		currentGrid = monsterGrid[11][0];
 		nextGrid = 0;
 		path = new ArrayList<Integer>();
+		
+		isHealing = false;
 	}
 	
 	protected void stronger()
@@ -96,7 +100,7 @@ public abstract class Monster
 			loc.update(0, -speed);
 		else if(nextGrid == currentGrid+100 )  // right
 			loc.update(speed , 0);
-		else if (nextGrid == currentGrid - 100) //left
+		else if (nextGrid == currentGrid-100) //left
 			loc.update(-speed, 0);
 		else if (nextGrid == currentGrid +1)
 			loc.update(0, speed);
@@ -107,12 +111,15 @@ public abstract class Monster
 		{
 			if(maxHP - hp >0)
 			{
+				isHealing = true;
 				// GUI for heal
 				if(maxHP - hp > 2)
 					hp = hp + 2;
 				else
 					hp = maxHP;	
 			}
+			else
+				isHealing = false;
 		}
 		
 		int gridAfterMove = monsterGrid[(loc.getY() / 40)][(loc.getX() / 40)];
@@ -289,10 +296,21 @@ public abstract class Monster
 	
 	public int getLocationY()
 	{return loc.getY();}
+	
+	
 
 	public double getDistanceToEndpoint() {
 		return distanceToEndpoint;
 	}
+	
+	public boolean getIsSlower() {
+		return isSlower;
+	}
+	
+	public boolean getIsHealing() {
+		return isHealing;
+	}
+	
 }
 
 class MovedToWrongGrid extends Exception
