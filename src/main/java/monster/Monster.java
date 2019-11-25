@@ -2,6 +2,7 @@ package monster;
 import Coordinates.Location;
 import Coordinates.OutOfArenaException;
 import tower.TowerHandler;
+import javafx.scene.control.Label;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,6 +33,8 @@ public abstract class Monster
 	
 	protected boolean isHealing;
 	
+	protected Label monsterLabel;
+	
 	Monster(int timestamp, int mID, int type)
 	{  
 		monsterType = type;
@@ -53,6 +56,8 @@ public abstract class Monster
 		path = new ArrayList<Integer>();
 		
 		isHealing = false;
+		
+		monsterLabel = new Label();
 	}
 	
 	protected void stronger()
@@ -309,6 +314,10 @@ public abstract class Monster
 	
 	public boolean getIsHealing() {
 		return isHealing;
+	}
+	
+	public Label getLabel() {
+		return monsterLabel;
 	}
 	
 }
