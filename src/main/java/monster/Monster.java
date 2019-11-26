@@ -39,7 +39,7 @@ public abstract class Monster
 	
 	Monster(int timestamp, int mID, int type, staticInterface interf)
 	{  
-		this.interf = interf;
+		this.interf =interf
 		monsterType = type;
 		time = timestamp;
 		loc = new Location(0,450);
