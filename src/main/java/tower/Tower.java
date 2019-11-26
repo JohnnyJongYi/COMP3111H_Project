@@ -1,5 +1,8 @@
 package tower;
 
+import arena.Grid;
+import sample.staticInterface;
+
 public abstract class Tower {
 	protected int towerType;
 	protected int level = 1;
@@ -9,8 +12,7 @@ public abstract class Tower {
 	protected int maxRange;
 	protected int locationX;
 	protected int locationY;
-	protected int targetX;
-	protected int targetY;
+	protected Grid label;
 	
 	Tower(int x, int y) {
 		locationX = x;
@@ -22,15 +24,7 @@ public abstract class Tower {
 		power = base_power * level;
 	}
 	
-	public void shoot() {}
-	
-	public int getTargetX() {
-		return targetX;
-	}
-	
-	public int getTargetY() {
-		return targetY;
-	}
+	public void shoot(staticInterface f) {}
 	
 	public int getTowerType() {
 		return towerType;
