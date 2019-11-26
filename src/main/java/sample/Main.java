@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import sample.MyController;
 
 
+
 public class Main extends Application {
 	
 	private long prevTime =0;

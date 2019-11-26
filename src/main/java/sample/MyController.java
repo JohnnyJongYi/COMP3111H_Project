@@ -507,6 +507,7 @@ public class MyController {
 		monster.infoToolTip.setText(String.valueOf("HP: " + monster.HP));
 	}
 	
+	
 	@FXML
 	public void moveRight() {
 		moveMonster(label1, 10, 0);

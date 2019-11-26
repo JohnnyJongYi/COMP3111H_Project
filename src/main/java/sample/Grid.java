@@ -11,6 +11,7 @@ public class Grid extends Label {
 				super();
 			}
 
+			
 			private double x;
 			private double y;
 			public Tooltip infoToolTip;
