@@ -2,6 +2,7 @@ package tower;
 
 import java.util.ArrayList;
 
+import sample.Grid;
 import sample.staticInterface;
 
 public class TowerHandler {
@@ -25,22 +26,22 @@ public class TowerHandler {
 		interf = f;
 	}
 	
-	public static boolean build(int type, int x, int y) {
+	public static boolean build(int type, int x, int y, Grid label) {
 		if (x == 0 && y == 11 || x == 11 && y == 0 || ART[x][y]) return false; // cannot build on start & end grid & articulation grid
 		
 		switch(type) {
 			case 1 : 
-				towerArray.add(new BasicTower(x, y));
+				towerArray.add(new BasicTower(x, y, label));
 				break;
 			case 2 :
-				towerArray.add(new IceTower(x, y));
+				towerArray.add(new IceTower(x, y, label));
 				break;
 			case 3 :
-				towerArray.add(new Catapult(x, y));
+				towerArray.add(new Catapult(x, y, label));
 				catapultCount++;
 				break;
 			case 4 :
-				towerArray.add(new LaserTower(x, y));
+				towerArray.add(new LaserTower(x, y, label));
 				break;
 		}
 		
@@ -67,6 +68,7 @@ public class TowerHandler {
 		flag[v_x][v_y] = true;
 		d[v_x][v_y] = ++time;
 		low[v_x][v_y] = d[v_x][v_y];
+		
 		for (int w = 0; w < 4; w++) {
 			int w_x = v_x + n_x[w];
 			int w_y = v_y + n_y[w];

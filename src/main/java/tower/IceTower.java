@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import monster.Monster;
 import monster.MonsterGenerator;
+import sample.Grid;
 import sample.staticInterface;
 
 public class IceTower extends Tower{
@@ -14,8 +15,8 @@ public class IceTower extends Tower{
 	protected int maxRange = 65;
 	protected int range2 = maxRange * maxRange;
 	
-	IceTower(int x, int y) {
-		super(x, y);
+	IceTower(int x, int y, Grid label) {
+		super(x, y, label);
 		printTowerInfo();
 	}
 	

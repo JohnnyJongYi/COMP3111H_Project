@@ -14,9 +14,10 @@ public abstract class Tower {
 	protected int locationY;
 	protected Grid label;
 	
-	Tower(int x, int y) {
+	Tower(int x, int y, Grid lbl) {
 		locationX = x;
 		locationY = y;
+		label = lbl;
 	}
 
 	public void upgrade() {

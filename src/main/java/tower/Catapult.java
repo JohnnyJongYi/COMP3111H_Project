@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import monster.Monster;
 import monster.MonsterGenerator;
+import sample.Grid;
 import sample.staticInterface;
 
 public class Catapult extends Tower{
@@ -15,8 +16,8 @@ public class Catapult extends Tower{
 	protected int minRange2 = minRange * minRange;
 	protected int maxRange2 = maxRange * maxRange;
 	
-	Catapult(int x, int y) {
-		super(x, y);
+	Catapult(int x, int y, Grid label) {
+		super(x, y, label);
 		printTowerInfo();
 	}
 	
