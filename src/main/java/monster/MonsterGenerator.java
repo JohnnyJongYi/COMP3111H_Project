@@ -12,6 +12,8 @@ public class MonsterGenerator
 	private static MonsterInRange forCatapult; 
 	protected static boolean monsterHasReached;
 	
+	protected static ArrayList<Monster> deadMonsters;
+	
 	
 	public MonsterGenerator() 
 	{
@@ -20,15 +22,18 @@ public class MonsterGenerator
 		timestamp = 0;
 		forCatapult = new MonsterInRange(monsterArray);
 		monsterHasReached = false;
+		
+		deadMonsters = new ArrayList<Monster>();
 	}
 	
 	public void updateMonsterEachTimestamp() throws OutOfArenaException, MovedToWrongGrid
 	{
+		deadMonsters.clear();
 		removeDead();
 		checkAnySlower();
+		moveAllMonsters();
 		if(timestamp % 20 == 0)
 		{generate();}
-		moveAllMonsters();
 		timestamp++;
 		
 		if(TowerHandler.catapultFound())
@@ -72,7 +77,7 @@ public class MonsterGenerator
 		{
 			if(!monsterArray.get(i).isAlive())
 			{
-				monsterArray.remove(i);
+				deadMonsters.add(monsterArray.remove(i));
 				size--;
 			}
 		}
@@ -99,6 +104,11 @@ public class MonsterGenerator
 	public static boolean getMonsterHasReachedEnd()
 	{
 		return monsterHasReached;
+	}
+	
+	public static ArrayList<Monster> getDeadMonsterArray()
+	{
+		return deadMonsters;
 	}
 }
 

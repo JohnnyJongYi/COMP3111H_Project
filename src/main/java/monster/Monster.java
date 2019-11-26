@@ -2,6 +2,8 @@ package monster;
 import Coordinates.Location;
 import Coordinates.OutOfArenaException;
 import tower.TowerHandler;
+import javafx.scene.control.Label;
+import sample.MyController;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,9 +30,11 @@ public abstract class Monster
 	protected int nextGrid;
 	protected ArrayList<Integer> path;
 	
-	protected boolean[][] flagArray = TowerHandler.towerGrid();
+	protected boolean[][] flagArray;
 	
-
+	protected boolean isHealing;
+	
+	protected Grid monsterLabel;
 	
 	Monster(int timestamp, int mID, int type)
 	{  
@@ -51,6 +55,10 @@ public abstract class Monster
 		currentGrid = monsterGrid[11][0];
 		nextGrid = 0;
 		path = new ArrayList<Integer>();
+		
+		isHealing = false;
+		
+		monsterGrid = new Grid();
 	}
 	
 	protected void stronger()
@@ -66,17 +74,22 @@ public abstract class Monster
 	
 	protected void nextMove() throws OutOfArenaException, MovedToWrongGrid
 	{
+		int deltax = 0;
+		int deltay = 0;
+		
 		if(time == MonsterGenerator.timestamp)
 		{
 			path.clear();
-			calculatePath(currentGrid, flagArray, monsterGrid, path);//based on current grid
+			flagArray = TowerHandler.towerGrid();
+			calculatePath(currentGrid);//based on current grid
 			Collections.reverse(path);
 		}
 		
 		if(TowerHandler.newTowerBuilt())
 		{
 			path.clear();
-			calculatePath(currentGrid, flagArray, monsterGrid, path);//based on current grid
+			flagArray = TowerHandler.towerGrid();
+			calculatePath(currentGrid);//based on current grid
 			Collections.reverse(path);
 			TowerHandler.resetNewTowerBuilt();
 		}
@@ -84,32 +97,51 @@ public abstract class Monster
 		
 		for(int i = 0 ; i< path.size(); i++)
 		{
-			if(currentGrid == path.get(i))
+			if(currentGrid == path.get(i) && currentGrid != 1100)
 			{
 				nextGrid = path.get(i+1);
 			}
 		}
 		
-		if(currentGrid > nextGrid) //up
+		
+		
+		if(nextGrid == currentGrid-1) //up
 		{
 			loc.update(0, -speed);
+			deltay = -speed;
+			
 		}
-		else // right
+		else if(nextGrid == currentGrid+100 )  // right
 		{
 			loc.update(speed , 0);
+			deltax = speed;
 		}
+		else if (nextGrid == currentGrid-100) //left
+		{
+			loc.update(-speed, 0);
+			deltax = -speed;
+		}
+		else if (nextGrid == currentGrid +1) // down
+		{
+			loc.update(0, speed);
+			deltax = speed;
+		}
+		
 		updateDistanceToEnd();
 		
 		if(monsterType == 2 && MonsterGenerator.timestamp % 10 == 0)
 		{
 			if(maxHP - hp >0)
 			{
+				isHealing = true;
 				// GUI for heal
-				if(maxHP - hp > 5)
-					hp = hp + 5;
+				if(maxHP - hp > 2)
+					hp = hp + 2;
 				else
 					hp = maxHP;	
 			}
+			else
+				isHealing = false;
 		}
 		
 		int gridAfterMove = monsterGrid[(loc.getY() / 40)][(loc.getX() / 40)];
@@ -129,33 +161,60 @@ public abstract class Monster
 				throw except;
 			}
 		}
-			
-
 	}
 	
 	
-	protected boolean calculatePath(int grid, boolean[][] flag, int[][] monsterGrid, ArrayList<Integer> path)
+	protected void calculatePath(int grid)
+	{
+		calculatePathNonFox(grid);
+	}
+	
+	protected boolean calculatePathNonFox(int grid)
 	{
 		int counterX = grid / 100;
 		int counterY = grid % 100;
 		
-		if(counterY-1 >=0 && flag[counterY-1][counterX])
+		if(counterY-1 >=0 && flagArray[counterY-1][counterX]) // up
 		{
-			if(calculatePath(monsterGrid[counterY-1][counterX],flag,monsterGrid, path))
+			flagArray[counterY][counterX] = false;
+			if(calculatePathNonFox(monsterGrid[counterY-1][counterX]))
 			{
 				path.add(grid);
 				return true;
 			}
 		}
 		
-		if(counterX+1 <12 && flag[counterY][counterX+1])
+		if(counterX+1 <12 && flagArray[counterY][counterX+1]) // right
 		{
-			if(calculatePath(monsterGrid[counterY][counterX+1],flag,monsterGrid,path))
+			flagArray[counterY][counterX] = false;
+			if(calculatePathNonFox(monsterGrid[counterY][counterX+1]))
 			{
 				path.add(grid);
 				return true;
 			}
 		}
+	
+		if(counterX-1 >=0 && flagArray[counterY][counterX-1]) // right
+		{
+			flagArray[counterY][counterX] = false;
+			if(calculatePathNonFox(monsterGrid[counterY][counterX-1]))
+			{
+				path.add(grid);
+				return true;
+			}
+		}
+
+		
+		if(counterY+1 <12 && flagArray[counterY+1][counterX]) // up
+		{
+			flagArray[counterY][counterX] = false;
+			if(calculatePathNonFox(monsterGrid[counterY+1][counterX]))
+			{
+				path.add(grid);
+				return true;
+			}
+		}
+		
 		
 		if(grid == 1100)
 		{
@@ -163,7 +222,6 @@ public abstract class Monster
 			return true;
 		}
 		else return false;
-		
 	}
 	
 	
@@ -260,10 +318,25 @@ public abstract class Monster
 	
 	public int getLocationY()
 	{return loc.getY();}
+	
+	
 
 	public double getDistanceToEndpoint() {
 		return distanceToEndpoint;
 	}
+	
+	public boolean getIsSlower() {
+		return isSlower;
+	}
+	
+	public boolean getIsHealing() {
+		return isHealing;
+	}
+	
+	public Grid getGrid() {
+		return monsterGrid;
+	}
+	
 }
 
 class MovedToWrongGrid extends Exception

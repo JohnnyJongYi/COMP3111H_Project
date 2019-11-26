@@ -3,7 +3,6 @@ package monster;
 
 public class Penguin extends Monster 
 {
-	
 	Penguin(int time, int mID, int type) 
 	{
 		super(time, mID, type);
@@ -15,5 +14,4 @@ public class Penguin extends Monster
 		maxHP = hp;
 		printMonsterInfo();
 	}
-
 }
