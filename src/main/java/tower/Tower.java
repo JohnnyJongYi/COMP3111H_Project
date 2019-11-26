@@ -1,6 +1,6 @@
 package tower;
 
-import arena.Grid;
+import sample.Grid;
 import sample.staticInterface;
 
 public abstract class Tower {
