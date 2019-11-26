@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -57,7 +58,7 @@ public class MyController implements staticInterface {
 	private Button buttonAttandSlow;
 
 	@FXML
-	private static AnchorPane paneArena;
+	private AnchorPane paneArena;
 
 	@FXML
 	private Label labelBasicTower;
@@ -430,7 +431,7 @@ public class MyController implements staticInterface {
 	}
 
 	private void TowerAttacking(Grid tower) {
-		Background oldFill = tower.getBackground();
+//		Background oldFill = tower.getBackground();
 		tower.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
 		Task<Void> sleeper = new Task<Void>() {
 
@@ -445,7 +446,7 @@ public class MyController implements staticInterface {
 		sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
 			@Override
 			public void handle(WorkerStateEvent event) {
-				tower.setBackground(oldFill);
+				tower.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 			}
 		});
 		new Thread(sleeper).start();
@@ -628,6 +629,38 @@ public class MyController implements staticInterface {
 
 //    paneArena.getChildren().addAll(laser);
 
+	public void flashShootUI(Node node) {
+		paneArena.getChildren().addAll(node);
+
+		Task<Void> sleeper = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+				}
+				return null;
+			}
+		};
+		sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent event) {
+				paneArena.getChildren().remove(node);
+			}
+		});
+		new Thread(sleeper).start();
+
+	}
+	
+	public void ShootBasic(Grid tower, Grid monster) {
+		TowerAttacking(tower);
+		
+	}
+	
+	public void ShootCatapult(Grid tower, double locX, double locY) {};
+	
+	public void ShootIce(Grid tower, Grid monster) {};
+	
 	public void ShootLaser(Grid tower, Grid monster) {
 		double towerX = tower.getX() + GRID_WIDTH / 2;
 		double towerY = tower.getY() + GRID_HEIGHT / 2;
@@ -655,25 +688,7 @@ public class MyController implements staticInterface {
 		line.setStartY(towerY);
 		line.setEndX(endX);
 		line.setEndY(480 - endY);
-		paneArena.getChildren().addAll(line);
-
-		Task<Void> sleeper = new Task<Void>() {
-			@Override
-			protected Void call() throws Exception {
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-				}
-				return null;
-			}
-		};
-		sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-			@Override
-			public void handle(WorkerStateEvent event) {
-				paneArena.getChildren().remove(line);
-			}
-		});
-		new Thread(sleeper).start();
+		flashShootUI(line);
 
 //
 //    	paneArena.getChildren().remove(laser);

@@ -7,7 +7,7 @@ public interface staticInterface {
 			
 		public void monsterDie(Grid monster) ;
 		
-		public void monsterAttacked(Grid monster);
+		public void monsterAttacked(Grid monster); 
 		
 		public void monsterAttackedAndSlowed(Grid monster);
 		
@@ -18,10 +18,14 @@ public interface staticInterface {
 		public void changeHP(Grid monster, int newHP);
 		
 		public boolean moveMonster(Grid monster, int deltaX, int deltaY);
+				
+		public void ShootLaser(Grid tower, Grid monster);
 		
-		public void MonsterAttacked(Grid tower, ArrayList<Grid> monsterList);
+		public void ShootCatapult(Grid tower, double locX, double locY);
 		
-		public void MonsterAttacked(Grid tower, Grid monster, boolean slowed); 
+		public void ShootBasic(Grid tower, Grid monster);
+		
+		public void ShootIce(Grid tower, Grid monster);
 		
 }
 

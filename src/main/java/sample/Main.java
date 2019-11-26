@@ -8,7 +8,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import monster.MonsterGenerator;
 import sample.MyController;
+import tower.TowerHandler;
 
 
 
@@ -16,7 +18,11 @@ public class Main extends Application {
 	
 	private long prevTime =0;
 	private final long GenerationTime = (long)1.0e9;
-	private int counter = 1;
+	private boolean flag = true;
+	
+	
+	private MonsterGenerator monsterGenerator;
+	private TowerHandler towerHandler;
     @Override
     public void start(Stage primaryStage) throws Exception{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample.fxml"));
@@ -27,6 +33,8 @@ public class Main extends Application {
         MyController appController = (MyController)loader.getController();
         appController.createArena();
         
+//        monsterGenerator = new MonsterGenerator(appController);
+//        towerHandler = new TowerHandler(appController);
         
         AnimationTimer timer = new AnimationTimer() {
     		@Override
@@ -38,10 +46,18 @@ public class Main extends Application {
     			long timeSpent = now - prevTime;
     			
     			if (timeSpent>GenerationTime*5) {
-//    				updateMonster(myController)
+    					if(flag) {
+//    						monsterGenerator.updateMonsterEachTimestamp();
+    						flag = false;
+    					}
+    					else {
+//    						TowerHandler.shootAll();
+    						flag = true;
+    					}
+////    				updateMonster(myController)
     				appController.Spawn(new ActionEvent());
-    				System.out.println(String.valueOf(counter));
-    				counter++;
+//    				System.out.println(String.valueOf(counter));
+//    				counter++;
     				prevTime = now;
     			}
     			
