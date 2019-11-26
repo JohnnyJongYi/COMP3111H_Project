@@ -654,12 +654,22 @@ public class MyController implements staticInterface {
 	
 	public void ShootBasic(Grid tower, Grid monster) {
 		TowerAttacking(tower);
-		
+		Grid bam = spawnMonster(label1.getLayoutX(),label1.getLayoutY()+450,"fire",100);
+		flashShootUI(bam);
 	}
 	
-	public void ShootCatapult(Grid tower, double locX, double locY) {};
+	public void ShootCatapult(Grid tower, double locX, double locY) {
+		Circle circle = new Circle(locX,locY, 25.0f);
+		circle.setOpacity(0.7);
+		circle.setFill(Color.ORANGERED);
+		flashShootUI(circle);
+	};
 	
-	public void ShootIce(Grid tower, Grid monster) {};
+	public void ShootIce(Grid tower, Grid monster) {
+		TowerAttacking(tower);
+		Grid iceBam = spawnMonster(label1.getLayoutX(),label1.getLayoutY()+450,"ice",100);
+		flashShootUI(iceBam);
+	};
 	
 	public void ShootLaser(Grid tower, Grid monster) {
 		double towerX = tower.getX() + GRID_WIDTH / 2;
