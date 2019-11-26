@@ -16,8 +16,8 @@ public class Catapult extends Tower{
 	protected int minRange2 = minRange * minRange;
 	protected int maxRange2 = maxRange * maxRange;
 	
-	Catapult(int x, int y, Grid label) {
-		super(x, y, label);
+	Catapult(int x, int y, Grid label, staticInterface interf) {
+		super(x, y, label, interf);
 		printTowerInfo();
 	}
 	

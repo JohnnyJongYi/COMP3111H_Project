@@ -15,8 +15,8 @@ public class IceTower extends Tower{
 	protected int maxRange = 65;
 	protected int range2 = maxRange * maxRange;
 	
-	IceTower(int x, int y, Grid label) {
-		super(x, y, label);
+	IceTower(int x, int y, Grid label, staticInterface interf) {
+		super(x, y, label, interf);
 		printTowerInfo();
 	}
 	
