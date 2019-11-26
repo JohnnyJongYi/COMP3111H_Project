@@ -1,6 +1,5 @@
 package monster;
-import Coordinates.Location;
-import Coordinates.OutOfArenaException;
+import Coordinates.*;
 import tower.TowerHandler;
 import sample.Grid;
 import sample.staticInterface;
@@ -352,13 +351,4 @@ public abstract class Monster
 		return monsterLabel;
 	}
 	
-}
-
-class MovedToWrongGrid extends Exception
-{
-
-	public MovedToWrongGrid()
-	{
-		super("One of the monster moved to the wrong grid");
-	}
 }
