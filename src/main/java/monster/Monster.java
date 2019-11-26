@@ -39,7 +39,7 @@ public abstract class Monster
 	
 	Monster(int timestamp, int mID, int type, staticInterface interf)
 	{  
-		interf = this.interf;
+		this.interf = interf;
 		monsterType = type;
 		time = timestamp;
 		loc = new Location(0,450);
@@ -132,7 +132,12 @@ public abstract class Monster
 		
 		updateDistanceToEnd();
 		
-		interf.moveMonster(monsterLabel, deltax, deltay);
+		
+		
+		if(interf == null)
+			System.out.println("interf is null"); 
+		else
+			interf.moveMonster(monsterLabel, deltax, deltay);
 		
 		if(monsterType == 2 && MonsterGenerator.timestamp % 10 == 0)
 		{
