@@ -31,17 +31,17 @@ public class TowerHandler {
 		
 		switch(type) {
 			case 1 : 
-				towerArray.add(new BasicTower(x, y, label));
+				towerArray.add(new BasicTower(x, y, label, interf));
 				break;
 			case 2 :
-				towerArray.add(new IceTower(x, y, label));
+				towerArray.add(new IceTower(x, y, label, interf));
 				break;
 			case 3 :
-				towerArray.add(new Catapult(x, y, label));
+				towerArray.add(new Catapult(x, y, label, interf));
 				catapultCount++;
 				break;
 			case 4 :
-				towerArray.add(new LaserTower(x, y, label));
+				towerArray.add(new LaserTower(x, y, label, interf));
 				break;
 		}
 		
