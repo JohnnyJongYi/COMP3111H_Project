@@ -5,6 +5,7 @@ import java.lang.Math;
 
 import monster.Monster;
 import monster.MonsterGenerator;
+import sample.Grid;
 import sample.staticInterface;
 
 public class LaserTower extends Tower{
@@ -14,8 +15,8 @@ public class LaserTower extends Tower{
 	protected int minRange = 0;
 	protected int maxRange = 680;
 	
-	LaserTower(int x, int y) {
-		super(x, y);
+	LaserTower(int x, int y, Grid label) {
+		super(x, y, label);
 		printTowerInfo();
 	}
 	
