@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import monster.Monster;
 import monster.MonsterGenerator;
+import sample.staticInterface;
 
 public class Catapult extends Tower{
 	protected int towerType = 3;
@@ -24,7 +25,7 @@ public class Catapult extends Tower{
 		super.printTowerInfo();
 	}
 	
-	public void shoot()
+	public void shoot(staticInterface f)
 	{
 		targetX = targetY = 0;
 		ArrayList<Monster> monsterArray = MonsterGenerator.getMonsterArray();
