@@ -13,6 +13,7 @@ import javafx.scene.input.*;
 import java.util.Optional;
 import java.util.Random;
 
+
 import javafx.concurrent.Task;
 import javafx.event.*;
 import javafx.fxml.FXML;
@@ -29,9 +30,8 @@ import javafx.scene.shape.Shape;
 
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
-import sample.Grid;
 
-public class MyController implements staticInterface {
+public class MyController {
 	@FXML
 	private Button buttonNextFrame;
 
@@ -56,7 +56,7 @@ public class MyController implements staticInterface {
 	private Button buttonAttandSlow;
 
 	@FXML
-	private static AnchorPane paneArena;
+	private AnchorPane paneArena;
 
 	@FXML
 	private Label labelBasicTower;
@@ -84,7 +84,7 @@ public class MyController implements staticInterface {
 
 	@FXML
 	private Label moneyLabel;
-
+	
 	private static final int GRID_WIDTH = 40;
 	private static final int GRID_HEIGHT = 40;
 	private static final int MAX_H_NUM_GRID = 12;
@@ -100,6 +100,41 @@ public class MyController implements staticInterface {
 	private towerType draggingTower;
 
 	private int money = 100;
+
+	class Grid extends Label {
+		public Grid() {
+			super();
+		}
+
+		private double x;
+		private double y;
+		public Tooltip infoToolTip;
+		public Shape radius;
+		private String name;
+		public double HP;
+
+		public double getX() {
+			return x;
+		}
+
+		public double getY() {
+			return y;
+		}
+
+		public void setXY(double _x, double _y) {
+			this.x = _x;
+			this.y = _y;
+		}
+
+		public String getName() {
+			return this.name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+	}
 
 	private void callInsufficientResourceAlert() {
 		Alert alert = new Alert(AlertType.ERROR);
@@ -137,8 +172,7 @@ public class MyController implements staticInterface {
 				newLabel.setMinHeight(GRID_HEIGHT);
 				newLabel.setMaxHeight(GRID_HEIGHT);
 				newLabel.setStyle("-fx-border-color: black;");
-				newLabel.setText(String.valueOf(Math.round(newLabel.getLayoutX())) + " "
-						+ String.valueOf(Math.round(newLabel.getLayoutY())));
+//				newLabel.setText(String.valueOf(Math.round(newLabel.getLayoutX())) + " " + String.valueOf(Math.round(newLabel.getLayoutY())) );
 //				newLabel.setText(String.valueOf(i)+" " + String.valueOf(j));
 				setDragAndDrop(newLabel);
 				grids[i][j] = newLabel;
@@ -403,9 +437,8 @@ public class MyController implements staticInterface {
 
 	// spawn monster at (0,0) according to type and returns the label
 
-	private void MonsterAttacked(Grid tower, Grid monster, String state) {
-		TowerAttacking(tower);
-		waitAndChangePic(label1, 1000, monster.getName(), state);
+	private void MonsterAttacked(Grid tower, Grid monster) {
+		waitAndChangePic(label1, 1000, monster.getName(), "attacked");
 		String message = tower.getName() + " @ (" + String.valueOf(tower.getX()) + ", " + String.valueOf(tower.getY())
 				+ ")";
 		message = message + " -> " + monster.getName() + " @ (" + String.valueOf(monster.getX()) + ", "
@@ -435,40 +468,39 @@ public class MyController implements staticInterface {
 		new Thread(sleeper).start();
 	}
 
-	private static void setUpSpawnMonster(Grid monster, double HP) {
+	private void setUpSpawnMonster(Grid monster, double HP) {
 		System.out.println(monster.getName() + ": " + String.valueOf(monster.HP) + " generated");
 	}
 
-	public static Grid spawnMonster(double xPosition, double yPosition, String name,double HP) {
-		double height = MONSTER_SIZE;
+	public Grid spawnMonster(double xPosition, double yPosition, String name, double length) {
+		double height = length;
 		Grid newLabel = new Grid();
 		newLabel.setName(name);
 		newLabel.setLayoutX(xPosition);
 		newLabel.setLayoutY(yPosition);
 		newLabel.setXY(xPosition, yPosition);
-		Image image = new Image(MyController.class.getResourceAsStream("/" + name + ".png"));
+		Image image = new Image(getClass().getResourceAsStream("/" + name + ".png"));
 		ImageView imageView = new ImageView(image);
 		imageView.setFitHeight(30);
 		imageView.setFitWidth(height);
 		newLabel.setGraphic(imageView);
 
 		paneArena.getChildren().addAll(newLabel);
-//
-//		switch (name) {
-//		case ("fox"):
-//			newLabel.HP = 50.0;
-//			break;
-//		case ("penguin"):
-//			newLabel.HP = 100.0;
-//			break;
-//		case ("unicorn"):
-//			newLabel.HP = 1000.0;
-//			break;
-//		default:
-//			break;
-//		}
 
-		newLabel.HP = HP;
+		switch (name) {
+		case ("fox"):
+			newLabel.HP = 50.0;
+			break;
+		case ("penguin"):
+			newLabel.HP = 100.0;
+			break;
+		case ("unicorn"):
+			newLabel.HP = 1000.0;
+			break;
+		default:
+			break;
+		}
+
 		newLabel.infoToolTip = new Tooltip();
 		newLabel.infoToolTip.setText("HP: " + String.valueOf(newLabel.HP));
 		newLabel.setTooltip(newLabel.infoToolTip);
@@ -490,21 +522,19 @@ public class MyController implements staticInterface {
 
 	// moves monster to point (x + deltaX, y + deltaY)
 	// note: logic isn't sorted
+	public boolean moveMonster(Grid monster, int deltaX, int deltaY) {
 
-	//
-	public static boolean moveMonster(Grid monster, int deltaX, int deltaY) {
-
+//		if (monster.getLayoutX() + deltaX > 480 - MONSTER_SIZE
+//				|| monster.getLayoutY() + deltaY > 480 - MONSTER_SIZE
+//				|| (monster.getLayoutY() == 0 && deltaY != 0) || (monster.getLayoutX() == 0 && deltaX < 0))
+//			return false;
+//		else {
 		monster.setLayoutX(monster.getLayoutX() + deltaX);
 		monster.setLayoutY(monster.getLayoutY() - deltaY);
 		monster.setXY(monster.getLayoutX(), monster.getLayoutY());
 		return true;
 //		}
 
-	}
-
-	public static void changeHP(Grid monster, int newHP) {
-		monster.HP = newHP;
-		monster.infoToolTip.setText(String.valueOf("HP: " + monster.HP));
 	}
 
 	@FXML
@@ -525,7 +555,7 @@ public class MyController implements staticInterface {
 		label.setGraphic(imageView);
 	}
 
-	private void waitAndChangePic(Grid label, int seconds, String monster, String status) {
+	private void waitAndChangePic(Label label, int seconds, String monster, String status) {
 		changePic(label, monster + "_" + status);
 		Task<Void> sleeper = new Task<Void>() {
 
@@ -540,10 +570,7 @@ public class MyController implements staticInterface {
 		sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
 			@Override
 			public void handle(WorkerStateEvent event) {
-				if (label.isSlowed)
-					changePic(label, monster + "_slowed");
-				else
-					changePic(label, monster);
+				changePic(label, monster);
 			}
 		});
 		new Thread(sleeper).start();
@@ -551,12 +578,8 @@ public class MyController implements staticInterface {
 
 	@FXML
 	public void Attacked() throws InterruptedException {
-		MonsterAttacked(grids[3][3], label1, "attacked");
+		MonsterAttacked(grids[3][3], label1);
 //		TowerAttacking(grids[0][0]);
-	}
-
-	public void monsterAttacked(Grid monster) {
-		waitAndChangePic(monster, 1000, monster.getName(), "attacked");
 	}
 
 	@FXML
@@ -564,25 +587,11 @@ public class MyController implements staticInterface {
 		waitAndChangePic(label1, 1000, label1.getName(), "attackedandslowed");
 	}
 
-	public void monsterAttackedAndSlowed(Grid monster) {
-		waitAndChangePic(monster, 1000, monster.getName(), "attackedandslowed");
-	}
-
 	@FXML
 	public void Slowed() throws InterruptedException {
 		waitAndChangePic(label1, 1000, label1.getName(), "slowed");
-		
 	}
 
-	public void monsterSlowed(Grid monster) {
-		monster.isSlowed = true;
-		changePic(monster, monster.getName() + "_slowed");
-	}
-
-	public void monsterNotSlowed(Grid monster) {
-		monster.isSlowed = false;
-		changePic(monster,monster.getName());
-	}
 	@FXML
 	public void Shoot() throws InterruptedException {
 //    	Label label2 = spawnMonster(label1.getLayoutX(),label1.getLayoutY()+450,"collision");
@@ -661,26 +670,8 @@ public class MyController implements staticInterface {
 
 	}
 
-	public void monsterDie(Grid monster) {
-		changePic(monster, "collision");
-		Task<Void> sleeper = new Task<Void>() {
-
-			protected Void call() throws Exception {
-				try {
-					Thread.sleep(3000);
-				} catch (InterruptedException e) {
-				}
-				return null;
-			}
-		};
-		sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-			@Override
-			public void handle(WorkerStateEvent event) {
-				paneArena.getChildren().remove(monster);
-			}
-		});
-		new Thread(sleeper).start();
-
+	public void monster_die() {
+		paneArena.getChildren().remove(label1);
 	}
 
 	@FXML
@@ -704,6 +695,6 @@ public class MyController implements staticInterface {
 			break;
 
 		}
-		label1 = spawnMonster(0, 450, monster,100);
+		label1 = this.spawnMonster(0, 450, monster, MONSTER_SIZE);
 	}
 }
