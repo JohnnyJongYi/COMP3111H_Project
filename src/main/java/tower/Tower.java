@@ -13,16 +13,19 @@ public abstract class Tower {
 	protected int locationX;
 	protected int locationY;
 	protected Grid label;
+	protected staticInterface interf;
 	
-	Tower(int x, int y, Grid lbl) {
+	Tower(int x, int y, Grid lbl, staticInterface f) {
 		locationX = x;
 		locationY = y;
 		label = lbl;
+		interf = f;
 	}
 
 	public void upgrade() {
 		level += 1;
 		power = base_power * level;
+		interf.upgradeTower(this, power, level);
 	}
 	
 	public void shoot(staticInterface f) {}

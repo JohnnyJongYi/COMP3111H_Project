@@ -15,8 +15,8 @@ public class LaserTower extends Tower{
 	protected int minRange = 0;
 	protected int maxRange = 680;
 	
-	LaserTower(int x, int y, Grid label) {
-		super(x, y, label);
+	LaserTower(int x, int y, Grid label, staticInterface interf) {
+		super(x, y, label, interf);
 		printTowerInfo();
 	}
 	

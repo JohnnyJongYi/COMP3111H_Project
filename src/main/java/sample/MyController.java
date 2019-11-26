@@ -32,8 +32,9 @@ import javafx.scene.shape.Shape;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import sample.Grid;
+import tower.TowerHandler;
 
-public class MyController implements staticInterface {
+public class MyController implements staticInterface  {
 	@FXML
 	private Button buttonNextFrame;
 
@@ -101,12 +102,12 @@ public class MyController implements staticInterface {
 
 	private towerType draggingTower;
 
-	private int money = 100;
+	private int money = 10000;
 
-	private void callInsufficientResourceAlert() {
+	private void callAlert(String title, String content) {
 		Alert alert = new Alert(AlertType.ERROR);
-		alert.setTitle("Insufficient Resources");
-		alert.setContentText("You don't have enough money to build this tower");
+		alert.setTitle(title);
+		alert.setContentText(content);
 		alert.showAndWait();
 	}
 
@@ -237,19 +238,95 @@ public class MyController implements staticInterface {
 		return true;
 	}
 
+	public void upgradeTower(Grid tower, double newDamage, int newLevel) {
+		String message = tower.getName() + " " + String.valueOf(newLevel);
+		double range1 = 0;
+		double range2 = 0;
+		int buildingCost = 0;
+		double damage = 0;
+		switch(tower.getName()) {
+		case("Basic Tower"):
+			range1 = 0;
+			range2 = 65;
+			buildingCost = 10;
+			damage = 40;
+			break;
+		case("Ice Tower"):
+			range1 = 0;
+			range2 = 65;
+			buildingCost = 20;
+			damage = 0;
+			break;
+		case("Catapult Tower"):
+			range1 = 50;
+			range2 = 150;
+			buildingCost = 30;
+			damage = 30;
+			break;
+		case("LaserTower"):
+			range1 = 0;
+			range2 = 1000;
+			buildingCost = 40;
+			damage = 50;
+			break;
+		default:
+			break;
+			
+		};
+		if(newLevel!=1)
+			damage = newDamage;
+		message = message + "\nPower : " + String.valueOf(damage);
+		message = message + "\nRange : " + String.valueOf(range1) + " - " + String.valueOf(range2);
+		message = message + "\nBuilding Cost : " + String.valueOf(buildingCost);
+		tower.infoToolTip.setText(message);
+	}
 	private void buildTower(Grid target, Image image) {
+		
 		if (updateInfo(target)) {
+			int type;
+			double radii;
+			boolean catapult = false;
+			switch (draggingTower) {
+			case BASIC:
+				type = 1;
+				radii = 65;
+				break;
+			case ICE:
+				type =2;
+				radii = 65;
+				break;
+			case CATAPULT:
+				type =3;
+				radii = 150;
+				catapult = true;
+				break;
+			case LASER:
+				type =4;
+				radii = 1000;
+				break;
+			default:
+				type = 1;
+				radii = 50;
+				break;
+			}
+				
+			if (!TowerHandler.build(type, (int)target.getX()/40 , (int)target.getX()/40,target))
+			{
+				callAlert("Not Allowed","You cannot block the monsters from reaching the end zone!");
+				return;
+			}
 			ImageView imageView = new ImageView(image);
 			imageView.setFitHeight(GRID_WIDTH);
 			imageView.setFitWidth(GRID_HEIGHT);
 			target.setGraphic(imageView);
 			target.infoToolTip = new Tooltip();
 			target.setTooltip(target.infoToolTip);
-
+			upgradeTower(target,0,1);
+			boolean newCatapult = catapult;
 			target.setOnMouseEntered(new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent event) {
-					mouseHover(target, event);
+					mouseHover(target, event,radii,newCatapult);
 				}
 			});
 			target.setOnMouseExited(new EventHandler<MouseEvent>() {
@@ -265,16 +342,20 @@ public class MyController implements staticInterface {
 				}
 			});
 		} else
-			callInsufficientResourceAlert();
+			callAlert("Insufficient resources","You don't have enough resources to build this!");
 
 //		Tower.build(target.getX(),target.getY(),draggingTower)
 
 	}
 
-	private void mouseHover(Grid target, MouseEvent event) {
+	private void mouseHover(Grid target, MouseEvent event, double radii, boolean catapult) {
 
-		Circle circle = new Circle(target.getX() + GRID_WIDTH / 2, target.getY() + GRID_HEIGHT / 2, 50.0f);
-		Rectangle rect = new Rectangle(target.getX(), target.getY(), GRID_WIDTH, GRID_HEIGHT);
+		Circle circle = new Circle(target.getX() + GRID_WIDTH / 2, target.getY() + GRID_HEIGHT / 2, radii);
+		Shape rect;
+		if(catapult)
+			rect = new Circle(target.getX() + GRID_WIDTH / 2, target.getY() + GRID_HEIGHT / 2, 50.0f);
+		else
+			rect = new Rectangle(target.getX(), target.getY(), GRID_WIDTH, GRID_HEIGHT);
 		target.radius = Shape.subtract(circle, rect);
 		target.radius.setFill(Color.RED);
 		target.radius.setOpacity(0.5);
@@ -292,6 +373,7 @@ public class MyController implements staticInterface {
 //		if(money)
 		// need to implement upgrade tower logic
 		System.out.println("Not enough resource to upgrade tower.");
+		tower.tower.upgrade();
 	}
 
 	private void destroyTower(Grid tower) {
@@ -347,9 +429,7 @@ public class MyController implements staticInterface {
 
 				if (db.hasImage()) {
 					buildTower(target, db.getImage());
-					String message = target.getName() + "\nAttack Power: 0\n" + "Building Cost: 0\n"
-							+ "Shooting Range: 0\n";
-					target.infoToolTip.setText(message);
+					
 					success = true;
 
 				}
@@ -469,7 +549,7 @@ public class MyController implements staticInterface {
 		imageView.setFitWidth(height);
 		newLabel.setGraphic(imageView);
 
-		paneArena.getChildren().addAll(newLabel);
+//		paneArena.getChildren().addAll(newLabel);
 //
 //		switch (name) {
 //		case ("fox"):
@@ -572,6 +652,7 @@ public class MyController implements staticInterface {
 	@FXML
 	public void Attacked() throws InterruptedException {
 		MonsterAttacked(grids[3][3], label1, false);
+		ShootBasic(grids[3][3],label1);
 //		TowerAttacking(grids[0][0]);
 	}
 
@@ -582,16 +663,18 @@ public class MyController implements staticInterface {
 	@FXML
 	public void AttackedAndSlowed() throws InterruptedException {
 		waitAndChangePic(label1, 1000, label1.getName(), "attackedandslowed");
+		ShootCatapult(grids[3][3],label1.getLayoutX() + GRID_WIDTH/2,label1.getLayoutY() + GRID_HEIGHT/2);
 	}
 
 	public void monsterAttackedAndSlowed(Grid monster) {
 		waitAndChangePic(monster, 1000, monster.getName(), "attackedandslowed");
+		
 	}
 
 	@FXML
 	public void Slowed() throws InterruptedException {
 		waitAndChangePic(label1, 1000, label1.getName(), "slowed");
-		
+		ShootIce(grids[3][3],label1);
 	}
 
 	public void monsterSlowed(Grid monster) {
@@ -654,7 +737,7 @@ public class MyController implements staticInterface {
 	
 	public void ShootBasic(Grid tower, Grid monster) {
 		TowerAttacking(tower);
-		Grid bam = spawnMonster(label1.getLayoutX(),label1.getLayoutY()+450,"fire",100);
+		Label bam = spawnMonster(label1.getLayoutX(),label1.getLayoutY(),"fire",100);
 		flashShootUI(bam);
 	}
 	
@@ -667,7 +750,7 @@ public class MyController implements staticInterface {
 	
 	public void ShootIce(Grid tower, Grid monster) {
 		TowerAttacking(tower);
-		Grid iceBam = spawnMonster(label1.getLayoutX(),label1.getLayoutY()+450,"ice",100);
+		Label iceBam = spawnMonster(label1.getLayoutX(),label1.getLayoutY(),"ice",100);
 		flashShootUI(iceBam);
 	};
 	
@@ -749,5 +832,6 @@ public class MyController implements staticInterface {
 
 		}
 		label1 = spawnMonster(0, 450, monster,100);
+		paneArena.getChildren().addAll(label1);
 	}
 }

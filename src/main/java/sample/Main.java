@@ -36,7 +36,7 @@ public class Main extends Application {
         appController.createArena();
         
         monsterGenerator = new MonsterGenerator(appController);
-//        towerHandler = new TowerHandler(appController);
+        towerHandler = new TowerHandler(appController);
         
         AnimationTimer timer = new AnimationTimer() {
     		@Override
@@ -49,19 +49,19 @@ public class Main extends Application {
     			
     			if (timeSpent>GenerationTime*5) {
     					if(flag) {
-    						try {
-								monsterGenerator.updateMonsterEachTimestamp();
-							} catch (OutOfArenaException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} catch (MovedToWrongGrid e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
+//    						try {
+//								monsterGenerator.updateMonsterEachTimestamp();
+//							} catch (OutOfArenaException e) {
+//								// TODO Auto-generated catch block
+//								e.printStackTrace();
+//							} catch (MovedToWrongGrid e) {
+//								// TODO Auto-generated catch block
+//								e.printStackTrace();
+//							}
     						flag = false;
     					}
     					else {
-//    						TowerHandler.shootAll();
+    						TowerHandler.shootAll();
     						flag = true;
     					}
 ////    				updateMonster(myController)
