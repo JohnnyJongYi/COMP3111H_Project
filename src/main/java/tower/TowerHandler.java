@@ -20,7 +20,7 @@ public class TowerHandler {
 	protected static int[][][] pred = new int[12][12][2];
 	protected static int n_x[] = {0, 1, 0, -1};
 	protected static int n_y[] = {-1, 0, 1, 0};
-	protected staticInterface interf;
+	protected static staticInterface interf;
 	
 	TowerHandler(staticInterface f) {
 		interf = f;
@@ -111,11 +111,11 @@ public class TowerHandler {
 		}
 	}
 	
-	public void shootAll() {
+	public static void shootAll() {
 		for (Tower tower : towerArray) tower.shoot(interf);
 	}
 	
-	public ArrayList<Tower> getTowerArray() {
+	public static ArrayList<Tower> getTowerArray() {
 		return towerArray;
 	}
 	
@@ -140,7 +140,7 @@ public class TowerHandler {
 		return true;
 	}
 	
-	public void destroy(Tower tower, int x, int y) {
+	public static void destroy(Tower tower, int x, int y) {
 		setNOA(tower.getTowerType(), x, y, -1);
 		if (tower.getTowerType() == 3) catapultCount--;
 		towerArray.remove(tower);
