@@ -1,7 +1,7 @@
 package sample;
 
 public interface staticInterface {
-		public static Grid spawnMonster(double xPosition, double yPosition, String name) {
+		public static Grid spawnMonster(double xPosition, double yPosition, String name,double HP) {
 			return (new Grid());
 		}
 		

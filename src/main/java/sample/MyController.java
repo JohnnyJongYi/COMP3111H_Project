@@ -439,7 +439,7 @@ public class MyController implements staticInterface {
 		System.out.println(monster.getName() + ": " + String.valueOf(monster.HP) + " generated");
 	}
 
-	public static Grid spawnMonster(double xPosition, double yPosition, String name) {
+	public static Grid spawnMonster(double xPosition, double yPosition, String name,double HP) {
 		double height = MONSTER_SIZE;
 		Grid newLabel = new Grid();
 		newLabel.setName(name);
@@ -453,21 +453,22 @@ public class MyController implements staticInterface {
 		newLabel.setGraphic(imageView);
 
 		paneArena.getChildren().addAll(newLabel);
+//
+//		switch (name) {
+//		case ("fox"):
+//			newLabel.HP = 50.0;
+//			break;
+//		case ("penguin"):
+//			newLabel.HP = 100.0;
+//			break;
+//		case ("unicorn"):
+//			newLabel.HP = 1000.0;
+//			break;
+//		default:
+//			break;
+//		}
 
-		switch (name) {
-		case ("fox"):
-			newLabel.HP = 50.0;
-			break;
-		case ("penguin"):
-			newLabel.HP = 100.0;
-			break;
-		case ("unicorn"):
-			newLabel.HP = 1000.0;
-			break;
-		default:
-			break;
-		}
-
+		newLabel.HP = HP;
 		newLabel.infoToolTip = new Tooltip();
 		newLabel.infoToolTip.setText("HP: " + String.valueOf(newLabel.HP));
 		newLabel.setTooltip(newLabel.infoToolTip);
@@ -703,6 +704,6 @@ public class MyController implements staticInterface {
 			break;
 
 		}
-		label1 = spawnMonster(0, 450, monster);
+		label1 = spawnMonster(0, 450, monster,100);
 	}
 }
