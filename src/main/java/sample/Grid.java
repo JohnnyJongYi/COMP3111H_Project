@@ -18,6 +18,8 @@ public class Grid extends Label {
 			public Shape radius;
 			private String name;
 			public double HP;
+			public boolean isSlowed = false;
+		
 
 			public double getX() {
 				return x;

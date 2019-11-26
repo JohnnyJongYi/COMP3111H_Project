@@ -13,7 +13,6 @@ import javafx.scene.input.*;
 import java.util.Optional;
 import java.util.Random;
 
-
 import javafx.concurrent.Task;
 import javafx.event.*;
 import javafx.fxml.FXML;
@@ -32,7 +31,7 @@ import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import sample.Grid;
 
-public class MyController {
+public class MyController implements staticInterface {
 	@FXML
 	private Button buttonNextFrame;
 
@@ -57,7 +56,7 @@ public class MyController {
 	private Button buttonAttandSlow;
 
 	@FXML
-	private AnchorPane paneArena;
+	private static AnchorPane paneArena;
 
 	@FXML
 	private Label labelBasicTower;
@@ -85,7 +84,7 @@ public class MyController {
 
 	@FXML
 	private Label moneyLabel;
-	
+
 	private static final int GRID_WIDTH = 40;
 	private static final int GRID_HEIGHT = 40;
 	private static final int MAX_H_NUM_GRID = 12;
@@ -101,8 +100,6 @@ public class MyController {
 	private towerType draggingTower;
 
 	private int money = 100;
-
-	
 
 	private void callInsufficientResourceAlert() {
 		Alert alert = new Alert(AlertType.ERROR);
@@ -140,7 +137,8 @@ public class MyController {
 				newLabel.setMinHeight(GRID_HEIGHT);
 				newLabel.setMaxHeight(GRID_HEIGHT);
 				newLabel.setStyle("-fx-border-color: black;");
-				newLabel.setText(String.valueOf(Math.round(newLabel.getLayoutX())) + " " + String.valueOf(Math.round(newLabel.getLayoutY())) );
+				newLabel.setText(String.valueOf(Math.round(newLabel.getLayoutX())) + " "
+						+ String.valueOf(Math.round(newLabel.getLayoutY())));
 //				newLabel.setText(String.valueOf(i)+" " + String.valueOf(j));
 				setDragAndDrop(newLabel);
 				grids[i][j] = newLabel;
@@ -405,8 +403,9 @@ public class MyController {
 
 	// spawn monster at (0,0) according to type and returns the label
 
-	private void MonsterAttacked(Grid tower, Grid monster) {
-		waitAndChangePic(label1, 1000, monster.getName(), "attacked");
+	private void MonsterAttacked(Grid tower, Grid monster, String state) {
+		TowerAttacking(tower);
+		waitAndChangePic(label1, 1000, monster.getName(), state);
 		String message = tower.getName() + " @ (" + String.valueOf(tower.getX()) + ", " + String.valueOf(tower.getY())
 				+ ")";
 		message = message + " -> " + monster.getName() + " @ (" + String.valueOf(monster.getX()) + ", "
@@ -436,18 +435,18 @@ public class MyController {
 		new Thread(sleeper).start();
 	}
 
-	private void setUpSpawnMonster(Grid monster, double HP) {
+	private static void setUpSpawnMonster(Grid monster, double HP) {
 		System.out.println(monster.getName() + ": " + String.valueOf(monster.HP) + " generated");
 	}
 
-	public Grid spawnMonster(double xPosition, double yPosition, String name, double length) {
-		double height = length;
+	public static Grid spawnMonster(double xPosition, double yPosition, String name) {
+		double height = MONSTER_SIZE;
 		Grid newLabel = new Grid();
 		newLabel.setName(name);
 		newLabel.setLayoutX(xPosition);
 		newLabel.setLayoutY(yPosition);
 		newLabel.setXY(xPosition, yPosition);
-		Image image = new Image(getClass().getResourceAsStream("/" + name + ".png"));
+		Image image = new Image(MyController.class.getResourceAsStream("/" + name + ".png"));
 		ImageView imageView = new ImageView(image);
 		imageView.setFitHeight(30);
 		imageView.setFitWidth(height);
@@ -490,7 +489,7 @@ public class MyController {
 
 	// moves monster to point (x + deltaX, y + deltaY)
 	// note: logic isn't sorted
-	
+
 	//
 	public static boolean moveMonster(Grid monster, int deltaX, int deltaY) {
 
@@ -501,13 +500,12 @@ public class MyController {
 //		}
 
 	}
-	
+
 	public static void changeHP(Grid monster, int newHP) {
 		monster.HP = newHP;
 		monster.infoToolTip.setText(String.valueOf("HP: " + monster.HP));
 	}
-	
-	
+
 	@FXML
 	public void moveRight() {
 		moveMonster(label1, 10, 0);
@@ -526,7 +524,7 @@ public class MyController {
 		label.setGraphic(imageView);
 	}
 
-	private void waitAndChangePic(Label label, int seconds, String monster, String status) {
+	private void waitAndChangePic(Grid label, int seconds, String monster, String status) {
 		changePic(label, monster + "_" + status);
 		Task<Void> sleeper = new Task<Void>() {
 
@@ -541,7 +539,10 @@ public class MyController {
 		sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
 			@Override
 			public void handle(WorkerStateEvent event) {
-				changePic(label, monster);
+				if (label.isSlowed)
+					changePic(label, monster + "_slowed");
+				else
+					changePic(label, monster);
 			}
 		});
 		new Thread(sleeper).start();
@@ -549,8 +550,12 @@ public class MyController {
 
 	@FXML
 	public void Attacked() throws InterruptedException {
-		MonsterAttacked(grids[3][3], label1);
+		MonsterAttacked(grids[3][3], label1, "attacked");
 //		TowerAttacking(grids[0][0]);
+	}
+
+	public void monsterAttacked(Grid monster) {
+		waitAndChangePic(monster, 1000, monster.getName(), "attacked");
 	}
 
 	@FXML
@@ -558,11 +563,25 @@ public class MyController {
 		waitAndChangePic(label1, 1000, label1.getName(), "attackedandslowed");
 	}
 
+	public void monsterAttackedAndSlowed(Grid monster) {
+		waitAndChangePic(monster, 1000, monster.getName(), "attackedandslowed");
+	}
+
 	@FXML
 	public void Slowed() throws InterruptedException {
 		waitAndChangePic(label1, 1000, label1.getName(), "slowed");
+		
 	}
 
+	public void monsterSlowed(Grid monster) {
+		monster.isSlowed = true;
+		changePic(monster, monster.getName() + "_slowed");
+	}
+
+	public void monsterNotSlowed(Grid monster) {
+		monster.isSlowed = false;
+		changePic(monster,monster.getName());
+	}
 	@FXML
 	public void Shoot() throws InterruptedException {
 //    	Label label2 = spawnMonster(label1.getLayoutX(),label1.getLayoutY()+450,"collision");
@@ -641,8 +660,26 @@ public class MyController {
 
 	}
 
-	public void monster_die() {
-		paneArena.getChildren().remove(label1);
+	public void monsterDie(Grid monster) {
+		changePic(monster, "collision");
+		Task<Void> sleeper = new Task<Void>() {
+
+			protected Void call() throws Exception {
+				try {
+					Thread.sleep(3000);
+				} catch (InterruptedException e) {
+				}
+				return null;
+			}
+		};
+		sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent event) {
+				paneArena.getChildren().remove(monster);
+			}
+		});
+		new Thread(sleeper).start();
+
 	}
 
 	@FXML
@@ -666,6 +703,6 @@ public class MyController {
 			break;
 
 		}
-		label1 = this.spawnMonster(0, 450, monster, MONSTER_SIZE);
+		label1 = spawnMonster(0, 450, monster);
 	}
 }
