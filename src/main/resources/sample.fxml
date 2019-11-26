@@ -27,7 +27,7 @@
                <children>
                   <Button fx:id="buttonNextFrame" layoutX="4.0" layoutY="24.0" mnemonicParsing="false" onAction="#Spawn" text="Spawn" />
                   <Button fx:id="buttonSimulate" layoutX="5.0" layoutY="65.0" mnemonicParsing="false" onAction="#Shoot" text="Shoot" />
-                  <Button fx:id="buttonPlay" layoutX="6.0" layoutY="108.0" mnemonicParsing="false" onAction="#play" text="Play" />
+                  <Button fx:id="buttonPlay" layoutX="6.0" layoutY="108.0" mnemonicParsing="false" onAction="#rotate" text="Rotate" />
                   <Label fx:id="labelBasicTower" layoutX="36.0" layoutY="257.0" minWidth="80.0" style="-fx-border-color: black;" text="Basic Tower">
                      <opaqueInsets>
                         <Insets />
@@ -89,6 +89,7 @@
                         <Image url="@laserTower.png" />
                      </image>
                   </ImageView>
+                  <Label fx:id="moneyLabel" layoutX="64.0" layoutY="381.0" text="0" />
                </children>
                <padding>
                   <Insets left="10.0" />
