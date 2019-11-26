@@ -22,7 +22,7 @@ public class TowerHandler {
 	protected static int n_y[] = {-1, 0, 1, 0};
 	protected static staticInterface interf;
 	
-	TowerHandler(staticInterface f) {
+	public TowerHandler(staticInterface f) {
 		interf = f;
 	}
 	
