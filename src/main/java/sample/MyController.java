@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Random;
 
@@ -403,9 +404,24 @@ public class MyController implements staticInterface {
 
 	// spawn monster at (0,0) according to type and returns the label
 
-	private void MonsterAttacked(Grid tower, Grid monster, String state) {
+	public void MonsterAttacked(Grid tower, ArrayList<Grid> monsterList) {
 		TowerAttacking(tower);
-		waitAndChangePic(label1, 1000, monster.getName(), state);
+		for (Grid monster : monsterList) {
+			waitAndChangePic(label1, 1000, monster.getName(), "attacked");
+			String message = tower.getName() + " @ (" + String.valueOf(tower.getX()) + ", " + String.valueOf(tower.getY())
+			+ ")";
+			message = message + " -> " + monster.getName() + " @ (" + String.valueOf(monster.getX()) + ", "
+			+ String.valueOf(monster.getY()) + ")";
+			System.out.println(message);
+		}
+	}
+	
+	public void MonsterAttacked(Grid tower, Grid monster, boolean slowed) {
+		TowerAttacking(tower);
+		if(slowed)
+			waitAndChangePic(label1, 1000, monster.getName(), "slowed");
+		else
+			waitAndChangePic(label1, 1000, monster.getName(), "attacked");
 		String message = tower.getName() + " @ (" + String.valueOf(tower.getX()) + ", " + String.valueOf(tower.getY())
 				+ ")";
 		message = message + " -> " + monster.getName() + " @ (" + String.valueOf(monster.getX()) + ", "
@@ -439,7 +455,7 @@ public class MyController implements staticInterface {
 		System.out.println(monster.getName() + ": " + String.valueOf(monster.HP) + " generated");
 	}
 
-	public static Grid spawnMonster(double xPosition, double yPosition, String name,double HP) {
+	public Grid spawnMonster(double xPosition, double yPosition, String name,double HP) {
 		double height = MONSTER_SIZE;
 		Grid newLabel = new Grid();
 		newLabel.setName(name);
@@ -492,7 +508,7 @@ public class MyController implements staticInterface {
 	// note: logic isn't sorted
 
 	//
-	public static boolean moveMonster(Grid monster, int deltaX, int deltaY) {
+	public boolean moveMonster(Grid monster, int deltaX, int deltaY) {
 
 		monster.setLayoutX(monster.getLayoutX() + deltaX);
 		monster.setLayoutY(monster.getLayoutY() - deltaY);
@@ -502,7 +518,7 @@ public class MyController implements staticInterface {
 
 	}
 
-	public static void changeHP(Grid monster, int newHP) {
+	public void changeHP(Grid monster, int newHP) {
 		monster.HP = newHP;
 		monster.infoToolTip.setText(String.valueOf("HP: " + monster.HP));
 	}
@@ -526,7 +542,10 @@ public class MyController implements staticInterface {
 	}
 
 	private void waitAndChangePic(Grid label, int seconds, String monster, String status) {
-		changePic(label, monster + "_" + status);
+		if(label.isSlowed)
+			changePic(label, monster + "_" + status + "andslowed");
+		else
+			changePic(label,monster + "_" + status);
 		Task<Void> sleeper = new Task<Void>() {
 
 			protected Void call() throws Exception {
@@ -551,7 +570,7 @@ public class MyController implements staticInterface {
 
 	@FXML
 	public void Attacked() throws InterruptedException {
-		MonsterAttacked(grids[3][3], label1, "attacked");
+		MonsterAttacked(grids[3][3], label1, false);
 //		TowerAttacking(grids[0][0]);
 	}
 

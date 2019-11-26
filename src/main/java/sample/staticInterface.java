@@ -1,10 +1,10 @@
 package sample;
 
+import java.util.ArrayList;
+
 public interface staticInterface {
-		public static Grid spawnMonster(double xPosition, double yPosition, String name,double HP) {
-			return (new Grid());
-		}
-		
+		public Grid spawnMonster(double xPosition, double yPosition, String name,double HP) ;
+			
 		public void monsterDie(Grid monster) ;
 		
 		public void monsterAttacked(Grid monster);
@@ -14,5 +14,14 @@ public interface staticInterface {
 		public void monsterSlowed(Grid monster) ;
 		
 		public void monsterNotSlowed(Grid monster);
+		
+		public void changeHP(Grid monster, int newHP);
+		
+		public boolean moveMonster(Grid monster, int deltaX, int deltaY);
+		
+		public void MonsterAttacked(Grid tower, ArrayList<Grid> monsterList);
+		
+		public void MonsterAttacked(Grid tower, Grid monster, boolean slowed); 
+		
 }
 

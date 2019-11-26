@@ -38,7 +38,7 @@ public class Main extends Application {
     			long timeSpent = now - prevTime;
     			
     			if (timeSpent>GenerationTime*5) {
-//    				updateMonster()
+//    				updateMonster(myController)
     				appController.Spawn(new ActionEvent());
     				System.out.println(String.valueOf(counter));
     				counter++;
