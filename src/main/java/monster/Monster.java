@@ -80,7 +80,7 @@ public abstract class Monster
 		int deltax = 0;
 		int deltay = 0;
 		
-		if(time == MonsterGenerator.timestamp)
+		if(time == MonsterGenerator.timestamp-1)
 		{
 			path.clear();
 			flagArray = TowerHandler.towerGrid();
