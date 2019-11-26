@@ -12,8 +12,6 @@ public abstract class Tower {
 	protected int maxRange;
 	protected int locationX;
 	protected int locationY;
-	protected int targetX;
-	protected int targetY;
 	protected Grid label;
 	
 	Tower(int x, int y) {
@@ -27,14 +25,6 @@ public abstract class Tower {
 	}
 	
 	public void shoot(staticInterface f) {}
-	
-	public int getTargetX() {
-		return targetX;
-	}
-	
-	public int getTargetY() {
-		return targetY;
-	}
 	
 	public int getTowerType() {
 		return towerType;
