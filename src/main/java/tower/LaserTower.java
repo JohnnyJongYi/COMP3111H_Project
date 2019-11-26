@@ -13,8 +13,8 @@ public class LaserTower extends Tower{
 	protected int minRange = 0;
 	protected int maxRange = 680;
 	
-	LaserTower(int ID, int x, int y) {
-		super(ID, x, y);
+	LaserTower(int x, int y) {
+		super(x, y);
 		printTowerInfo();
 	}
 	
@@ -24,6 +24,7 @@ public class LaserTower extends Tower{
 	}
 	
 	public void shoot() {
+		targetX = targetY = 0;
 		ArrayList<Monster> monsterArray = MonsterGenerator.getMonsterArray();
 		if(monsterArray.size() == 0) return;
 		
@@ -37,17 +38,22 @@ public class LaserTower extends Tower{
 				target_to_end = to_end;
 			}
 		}
-		//consumes some resources
-		int x = monsterArray.get(target).getLocationX(); // make a line towards the monster
-		int y = monsterArray.get(target).getLocationY();
-		int a = y - locationY;
-		int b = locationX - x;
-		int c = - a * locationX - b * locationY;
-		double divider = Math.sqrt(a * a + b * b);
 		
-		for (int i = 0; i < monsterArray.size(); i++) { // loop all monster, damage all monster 3 px away from the line
-			if (Math.abs(a * monsterArray.get(i).getLocationX() + b * monsterArray.get(i).getLocationY() + c) / divider <= 3)
-				monsterArray.get(i).takedamage(1, power);
+		if (target != -1) {
+			//consumes some resources
+			int x = monsterArray.get(target).getLocationX(); // make a line towards the monster
+			int y = monsterArray.get(target).getLocationY();
+			targetX = x;
+			targetY = y;
+			int a = y - locationY;
+			int b = locationX - x;
+			int c = - a * locationX - b * locationY;
+			double divider = Math.sqrt(a * a + b * b);
+			
+			for (int i = 0; i < monsterArray.size(); i++) { // loop all monster, damage all monster 3 px away from the line
+				if (Math.abs(a * monsterArray.get(i).getLocationX() + b * monsterArray.get(i).getLocationY() + c) / divider <= 3)
+					monsterArray.get(i).takedamage(1, power);
+			}
 		}
 	}
 }
