@@ -1,6 +1,6 @@
 package monster;
 import java.util.ArrayList;
-
+import sample.staticInterface;
 import Coordinates.OutOfArenaException;
 import tower.TowerHandler;
 
@@ -13,16 +13,17 @@ public class MonsterGenerator
 	protected static boolean monsterHasReached;
 	
 	protected static ArrayList<Monster> deadMonsters;
+	protected staticInterface interf;
 	
 	
-	public MonsterGenerator() 
+	public MonsterGenerator(staticInterface interf) 
 	{
 		monsterArray = new ArrayList<Monster>();
 		monsterIDCounter = 0;
 		timestamp = 0;
 		forCatapult = new MonsterInRange(monsterArray);
 		monsterHasReached = false;
-		
+		this.interf = interf;
 		deadMonsters = new ArrayList<Monster>();
 	}
 	
@@ -33,7 +34,7 @@ public class MonsterGenerator
 		checkAnySlower();
 		moveAllMonsters();
 		if(timestamp % 20 == 0)
-		{generate();}
+		{generate(interf);}
 		timestamp++;
 		
 		if(TowerHandler.catapultFound())
@@ -48,22 +49,22 @@ public class MonsterGenerator
 			monsterArray.get(i).nextMove();
 	}
 	
-	public void generate()
+	public void generate(staticInterface interf)
 	{
 		int type = (int)(Math.random() * 3 + 1);
 		// Randomly choose monster type
 		switch(type)
 		{
 			case 1 : 
-				monsterArray.add(new Unicorn(timestamp,monsterIDCounter,type));
+				monsterArray.add(new Unicorn(timestamp,monsterIDCounter,type, interf));
 				monsterIDCounter++;
 				break;
 			case 2 : 
-				monsterArray.add(new Penguin(timestamp,monsterIDCounter,type));
+				monsterArray.add(new Penguin(timestamp,monsterIDCounter,type, interf));
 				monsterIDCounter++;
 				break;
 			case 3 : 
-				monsterArray.add(new Fox(timestamp,monsterIDCounter,type));
+				monsterArray.add(new Fox(timestamp,monsterIDCounter,type, interf));
 				monsterIDCounter++;
 				break;		
 		}
