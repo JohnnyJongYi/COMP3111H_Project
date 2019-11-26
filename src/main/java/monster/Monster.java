@@ -3,6 +3,7 @@ import Coordinates.Location;
 import Coordinates.OutOfArenaException;
 import tower.TowerHandler;
 import javafx.scene.control.Label;
+import sample.MyController;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,7 +34,7 @@ public abstract class Monster
 	
 	protected boolean isHealing;
 	
-	protected Label monsterLabel;
+	protected Grid monsterLabel;
 	
 	Monster(int timestamp, int mID, int type)
 	{  
@@ -57,7 +58,7 @@ public abstract class Monster
 		
 		isHealing = false;
 		
-		monsterLabel = new Label();
+		monsterGrid = new Grid();
 	}
 	
 	protected void stronger()
@@ -73,6 +74,9 @@ public abstract class Monster
 	
 	protected void nextMove() throws OutOfArenaException, MovedToWrongGrid
 	{
+		int deltax = 0;
+		int deltay = 0;
+		
 		if(time == MonsterGenerator.timestamp)
 		{
 			path.clear();
@@ -102,13 +106,26 @@ public abstract class Monster
 		
 		
 		if(nextGrid == currentGrid-1) //up
+		{
 			loc.update(0, -speed);
+			deltay = -speed;
+			
+		}
 		else if(nextGrid == currentGrid+100 )  // right
+		{
 			loc.update(speed , 0);
+			deltax = speed;
+		}
 		else if (nextGrid == currentGrid-100) //left
+		{
 			loc.update(-speed, 0);
-		else if (nextGrid == currentGrid +1)
+			deltax = -speed;
+		}
+		else if (nextGrid == currentGrid +1) // down
+		{
 			loc.update(0, speed);
+			deltax = speed;
+		}
 		
 		updateDistanceToEnd();
 		
@@ -316,8 +333,8 @@ public abstract class Monster
 		return isHealing;
 	}
 	
-	public Label getLabel() {
-		return monsterLabel;
+	public Grid getGrid() {
+		return monsterGrid;
 	}
 	
 }
