@@ -5,27 +5,27 @@ import java.util.ArrayList;
 import sample.staticInterface;
 
 public class TowerHandler {
-	protected ArrayList<Tower> towerArray = new ArrayList<Tower>();
-	protected int num;
+	protected static ArrayList<Tower> towerArray = new ArrayList<Tower>();
+	protected static int num;
 	protected static int[][] numberOfAttack = new int[480][480];
 	protected static boolean[][] towerGrid =  new boolean[12][12];
 	protected static boolean newTowerBuilt;
 	protected static int catapultCount;
-	protected boolean[][] ART = new boolean[12][12]; // articulation prep
-	protected boolean[][] flag = new boolean[12][12];
-	protected int time;
-	protected int[][] d = new int[12][12];
-	protected int[][] low = new int[12][12];
-	protected int[][][] pred = new int[12][12][2];
-	protected int n_x[] = {0, 1, 0, -1};
-	protected int n_y[] = {-1, 0, 1, 0};
+	protected static boolean[][] ART = new boolean[12][12]; // articulation prep
+	protected static boolean[][] flag = new boolean[12][12];
+	protected static int time;
+	protected static int[][] d = new int[12][12];
+	protected static int[][] low = new int[12][12];
+	protected static int[][][] pred = new int[12][12][2];
+	protected static int n_x[] = {0, 1, 0, -1};
+	protected static int n_y[] = {-1, 0, 1, 0};
 	protected staticInterface interf;
 	
 	TowerHandler(staticInterface f) {
 		interf = f;
 	}
 	
-	public boolean build(int type, int x, int y) {
+	public static boolean build(int type, int x, int y) {
 		if (x == 0 && y == 11 || x == 11 && y == 0 || ART[x][y]) return false; // cannot build on start & end grid & articulation grid
 		
 		switch(type) {
@@ -44,7 +44,7 @@ public class TowerHandler {
 				break;
 		}
 		
-		setNOA(towerArray.get(num), x, y, 1);
+		setNOA(type, x, y, 1);
 		
 		num++;
 		newTowerBuilt = true;
@@ -63,7 +63,7 @@ public class TowerHandler {
 		return true;
 	}
 	
-	protected void articulation(int v_x, int v_y) {
+	protected static void articulation(int v_x, int v_y) {
 		flag[v_x][v_y] = true;
 		d[v_x][v_y] = ++time;
 		low[v_x][v_y] = d[v_x][v_y];
@@ -85,8 +85,8 @@ public class TowerHandler {
 		}
 	}
 	
-	protected void setNOA(Tower tower, int locationX, int locationY, int a) {
-		if (tower.getTowerType() == 4) return;
+	protected static void setNOA(int type, int locationX, int locationY, int a) {
+		if (type == 4) return;
 		
 		int maxRange = towerArray.get(num).getMaxRange();
 		int minRange = towerArray.get(num).getMinRange();
@@ -139,7 +139,7 @@ public class TowerHandler {
 	}
 	
 	public void destroy(Tower tower, int x, int y) {
-		setNOA(tower, x, y, -1);
+		setNOA(tower.getTowerType(), x, y, -1);
 		if (tower.getTowerType() == 3) catapultCount--;
 		towerArray.remove(tower);
 		towerGrid[x][y] = false;
