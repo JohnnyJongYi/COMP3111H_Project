@@ -2,6 +2,8 @@ package tower;
 
 import java.util.ArrayList;
 
+import sample.staticInterface;
+
 public class TowerHandler {
 	protected ArrayList<Tower> towerArray = new ArrayList<Tower>();
 	protected int num;
@@ -17,6 +19,11 @@ public class TowerHandler {
 	protected int[][][] pred = new int[12][12][2];
 	protected int n_x[] = {0, 1, 0, -1};
 	protected int n_y[] = {-1, 0, 1, 0};
+	protected staticInterface interf;
+	
+	TowerHandler(staticInterface f) {
+		interf = f;
+	}
 	
 	public boolean build(int type, int x, int y) {
 		if (x == 0 && y == 11 || x == 11 && y == 0 || ART[x][y]) return false; // cannot build on start & end grid & articulation grid
@@ -100,6 +107,10 @@ public class TowerHandler {
 				if (delta_x * delta_x + delta_y * delta_y >= minRange2) numberOfAttack[x][y] += a;
 			}
 		}
+	}
+	
+	public void shootAll() {
+		for (Tower tower : towerArray) tower.shoot(interf);
 	}
 	
 	public ArrayList<Tower> getTowerArray() {
