@@ -1,5 +1,6 @@
 package sample;
 
+import Coordinates.OutOfArenaException;
 import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -9,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import monster.MonsterGenerator;
+import Coordinates.MovedToWrongGrid;
 import sample.MyController;
 import tower.TowerHandler;
 
@@ -33,7 +35,7 @@ public class Main extends Application {
         MyController appController = (MyController)loader.getController();
         appController.createArena();
         
-//        monsterGenerator = new MonsterGenerator(appController);
+        monsterGenerator = new MonsterGenerator(appController);
 //        towerHandler = new TowerHandler(appController);
         
         AnimationTimer timer = new AnimationTimer() {
@@ -47,7 +49,15 @@ public class Main extends Application {
     			
     			if (timeSpent>GenerationTime*5) {
     					if(flag) {
-//    						monsterGenerator.updateMonsterEachTimestamp();
+    						try {
+								monsterGenerator.updateMonsterEachTimestamp();
+							} catch (OutOfArenaException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (MovedToWrongGrid e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
     						flag = false;
     					}
     					else {
@@ -55,7 +65,7 @@ public class Main extends Application {
     						flag = true;
     					}
 ////    				updateMonster(myController)
-    				appController.Spawn(new ActionEvent());
+//    				appController.Spawn(new ActionEvent());
 //    				System.out.println(String.valueOf(counter));
 //    				counter++;
     				prevTime = now;
