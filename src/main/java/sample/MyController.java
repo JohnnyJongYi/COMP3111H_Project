@@ -30,6 +30,7 @@ import javafx.scene.shape.Shape;
 
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
+import sample.Grid;
 
 public class MyController {
 	@FXML
@@ -101,40 +102,7 @@ public class MyController {
 
 	private int money = 100;
 
-	class Grid extends Label {
-		public Grid() {
-			super();
-		}
-
-		private double x;
-		private double y;
-		public Tooltip infoToolTip;
-		public Shape radius;
-		private String name;
-		public double HP;
-
-		public double getX() {
-			return x;
-		}
-
-		public double getY() {
-			return y;
-		}
-
-		public void setXY(double _x, double _y) {
-			this.x = _x;
-			this.y = _y;
-		}
-
-		public String getName() {
-			return this.name;
-		}
-
-		public void setName(String name) {
-			this.name = name;
-		}
-
-	}
+	
 
 	private void callInsufficientResourceAlert() {
 		Alert alert = new Alert(AlertType.ERROR);
@@ -172,7 +140,7 @@ public class MyController {
 				newLabel.setMinHeight(GRID_HEIGHT);
 				newLabel.setMaxHeight(GRID_HEIGHT);
 				newLabel.setStyle("-fx-border-color: black;");
-//				newLabel.setText(String.valueOf(Math.round(newLabel.getLayoutX())) + " " + String.valueOf(Math.round(newLabel.getLayoutY())) );
+				newLabel.setText(String.valueOf(Math.round(newLabel.getLayoutX())) + " " + String.valueOf(Math.round(newLabel.getLayoutY())) );
 //				newLabel.setText(String.valueOf(i)+" " + String.valueOf(j));
 				setDragAndDrop(newLabel);
 				grids[i][j] = newLabel;
@@ -522,13 +490,10 @@ public class MyController {
 
 	// moves monster to point (x + deltaX, y + deltaY)
 	// note: logic isn't sorted
-	public boolean moveMonster(Grid monster, int deltaX, int deltaY) {
+	
+	//
+	public static boolean moveMonster(Grid monster, int deltaX, int deltaY) {
 
-//		if (monster.getLayoutX() + deltaX > 480 - MONSTER_SIZE
-//				|| monster.getLayoutY() + deltaY > 480 - MONSTER_SIZE
-//				|| (monster.getLayoutY() == 0 && deltaY != 0) || (monster.getLayoutX() == 0 && deltaX < 0))
-//			return false;
-//		else {
 		monster.setLayoutX(monster.getLayoutX() + deltaX);
 		monster.setLayoutY(monster.getLayoutY() - deltaY);
 		monster.setXY(monster.getLayoutX(), monster.getLayoutY());
@@ -536,7 +501,12 @@ public class MyController {
 //		}
 
 	}
-
+	
+	public static void changeHP(Grid monster, int newHP) {
+		monster.HP = newHP;
+		monster.infoToolTip.setText(String.valueOf("HP: " + monster.HP));
+	}
+	
 	@FXML
 	public void moveRight() {
 		moveMonster(label1, 10, 0);
