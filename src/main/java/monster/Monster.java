@@ -2,8 +2,8 @@ package monster;
 import Coordinates.Location;
 import Coordinates.OutOfArenaException;
 import tower.TowerHandler;
-import javafx.scene.control.Label;
-import sample.MyController;
+import sample.Grid;
+import sample.staticInterface;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,9 +35,12 @@ public abstract class Monster
 	protected boolean isHealing;
 	
 	protected Grid monsterLabel;
+	protected staticInterface interf;
 	
-	Monster(int timestamp, int mID, int type)
+	
+	Monster(int timestamp, int mID, int type, staticInterface interf)
 	{  
+		interf = this.interf;
 		monsterType = type;
 		time = timestamp;
 		loc = new Location(0,479);
@@ -58,7 +61,7 @@ public abstract class Monster
 		
 		isHealing = false;
 		
-		monsterGrid = new Grid();
+		
 	}
 	
 	protected void stronger()
@@ -70,6 +73,7 @@ public abstract class Monster
 	protected void die()
 	{
 		alive = false;
+		interf.monsterDie(monsterLabel);
 	}
 	
 	protected void nextMove() throws OutOfArenaException, MovedToWrongGrid
@@ -128,6 +132,8 @@ public abstract class Monster
 		}
 		
 		updateDistanceToEnd();
+		
+		interf.moveMonster(monsterLabel, deltax, deltay);
 		
 		if(monsterType == 2 && MonsterGenerator.timestamp % 10 == 0)
 		{
@@ -237,10 +243,18 @@ public abstract class Monster
 			isSlower = true;
 			slowerStartTime = MonsterGenerator.timestamp+1;
 			slowerDuration = 20*damage;
+			interf.monsterSlowed(monsterLabel);
 		}
 		else if(towerType == 1)
 		{
 			hp = hp - damage;
+			
+			if(isSlower)
+				interf.monsterAttackedAndSlowed(monsterLabel);
+			else
+				interf.monsterAttacked(monsterLabel);
+			
+			interf.changeHP(monsterLabel, hp);
 			if ( hp <= 0)
 				die();
 		}
@@ -258,6 +272,7 @@ public abstract class Monster
 			else
 			{
 				isSlower = false;
+				interf.monsterNotSlowed(monsterLabel);
 				slowerStartTime = Integer.MAX_VALUE;
 				slowerDuration = 0;
 				speed = OriginalSpeed;
@@ -334,7 +349,7 @@ public abstract class Monster
 	}
 	
 	public Grid getGrid() {
-		return monsterGrid;
+		return monsterLabel;
 	}
 	
 }

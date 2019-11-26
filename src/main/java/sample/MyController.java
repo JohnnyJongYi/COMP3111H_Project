@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -10,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Random;
 
@@ -56,7 +58,7 @@ public class MyController implements staticInterface {
 	private Button buttonAttandSlow;
 
 	@FXML
-	private static AnchorPane paneArena;
+	private AnchorPane paneArena;
 
 	@FXML
 	private Label labelBasicTower;
@@ -403,9 +405,24 @@ public class MyController implements staticInterface {
 
 	// spawn monster at (0,0) according to type and returns the label
 
-	private void MonsterAttacked(Grid tower, Grid monster, String state) {
+	public void MonsterAttacked(Grid tower, ArrayList<Grid> monsterList) {
 		TowerAttacking(tower);
-		waitAndChangePic(label1, 1000, monster.getName(), state);
+		for (Grid monster : monsterList) {
+			waitAndChangePic(label1, 1000, monster.getName(), "attacked");
+			String message = tower.getName() + " @ (" + String.valueOf(tower.getX()) + ", " + String.valueOf(tower.getY())
+			+ ")";
+			message = message + " -> " + monster.getName() + " @ (" + String.valueOf(monster.getX()) + ", "
+			+ String.valueOf(monster.getY()) + ")";
+			System.out.println(message);
+		}
+	}
+	
+	public void MonsterAttacked(Grid tower, Grid monster, boolean slowed) {
+		TowerAttacking(tower);
+		if(slowed)
+			waitAndChangePic(label1, 1000, monster.getName(), "slowed");
+		else
+			waitAndChangePic(label1, 1000, monster.getName(), "attacked");
 		String message = tower.getName() + " @ (" + String.valueOf(tower.getX()) + ", " + String.valueOf(tower.getY())
 				+ ")";
 		message = message + " -> " + monster.getName() + " @ (" + String.valueOf(monster.getX()) + ", "
@@ -414,7 +431,7 @@ public class MyController implements staticInterface {
 	}
 
 	private void TowerAttacking(Grid tower) {
-		Background oldFill = tower.getBackground();
+//		Background oldFill = tower.getBackground();
 		tower.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
 		Task<Void> sleeper = new Task<Void>() {
 
@@ -429,7 +446,7 @@ public class MyController implements staticInterface {
 		sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
 			@Override
 			public void handle(WorkerStateEvent event) {
-				tower.setBackground(oldFill);
+				tower.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 			}
 		});
 		new Thread(sleeper).start();
@@ -439,7 +456,7 @@ public class MyController implements staticInterface {
 		System.out.println(monster.getName() + ": " + String.valueOf(monster.HP) + " generated");
 	}
 
-	public static Grid spawnMonster(double xPosition, double yPosition, String name,double HP) {
+	public Grid spawnMonster(double xPosition, double yPosition, String name,double HP) {
 		double height = MONSTER_SIZE;
 		Grid newLabel = new Grid();
 		newLabel.setName(name);
@@ -492,7 +509,7 @@ public class MyController implements staticInterface {
 	// note: logic isn't sorted
 
 	//
-	public static boolean moveMonster(Grid monster, int deltaX, int deltaY) {
+	public boolean moveMonster(Grid monster, int deltaX, int deltaY) {
 
 		monster.setLayoutX(monster.getLayoutX() + deltaX);
 		monster.setLayoutY(monster.getLayoutY() - deltaY);
@@ -502,7 +519,7 @@ public class MyController implements staticInterface {
 
 	}
 
-	public static void changeHP(Grid monster, int newHP) {
+	public void changeHP(Grid monster, int newHP) {
 		monster.HP = newHP;
 		monster.infoToolTip.setText(String.valueOf("HP: " + monster.HP));
 	}
@@ -526,7 +543,10 @@ public class MyController implements staticInterface {
 	}
 
 	private void waitAndChangePic(Grid label, int seconds, String monster, String status) {
-		changePic(label, monster + "_" + status);
+		if(label.isSlowed)
+			changePic(label, monster + "_" + status + "andslowed");
+		else
+			changePic(label,monster + "_" + status);
 		Task<Void> sleeper = new Task<Void>() {
 
 			protected Void call() throws Exception {
@@ -551,7 +571,7 @@ public class MyController implements staticInterface {
 
 	@FXML
 	public void Attacked() throws InterruptedException {
-		MonsterAttacked(grids[3][3], label1, "attacked");
+		MonsterAttacked(grids[3][3], label1, false);
 //		TowerAttacking(grids[0][0]);
 	}
 
@@ -609,6 +629,38 @@ public class MyController implements staticInterface {
 
 //    paneArena.getChildren().addAll(laser);
 
+	public void flashShootUI(Node node) {
+		paneArena.getChildren().addAll(node);
+
+		Task<Void> sleeper = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+				}
+				return null;
+			}
+		};
+		sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent event) {
+				paneArena.getChildren().remove(node);
+			}
+		});
+		new Thread(sleeper).start();
+
+	}
+	
+	public void ShootBasic(Grid tower, Grid monster) {
+		TowerAttacking(tower);
+		
+	}
+	
+	public void ShootCatapult(Grid tower, double locX, double locY) {};
+	
+	public void ShootIce(Grid tower, Grid monster) {};
+	
 	public void ShootLaser(Grid tower, Grid monster) {
 		double towerX = tower.getX() + GRID_WIDTH / 2;
 		double towerY = tower.getY() + GRID_HEIGHT / 2;
@@ -636,25 +688,7 @@ public class MyController implements staticInterface {
 		line.setStartY(towerY);
 		line.setEndX(endX);
 		line.setEndY(480 - endY);
-		paneArena.getChildren().addAll(line);
-
-		Task<Void> sleeper = new Task<Void>() {
-			@Override
-			protected Void call() throws Exception {
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-				}
-				return null;
-			}
-		};
-		sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-			@Override
-			public void handle(WorkerStateEvent event) {
-				paneArena.getChildren().remove(line);
-			}
-		});
-		new Thread(sleeper).start();
+		flashShootUI(line);
 
 //
 //    	paneArena.getChildren().remove(laser);
