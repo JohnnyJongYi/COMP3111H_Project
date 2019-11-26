@@ -13,6 +13,6 @@ public class Penguin extends Monster
 		//Default HP, Speed : 50, 15
 		stronger();
 		maxHP = hp;
-		monsterLabel = interf.spawnMonster(0, 479, "Penguin", hp);
+		monsterLabel = interf.spawnMonster(0, 450, "Penguin", hp);
 	}
 }

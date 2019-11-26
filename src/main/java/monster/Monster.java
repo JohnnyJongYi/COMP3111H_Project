@@ -42,7 +42,7 @@ public abstract class Monster
 		interf = this.interf;
 		monsterType = type;
 		time = timestamp;
-		loc = new Location(0,479);
+		loc = new Location(0,450);
 		monsterID = mID;
 		alive = true;
 		isSlower = false;
@@ -55,7 +55,7 @@ public abstract class Monster
 			for(int j = 0 ; j <= 11 ; j++)
 				monsterGrid[i][j] = j*100 + i;
 		currentGrid = monsterGrid[11][0];
-		nextGrid = 0;
+		nextGrid = currentGrid;
 		path = new ArrayList<Integer>();
 		
 		isHealing = false;
