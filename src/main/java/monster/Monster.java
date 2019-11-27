@@ -36,8 +36,8 @@ public abstract class Monster
 	protected Grid monsterLabel;
 	protected MyController interf;
 	
-	protected final int startxAlgo = 15;
-	protected final int startyAlgo = 465;
+	protected final int startxAlgo = 20;
+	protected final int startyAlgo = 460;
 	
 	protected final int startxGrid = startxAlgo -15;
 	protected final int startyGrid = startyAlgo - 15;
