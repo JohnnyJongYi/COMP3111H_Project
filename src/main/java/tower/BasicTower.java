@@ -30,11 +30,11 @@ public class BasicTower extends Tower {
 		if (monsterArray.size() == 0) return;
 		
 		Monster target = null;
-		double target_to_end = 680;
+		double target_to_end = 1000;
 		
 		for (Monster monster : monsterArray) { // loop all monster, find the monster in range and closest to end point
 			double to_end = monster.getDistanceToEndpoint();
-			if (to_end < target_to_end && Math.pow(monster.getLocationX() - locationX, 2) + Math.pow(monster.getLocationY() - locationY, 2) <= range2) {
+			if (to_end < target_to_end && Math.pow(monster.getLocationX() - midX, 2) + Math.pow(monster.getLocationY() - midY, 2) <= range2) {
 				target = monster;
 				target_to_end = to_end;
 			}

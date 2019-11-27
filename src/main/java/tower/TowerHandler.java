@@ -132,7 +132,12 @@ public class TowerHandler {
 	}
 	
 	public static boolean[][] towerGrid() {
-		return towerGrid;
+		boolean[][] invertedFlag = new boolean[12][12];
+		
+		for (int x = 0; x < 12; x++) for (int y = 0; y < 12; y++)
+			if (!towerGrid[x][y]) invertedFlag[x][y] = true;
+		
+		return invertedFlag;
 	}
 	
 	public static boolean catapultFound() {

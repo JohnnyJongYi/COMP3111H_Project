@@ -44,13 +44,13 @@ public class LaserTower extends Tower{
 			//consumes some resources
 			int x = target.getLocationX(); // make a line towards the monster
 			int y = target.getLocationY();
-			int a = y - locationY;
-			int b = locationX - x;
-			int c = - a * locationX - b * locationY;
-			double divider = Math.sqrt(a * a + b * b);
+			int A = midX - y;
+			int B = x - midX;
+			int C = - A * midX - B * midX;
+			double divider = Math.sqrt(A * A + B * B);
 			
 			for (Monster monster : monsterArray) { // loop all monster, damage all monster 3 px away from the line
-				if (Math.abs(a * monster.getLocationX() + b * monster.getLocationY() + c) / divider <= 3)
+				if (Math.abs(A * monster.getLocationX() + B * monster.getLocationY() + C) / divider <= 3)
 					monster.takedamage(1, power);
 			}
 			
