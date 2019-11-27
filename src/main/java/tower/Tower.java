@@ -12,12 +12,16 @@ public abstract class Tower {
 	protected int maxRange;
 	protected int locationX;
 	protected int locationY;
+	protected int midX;
+	protected int midY;
 	protected Grid label;
 	protected staticInterface interf;
 	
 	Tower(int x, int y, Grid lbl, staticInterface f) {
 		locationX = x;
 		locationY = y;
+		midX = x * 40 + 20;
+		midY = y * 40 + 20;
 		label = lbl;
 		interf = f;
 	}
