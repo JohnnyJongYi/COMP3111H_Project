@@ -27,7 +27,7 @@ public class TowerHandler {
 	}
 	
 	public static boolean build(int type, int x, int y, Grid label) {
-		if (x == 0 && y == 11 || x == 11 && y == 0 || ART[x][y]) return false; // cannot build on start & end grid & articulation grid
+		if (ART[x][y]) return false; // cannot build on articulation grid
 		
 		Tower tower = null;
 		switch(type) {
@@ -59,33 +59,52 @@ public class TowerHandler {
 		d = new int[12][12];
 		low = new int[12][12];
 		pred = new int[12][12][2];
-		for (int i = 0; i < 11; i++) for (int j = 0; j < 11; j++) pred[i][j][0] = -1;
+		
+		for (int i = 0; i < 11; i++) for (int j = 0; j < 11; j++) {
+			ART[i][j] = flag[i][j] = false;
+			pred[i][j][0] = -1;
+		}
 
 		articulation(0, 11);
+		ART[0][11] = true; // cannot build on start & end grid
+		ART[11][0] = true;
 		
 		return true;
 	}
 	
 	protected static void articulation(int v_x, int v_y) {
 		flag[v_x][v_y] = true;
-		d[v_x][v_y] = ++time;
+		time++;
+		d[v_x][v_y] = time;
 		low[v_x][v_y] = d[v_x][v_y];
 		
 		for (int w = 0; w < 4; w++) {
 			int w_x = v_x + n_x[w];
 			int w_y = v_y + n_y[w];
-			if (w_x < 0 || w_x > 11 || w_y < 0 || w_y > 11) continue; // boundary check
-			if (towerGrid[w_x][w_y]) continue; // skip if there is a tower on w
+			
+			if (w_x < 0 || w_x > 11 || w_y < 0 || w_y > 11 || towerGrid[w_x][w_y]) continue; // boundary check or if there is a tower
 			
 			if (!flag[w_x][w_y]) {
 				pred[w_x][w_y][0] = v_x;
 				pred[w_x][w_y][1] = v_y;
 				articulation(w_x, w_y);
-				if (low[w_x][w_y] >= d[v_x][v_y]) ART[v_x][v_y] = true;
+				if (low[w_x][w_y] >= d[v_x][v_y]) {
+					ART[v_x][v_y] = true;
+					System.out.println("Articulation point on (" + v_x + ", " + v_y + ")");
+				}
 				low[v_x][v_y] = Math.min(low[v_x][v_y], low[w_x][w_y]);
 			}
 			else if (w_x != pred[v_x][v_y][0] || w_y != pred[v_x][v_y][1])
 				low[v_x][v_y] = Math.min(low[v_x][v_y], d[w_x][w_y]);
+		}
+	}
+	
+	public static void printART() {
+		for (int y = 0; y < 11; y++) {
+			for (int x = 0; x < 11; x++) {
+				System.out.print(ART[x][y] + " ");
+			}
+			System.out.println();
 		}
 	}
 	
@@ -136,8 +155,10 @@ public class TowerHandler {
 	public static boolean[][] towerGrid() {
 		boolean[][] invertedFlag = new boolean[12][12];
 		
-		for (int x = 0; x < 12; x++) for (int y = 0; y < 12; y++)
-			if (!towerGrid[x][y]) invertedFlag[x][y] = true;
+		for (int x = 0; x < 12; x++) for (int y = 0; y < 12; y++) {
+			if (towerGrid[x][y]) invertedFlag[x][y] = false;
+			else invertedFlag[x][y] = true;
+		}
 		
 		return invertedFlag;
 	}
