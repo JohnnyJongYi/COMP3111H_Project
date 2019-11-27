@@ -118,7 +118,7 @@ public abstract class Monster
 		if(nextGrid == currentGrid-1) //up
 		{
 			loc.update(0, -speed);
-			deltay = -speed;
+			deltay = speed;
 			
 		}
 		else if(nextGrid == currentGrid+100 )  // right
@@ -134,7 +134,7 @@ public abstract class Monster
 		else if (nextGrid == currentGrid +1) // down
 		{
 			loc.update(0, speed);
-			deltax = speed;
+			deltay = -speed;
 		}
 		
 		updateDistanceToEnd();
