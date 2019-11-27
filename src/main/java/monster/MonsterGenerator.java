@@ -1,7 +1,7 @@
 package monster;
 import java.util.ArrayList;
 import sample.staticInterface;
-import Coordinates.OutOfArenaException;
+import Coordinates.*;
 import tower.TowerHandler;
 
 public class MonsterGenerator

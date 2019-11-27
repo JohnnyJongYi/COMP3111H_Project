@@ -27,5 +27,7 @@ public interface staticInterface {
 		
 		public void ShootIce(Grid tower, Grid monster);
 		
+		public void upgradeTower(Grid tower, double newDamage, int newLevel);
+		
 }
 
