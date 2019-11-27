@@ -2,7 +2,7 @@ package monster;
 import Coordinates.*;
 import tower.TowerHandler;
 import sample.Grid;
-import sample.staticInterface;
+import sample.MyController;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,19 +34,22 @@ public abstract class Monster
 	protected boolean isHealing;
 	
 	protected Grid monsterLabel;
-	protected staticInterface interf;
+	protected MyController interf;
 	
-	protected final int startx = 15;
-	protected final int starty = 465;
+	protected final int startxAlgo = 15;
+	protected final int startyAlgo = 465;
+	
+	protected final int startxGrid = startxAlgo -15;
+	protected final int startyGrid = startyAlgo - 15;
 	
 	
-	Monster(int timestamp, int mID, int type, staticInterface interf)
+	Monster(int timestamp, int mID, int type, MyController interf)
 	{  
 		
 		this.interf =interf;
 		monsterType = type;
 		time = timestamp;
-		loc = new Location(startx,starty);
+		loc = new Location(startxAlgo,startyAlgo);
 		monsterID = mID;
 		alive = true;
 		isSlower = false;
@@ -158,7 +161,7 @@ public abstract class Monster
 				isHealing = false;
 		}
 		
-		int gridAfterMove = monsterGrid[((loc.getY()+14) / 40)][((loc.getX()-15) / 40)];
+		int gridAfterMove = monsterGrid[(loc.getY() / 40)][(loc.getX() / 40)];
 		System.out.println(gridAfterMove);
 		
 		if(gridAfterMove != currentGrid)

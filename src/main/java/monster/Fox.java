@@ -1,5 +1,5 @@
 package monster;
-import sample.staticInterface;
+import sample.MyController;
 
 import java.util.ArrayList;
 import tower.TowerHandler;
@@ -11,7 +11,7 @@ import java.util.Comparator;
 public class Fox extends Monster 
 {
 
-	Fox(int time, int mID, int type, staticInterface interf) 
+	Fox(int time, int mID, int type, MyController interf) 
 	{
 		super(time, mID, type, interf);
 		hp = 40;
@@ -21,7 +21,7 @@ public class Fox extends Monster
 		stronger();
 		maxHP = hp;
 		
-		monsterLabel = interf.spawnMonster(startx, starty, "Fox", hp);
+		monsterLabel = interf.spawnMonster(startxGrid, startyGrid, "Fox", hp);
 	}
 	
 	int[][] NOA = new int[480][480]; // number of attack grid;

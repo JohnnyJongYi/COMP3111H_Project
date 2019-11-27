@@ -1,11 +1,11 @@
 package monster;
-import sample.staticInterface;
+import sample.MyController;
 // more initial HP
 
 public class Unicorn extends Monster 
 {
 
-	Unicorn(int time, int mID, int type, staticInterface interf) 
+	Unicorn(int time, int mID, int type, MyController interf) 
 	{
 		super(time, mID, type, interf);
 		hp = 70 ;
@@ -14,7 +14,7 @@ public class Unicorn extends Monster
 		//Default HP, Speed : 70, 15
 		stronger();
 		maxHP = hp;
-		monsterLabel = interf.spawnMonster(startx, starty, "Unicorn", hp);
+		monsterLabel = interf.spawnMonster(startxGrid, startyGrid, "Unicorn", hp);
 	}
 
 }
