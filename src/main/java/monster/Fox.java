@@ -1,5 +1,5 @@
 package monster;
-import sample.MyController;
+import sample.staticInterface;
 
 import java.util.ArrayList;
 import tower.TowerHandler;
@@ -11,7 +11,7 @@ import java.util.Comparator;
 public class Fox extends Monster 
 {
 
-	Fox(int time, int mID, int type, MyController interf) 
+	Fox(int time, int mID, int type, staticInterface interf) 
 	{
 		super(time, mID, type, interf);
 		hp = 40;

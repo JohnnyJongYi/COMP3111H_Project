@@ -1,11 +1,11 @@
 package monster;
-import sample.MyController;
+import sample.staticInterface;
 // more initial HP
 
 public class Unicorn extends Monster 
 {
 
-	Unicorn(int time, int mID, int type, MyController interf) 
+	Unicorn(int time, int mID, int type, staticInterface interf) 
 	{
 		super(time, mID, type, interf);
 		hp = 70 ;

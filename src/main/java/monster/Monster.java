@@ -2,7 +2,7 @@ package monster;
 import Coordinates.*;
 import tower.TowerHandler;
 import sample.Grid;
-import sample.MyController;
+import sample.staticInterface;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,7 +34,7 @@ public abstract class Monster
 	protected boolean isHealing;
 	
 	protected Grid monsterLabel;
-	protected MyController interf;
+	protected staticInterface interf;
 	
 	protected final int startxAlgo = 20;
 	protected final int startyAlgo = 460;
@@ -43,7 +43,7 @@ public abstract class Monster
 	protected final int startyGrid = startyAlgo - 15;
 	
 	
-	Monster(int timestamp, int mID, int type, MyController interf)
+	Monster(int timestamp, int mID, int type, staticInterface interf)
 	{  
 		
 		this.interf =interf;

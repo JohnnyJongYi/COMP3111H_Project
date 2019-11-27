@@ -1,6 +1,6 @@
 package monster;
 import java.util.ArrayList;
-import sample.MyController;
+import sample.staticInterface;
 import Coordinates.*;
 import tower.TowerHandler;
 
@@ -13,10 +13,10 @@ public class MonsterGenerator
 	protected static boolean monsterHasReached;
 	
 	protected static ArrayList<Monster> deadMonsters;
-	protected MyController interf;
+	protected staticInterface interf;
 	
 	
-	public MonsterGenerator(MyController interf) 
+	public MonsterGenerator(staticInterface interf) 
 	{
 		monsterArray = new ArrayList<Monster>();
 		monsterIDCounter = 0;
@@ -49,7 +49,7 @@ public class MonsterGenerator
 			monsterArray.get(i).nextMove();
 	}
 	
-	public void generate(MyController interf)
+	public void generate(staticInterface interf)
 	{
 		int type = (int)(Math.random() * 3 + 1);
 		// Randomly choose monster type

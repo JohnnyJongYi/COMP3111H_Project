@@ -1,10 +1,10 @@
 package monster;
-import sample.MyController;
+import sample.staticInterface;
 // heals certain amount of HP every second
 
 public class Penguin extends Monster 
 {
-	Penguin(int time, int mID, int type, MyController interf) 
+	Penguin(int time, int mID, int type, staticInterface interf) 
 	{
 		super(time, mID, type, interf);
 		hp = 50;
