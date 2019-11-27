@@ -549,7 +549,7 @@ public class MyController implements staticInterface  {
 		imageView.setFitWidth(height);
 		newLabel.setGraphic(imageView);
 
-//		paneArena.getChildren().addAll(newLabel);
+		paneArena.getChildren().addAll(newLabel);
 //
 //		switch (name) {
 //		case ("fox"):
@@ -719,7 +719,7 @@ public class MyController implements staticInterface  {
 			@Override
 			protected Void call() throws Exception {
 				try {
-					Thread.sleep(1000);
+					Thread.sleep(500);
 				} catch (InterruptedException e) {
 				}
 				return null;
@@ -794,7 +794,7 @@ public class MyController implements staticInterface  {
 
 			protected Void call() throws Exception {
 				try {
-					Thread.sleep(3000);
+					Thread.sleep(1000);
 				} catch (InterruptedException e) {
 				}
 				return null;
