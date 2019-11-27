@@ -29,23 +29,25 @@ public class TowerHandler {
 	public static boolean build(int type, int x, int y, Grid label) {
 		if (x == 0 && y == 11 || x == 11 && y == 0 || ART[x][y]) return false; // cannot build on start & end grid & articulation grid
 		
+		Tower tower = null;
 		switch(type) {
 			case 1 : 
-				towerArray.add(new BasicTower(x, y, label, interf));
+				tower = new BasicTower(x, y, label, interf);
 				break;
 			case 2 :
-				towerArray.add(new IceTower(x, y, label, interf));
+				tower = new IceTower(x, y, label, interf);
 				break;
 			case 3 :
-				towerArray.add(new Catapult(x, y, label, interf));
+				tower = new Catapult(x, y, label, interf);
 				catapultCount++;
 				break;
 			case 4 :
-				towerArray.add(new LaserTower(x, y, label, interf));
+				tower = new LaserTower(x, y, label, interf);
 				break;
 		}
 		
-		setNOA(type, x, y, 1);
+		towerArray.add(tower);
+		setNOA(tower, x, y, 1);
 		
 		num++;
 		newTowerBuilt = true;
@@ -87,26 +89,26 @@ public class TowerHandler {
 		}
 	}
 	
-	protected static void setNOA(int type, int locationX, int locationY, int a) {
-		if (type == 4) return;
+	protected static void setNOA(Tower tower, int locationX, int locationY, int a) {
+		if (tower.getTowerType() == 4) return;
 		
-		int maxRange = towerArray.get(num).getMaxRange();
-		int minRange = towerArray.get(num).getMinRange();
+		int maxRange = tower.getMaxRange();
+		int minRange = tower.getMinRange();
 		int maxRange2 = maxRange * maxRange;
 		int minRange2 = minRange * minRange;
 		
 		int x_low = Math.max(0, locationX - maxRange);
-		int x_high = Math.min(480, locationX + maxRange);
+		int x_high = Math.min(479, locationX + maxRange);
 		
 		for (int x = x_low; x <= x_high; x++) {
-			int delta_x = Math.abs(locationX - x);
-			int max_delta_y = (int) Math.floor(Math.sqrt(maxRange2 - delta_x * delta_x));
-			int y_low = Math.max(0, locationY - max_delta_y);
-			int y_high = Math.min(480, locationY + max_delta_y);
+			int dx = Math.abs(locationX - x);
+			int max_dy = (int) Math.floor(Math.sqrt(maxRange2 - dx * dx));
+			int y_low = Math.max(0, locationY - max_dy);
+			int y_high = Math.min(479, locationY + max_dy);
 			
 			for (int y = y_low; y <= y_high; y++) { // for all pixel in range
-				int delta_y = Math.abs(locationY - y);
-				if (delta_x * delta_x + delta_y * delta_y >= minRange2) numberOfAttack[x][y] += a;
+				int dy = Math.abs(locationY - y);
+				if (dx * dx + dy * dy >= minRange2) numberOfAttack[x][y] += a;
 			}
 		}
 	}
@@ -146,7 +148,7 @@ public class TowerHandler {
 	}
 	
 	public static void destroy(Tower tower, int x, int y) {
-		setNOA(tower.getTowerType(), x, y, -1);
+		setNOA(tower, x, y, -1);
 		if (tower.getTowerType() == 3) catapultCount--;
 		towerArray.remove(tower);
 		towerGrid[x][y] = false;
