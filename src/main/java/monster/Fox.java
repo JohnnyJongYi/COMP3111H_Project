@@ -21,7 +21,7 @@ public class Fox extends Monster
 		stronger();
 		maxHP = hp;
 		
-		monsterLabel = interf.spawnMonster(0, 450, "Fox", hp);
+		monsterLabel = interf.spawnMonster(startx, starty, "Fox", hp);
 	}
 	
 	int[][] NOA = new int[480][480]; // number of attack grid;

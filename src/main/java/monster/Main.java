@@ -1,4 +1,4 @@
-package monster;
+/*package monster;
 
 import Coordinates.OutOfArenaException;
 
@@ -15,3 +15,4 @@ public class Main // needs to be integrated into Arena
 		}
 	}
 }
+*/

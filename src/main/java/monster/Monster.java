@@ -36,13 +36,17 @@ public abstract class Monster
 	protected Grid monsterLabel;
 	protected staticInterface interf;
 	
+	protected final int startx = 15;
+	protected final int starty = 465;
+	
 	
 	Monster(int timestamp, int mID, int type, staticInterface interf)
 	{  
+		
 		this.interf =interf;
 		monsterType = type;
 		time = timestamp;
-		loc = new Location(0,450);
+		loc = new Location(startx,starty);
 		monsterID = mID;
 		alive = true;
 		isSlower = false;
@@ -154,7 +158,7 @@ public abstract class Monster
 				isHealing = false;
 		}
 		
-		int gridAfterMove = monsterGrid[(loc.getY() / 40)][(loc.getX() / 40)];
+		int gridAfterMove = monsterGrid[((loc.getY()+14) / 40)][((loc.getX()-15) / 40)];
 		System.out.println(gridAfterMove);
 		
 		if(gridAfterMove != currentGrid)
