@@ -260,14 +260,18 @@ public abstract class Monster
 		{
 			hp = hp - damage;
 			
-			if(isSlower)
-				interf.monsterAttackedAndSlowed(monsterLabel);
-			else
-				interf.monsterAttacked(monsterLabel);
-			
+		
 			interf.changeHP(monsterLabel, hp);
 			if ( hp <= 0)
 				die();
+			else
+			{
+				if(isSlower)
+					interf.monsterAttackedAndSlowed(monsterLabel);
+				else
+					interf.monsterAttacked(monsterLabel);
+			}
+				
 		}
 		//reduce hp by certain amount according to tower type
 	}
