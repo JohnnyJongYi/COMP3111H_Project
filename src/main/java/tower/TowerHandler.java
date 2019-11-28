@@ -69,13 +69,11 @@ public class TowerHandler {
 		pred = new int[12][12][2];
 		
 		for (int i = 0; i < 11; i++) for (int j = 0; j < 11; j++) {
-			ART[i][j] = flag[i][j] = false;
 			pred[i][j][0] = -1;
 		}
 
 		articulation(0, 11);
-		ART[0][11] = true; // cannot build on start & end grid
-		ART[11][0] = true;
+		ART[0][11] = ART[11][0] = true; // cannot build on start & end grid
 		
 		printART();
 	}
@@ -175,10 +173,6 @@ public class TowerHandler {
 	
 	public static void shootAll() {
 		for (Tower tower : towerArray) tower.shoot(interf);
-	}
-	
-	public static ArrayList<Tower> getTowerArray() {
-		return towerArray;
 	}
 	
 	public static int[][] getNOA() {
