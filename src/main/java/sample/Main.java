@@ -47,7 +47,7 @@ public class Main extends Application {
     			}
     			long timeSpent = now - prevTime;
     			
-    			if (timeSpent>GenerationTime/5) {
+    			if (timeSpent>GenerationTime/15) {
     					if(flag) {
     						try {
 								monsterGenerator.updateMonsterEachTimestamp();
@@ -59,12 +59,10 @@ public class Main extends Application {
 								e.printStackTrace();
 							}
     						flag = false;
-    						System.out.println("1");
     					}
     					else {
     						TowerHandler.shootAll();
     						flag = true;
-    						System.out.println("2");
     					}
 ////    				updateMonster(myController)
 //    				appController.Spawn(new ActionEvent());
