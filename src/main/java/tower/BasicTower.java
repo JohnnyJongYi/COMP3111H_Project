@@ -38,6 +38,7 @@ public class BasicTower extends Tower {
 		}
 		
 		if (target != null) {
+			System.out.println();
 			System.out.println("Basic shooting target--->");
 			System.out.println("Damaging monster--->");
 			target.printMonsterInfo();
@@ -46,6 +47,7 @@ public class BasicTower extends Tower {
 			f.ShootBasic(label, target.getGrid());
 			
 			System.out.println("Basic shooting done--->");
+			System.out.println();
 		}
 	}
 	

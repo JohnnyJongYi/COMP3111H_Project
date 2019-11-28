@@ -106,6 +106,14 @@ public class TowerHandler {
 	}
 	
 	public static void printART() {
+		System.out.println();
+		System.out.println("Tower Array--->");
+		for (Tower t: towerArray) {
+			t.printTowerInfo();
+		}
+		System.out.println("Tower Array END--->");
+		System.out.println();
+		
 		System.out.println("Tower grid:");
 		for (int y = 0; y < 12; y++) {
 			for (int x = 0; x < 12; x++) {
@@ -200,14 +208,21 @@ public class TowerHandler {
 	}
 	
 	public static void destroy(Tower tower) {
+		System.out.println("Deleting tower----------------------------------------------------------------->");
+		
+		if (!towerArray.contains(tower)) {
+			System.out.println("No such tower in towerArray!!!");
+			return;
+		}
+		
 		if (tower.getTowerType() == 3) catapultCount--;
 		
 		towerGrid[tower.getLocationX()][tower.getLocationY()] = false;
 		setNOA(tower, -1);
 		newTowerBuilt = true;
 		
-		calculateART();
-		
 		towerArray.remove(tower);
+		
+		calculateART();
 	}
 }
