@@ -11,13 +11,11 @@ public class Catapult extends Tower{
 	protected int towerType = 3;
 	protected int base_power = 10;
 	protected int power = 10;
-	protected int minRange = 50;
-	protected int maxRange = 150;
 	protected int minRange2 = minRange * minRange;
 	protected int maxRange2 = maxRange * maxRange;
 	
 	Catapult(int x, int y, Grid label, staticInterface interf) {
-		super(x, y, label, interf);
+		super(x, y, 50, 150, label, interf);
 	}
 	
 	public void printTowerInfo() {
