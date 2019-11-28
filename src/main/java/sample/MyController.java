@@ -240,6 +240,8 @@ public class MyController implements staticInterface  {
 	}
 
 	public void upgradeTower(Grid tower, double newDamage, int newLevel) {
+		
+
 		String message = tower.getName() + " " + String.valueOf(newLevel);
 		double range1 = 0;
 		double range2 = 0;
@@ -380,8 +382,28 @@ public class MyController implements staticInterface  {
 	}
 
 	private void destroyTower(Grid tower) {
-		tower.setGraphic(null);
-		TowerHandler.destroy(tower.tower,(int)tower.getX()/40 , (int)tower.getY()/40);
+//		tower.setGraphic(null);
+
+		Grid newLabel = new Grid();
+		newLabel.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+		int j = (int)tower.getX()/GRID_WIDTH;
+		int i = (int)tower.getY()/GRID_HEIGHT;
+		newLabel.setLayoutX(j * GRID_WIDTH);
+		newLabel.setLayoutY(i * GRID_HEIGHT);
+		newLabel.setXY(j * GRID_WIDTH, i * GRID_HEIGHT);
+		newLabel.setMinWidth(GRID_WIDTH);
+		newLabel.setMaxWidth(GRID_WIDTH);
+		newLabel.setMinHeight(GRID_HEIGHT);
+		newLabel.setMaxHeight(GRID_HEIGHT);
+		newLabel.setStyle("-fx-border-color: black;");
+		newLabel.setText(String.valueOf(Math.round(newLabel.getLayoutX())) + " "
+				+ String.valueOf(Math.round(newLabel.getLayoutY())));
+		setDragAndDrop(newLabel);
+		grids[i][j] = newLabel;
+
+		paneArena.getChildren().remove(tower);
+		paneArena.getChildren().addAll(newLabel);
+		TowerHandler.destroy(j,i);
 	}
 
 	private void actionOnTower(Grid tower) {
