@@ -27,25 +27,27 @@ public class TowerHandler {
 	}
 	
 	public static boolean build(int type, int x, int y, Grid label) {
-		if (x == 0 && y == 11 || x == 11 && y == 0 || ART[x][y]) return false; // cannot build on start & end grid & articulation grid
+		if (ART[x][y]) return false; // cannot build on articulation grid
 		
+		Tower tower = null;
 		switch(type) {
 			case 1 : 
-				towerArray.add(new BasicTower(x, y, label, interf));
+				tower = new BasicTower(x, y, label, interf);
 				break;
 			case 2 :
-				towerArray.add(new IceTower(x, y, label, interf));
+				tower = new IceTower(x, y, label, interf);
 				break;
 			case 3 :
-				towerArray.add(new Catapult(x, y, label, interf));
+				tower = new Catapult(x, y, label, interf);
 				catapultCount++;
 				break;
 			case 4 :
-				towerArray.add(new LaserTower(x, y, label, interf));
+				tower = new LaserTower(x, y, label, interf);
 				break;
 		}
 		
-		setNOA(type, x, y, 1);
+		towerArray.add(tower);
+		setNOA(tower, x, y, 1);
 		
 		num++;
 		newTowerBuilt = true;
@@ -57,29 +59,41 @@ public class TowerHandler {
 		d = new int[12][12];
 		low = new int[12][12];
 		pred = new int[12][12][2];
-		for (int i = 0; i < 11; i++) for (int j = 0; j < 11; j++) pred[i][j][0] = -1;
+		
+		for (int i = 0; i < 11; i++) for (int j = 0; j < 11; j++) {
+			ART[i][j] = flag[i][j] = false;
+			pred[i][j][0] = -1;
+		}
 
 		articulation(0, 11);
+		ART[0][11] = true; // cannot build on start & end grid
+		ART[11][0] = true;
+		
+		printART();
 		
 		return true;
 	}
 	
 	protected static void articulation(int v_x, int v_y) {
 		flag[v_x][v_y] = true;
-		d[v_x][v_y] = ++time;
+		time++;
+		d[v_x][v_y] = time;
 		low[v_x][v_y] = d[v_x][v_y];
 		
 		for (int w = 0; w < 4; w++) {
 			int w_x = v_x + n_x[w];
 			int w_y = v_y + n_y[w];
-			if (w_x < 0 || w_x > 11 || w_y < 0 || w_y > 11) continue; // boundary check
-			if (towerGrid[w_x][w_y]) continue; // skip if there is a tower on w
+			
+			if (w_x < 0 || w_x > 11 || w_y < 0 || w_y > 11 || towerGrid[w_x][w_y]) continue; // boundary check or if there is a tower
 			
 			if (!flag[w_x][w_y]) {
 				pred[w_x][w_y][0] = v_x;
 				pred[w_x][w_y][1] = v_y;
 				articulation(w_x, w_y);
-				if (low[w_x][w_y] >= d[v_x][v_y]) ART[v_x][v_y] = true;
+				if (low[w_x][w_y] >= d[v_x][v_y]) {
+					ART[v_x][v_y] = true;
+					System.out.println("Articulation point on (" + v_x + ", " + v_y + ")");
+				}
 				low[v_x][v_y] = Math.min(low[v_x][v_y], low[w_x][w_y]);
 			}
 			else if (w_x != pred[v_x][v_y][0] || w_y != pred[v_x][v_y][1])
@@ -87,26 +101,50 @@ public class TowerHandler {
 		}
 	}
 	
-	protected static void setNOA(int type, int locationX, int locationY, int a) {
-		if (type == 4) return;
+	public static void printART() {
+		System.out.println("Articulation grid:");
+		for (int y = 0; y < 11; y++) {
+			for (int x = 0; x < 11; x++) {
+				System.out.print(ART[x][y] + " ");
+			}
+			System.out.println("---------------------------------------------");
+		}
+		System.out.println("d grid:");
+		for (int y = 0; y < 11; y++) {
+			for (int x = 0; x < 11; x++) {
+				System.out.print(d[x][y] + " ");
+			}
+			System.out.println("---------------------------------------------");
+		}
+		System.out.println("low grid:");
+		for (int y = 0; y < 11; y++) {
+			for (int x = 0; x < 11; x++) {
+				System.out.print(low[x][y] + " ");
+			}
+			System.out.println("---------------------------------------------");
+		}
+	}
+	
+	protected static void setNOA(Tower tower, int locationX, int locationY, int a) {
+		if (tower.getTowerType() == 4) return;
 		
-		int maxRange = towerArray.get(num).getMaxRange();
-		int minRange = towerArray.get(num).getMinRange();
+		int maxRange = tower.getMaxRange();
+		int minRange = tower.getMinRange();
 		int maxRange2 = maxRange * maxRange;
 		int minRange2 = minRange * minRange;
 		
 		int x_low = Math.max(0, locationX - maxRange);
-		int x_high = Math.min(480, locationX + maxRange);
+		int x_high = Math.min(479, locationX + maxRange);
 		
 		for (int x = x_low; x <= x_high; x++) {
-			int delta_x = Math.abs(locationX - x);
-			int max_delta_y = (int) Math.floor(Math.sqrt(maxRange2 - delta_x * delta_x));
-			int y_low = Math.max(0, locationY - max_delta_y);
-			int y_high = Math.min(480, locationY + max_delta_y);
+			int dx = Math.abs(locationX - x);
+			int max_dy = (int) Math.floor(Math.sqrt(maxRange2 - dx * dx));
+			int y_low = Math.max(0, locationY - max_dy);
+			int y_high = Math.min(479, locationY + max_dy);
 			
 			for (int y = y_low; y <= y_high; y++) { // for all pixel in range
-				int delta_y = Math.abs(locationY - y);
-				if (delta_x * delta_x + delta_y * delta_y >= minRange2) numberOfAttack[x][y] += a;
+				int dy = Math.abs(locationY - y);
+				if (dx * dx + dy * dy >= minRange2) numberOfAttack[x][y] += a;
 			}
 		}
 	}
@@ -132,7 +170,14 @@ public class TowerHandler {
 	}
 	
 	public static boolean[][] towerGrid() {
-		return towerGrid;
+		boolean[][] invertedFlag = new boolean[12][12];
+		
+		for (int x = 0; x < 12; x++) for (int y = 0; y < 12; y++) {
+			if (towerGrid[x][y]) invertedFlag[x][y] = false;
+			else invertedFlag[x][y] = true;
+		}
+		
+		return invertedFlag;
 	}
 	
 	public static boolean catapultFound() {
@@ -141,7 +186,7 @@ public class TowerHandler {
 	}
 	
 	public static void destroy(Tower tower, int x, int y) {
-		setNOA(tower.getTowerType(), x, y, -1);
+		setNOA(tower, x, y, -1);
 		if (tower.getTowerType() == 3) catapultCount--;
 		towerArray.remove(tower);
 		towerGrid[x][y] = false;
