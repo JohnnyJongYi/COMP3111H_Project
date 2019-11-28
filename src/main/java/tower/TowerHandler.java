@@ -7,6 +7,7 @@ import sample.staticInterface;
 
 public class TowerHandler {
 	protected static ArrayList<Tower> towerArray = new ArrayList<Tower>();
+	protected static Tower[][] findTowerGrid =  new Tower[12][12];
 	protected static int[][] numberOfAttack = new int[480][480];
 	protected static boolean[][] towerGrid =  new boolean[12][12];
 	protected static boolean newTowerBuilt;
@@ -48,6 +49,7 @@ public class TowerHandler {
 		tower.printTowerInfo();
 		
 		towerArray.add(tower);
+		findTowerGrid[x][y] = tower;
 		
 		towerGrid[x][y] = true;
 		setNOA(tower, 1);
@@ -207,22 +209,18 @@ public class TowerHandler {
 		return true;
 	}
 	
-	public static void destroy(Tower tower) {
+	public static void destroy(int x, int y) {
 		System.out.println("Deleting tower----------------------------------------------------------------->");
 		
-		if (!towerArray.contains(tower)) {
-			System.out.println("No such tower in towerArray!!!");
-			System.out.println(tower);
-			return;
-		}
-		
+		Tower tower = findTowerGrid[x][y];
 		if (tower.getTowerType() == 3) catapultCount--;
 		
-		towerGrid[tower.getLocationX()][tower.getLocationY()] = false;
+		towerGrid[x][y] = false;
 		setNOA(tower, -1);
 		newTowerBuilt = true;
 		
 		towerArray.remove(tower);
+		findTowerGrid[x][y] = null;
 		
 		calculateART();
 	}
