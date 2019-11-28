@@ -191,9 +191,11 @@ public class TowerHandler {
 		boolean[][] invertedFlag = new boolean[12][12];
 		
 		for (int x = 0; x < 12; x++) for (int y = 0; y < 12; y++) {
-			if (towerGrid[x][y]) invertedFlag[x][y] = false;
-			else invertedFlag[x][y] = true;
+			if (towerGrid[x][y]) invertedFlag[y][x] = false;
+			else invertedFlag[y][x] = true;
 		}
+		
+		
 		
 		return invertedFlag;
 	}

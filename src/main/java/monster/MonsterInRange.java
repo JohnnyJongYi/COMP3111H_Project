@@ -11,11 +11,11 @@ public class MonsterInRange
 	MonsterInRange(ArrayList<Monster> mon)
 	{
 		monsters = mon;
-		rangeArray = new ArrayList[480][480]; 
 	}
 	
 	public void startSearch()
 	{
+		rangeArray = new ArrayList[480][480]; 
 		for(int m = 0 ; m<monsters.size(); m++)
 		{
 			int xm = monsters.get(m).getLoc().getX();
