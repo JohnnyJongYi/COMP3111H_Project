@@ -770,6 +770,7 @@ public class MyController implements staticInterface  {
 			endY = 1000;
 		else
 			endY = -1000;
+		
 		if (towerX != monsterX) {
 			double slope = (realTowerY - realMonsterY) / (towerX - monsterX);
 			double bias = realTowerY - slope * towerX;
@@ -777,6 +778,13 @@ public class MyController implements staticInterface  {
 		} else
 			endX = towerX;
 
+		if(realMonsterY == realTowerY) {
+			endY = realTowerY;
+			if(monsterX<towerX)
+				endX = -1000;
+			else
+				endX = 1000;
+			}
 		line.setStartX(towerX);
 		line.setStartY(towerY);
 		line.setEndX(endX);
