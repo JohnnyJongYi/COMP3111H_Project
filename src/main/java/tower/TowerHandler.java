@@ -120,18 +120,26 @@ public class TowerHandler {
 			System.out.println();
 		}
 		System.out.println("---------------------------------------------");
-		System.out.println("d grid:");
+//		System.out.println("d grid:");
+//		for (int y = 0; y < 12; y++) {
+//			for (int x = 0; x < 12; x++) {
+//				System.out.print(d[x][y] + " ");
+//			}
+//			System.out.println();
+//		}
+//		System.out.println("---------------------------------------------");
+//		System.out.println("low grid:");
+//		for (int y = 0; y < 12; y++) {
+//			for (int x = 0; x < 12; x++) {
+//				System.out.print(low[x][y] + " ");
+//			}
+//			System.out.println();
+//		}
+//		System.out.println("---------------------------------------------");
+		System.out.println("NOA grid:");
 		for (int y = 0; y < 12; y++) {
 			for (int x = 0; x < 12; x++) {
-				System.out.print(d[x][y] + " ");
-			}
-			System.out.println();
-		}
-		System.out.println("---------------------------------------------");
-		System.out.println("low grid:");
-		for (int y = 0; y < 12; y++) {
-			for (int x = 0; x < 12; x++) {
-				System.out.print(low[x][y] + " ");
+				System.out.print(ART[x][y] + " ");
 			}
 			System.out.println();
 		}
