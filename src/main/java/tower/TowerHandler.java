@@ -212,6 +212,7 @@ public class TowerHandler {
 		
 		if (!towerArray.contains(tower)) {
 			System.out.println("No such tower in towerArray!!!");
+			System.out.println(tower);
 			return;
 		}
 		
