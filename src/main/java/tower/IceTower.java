@@ -17,7 +17,6 @@ public class IceTower extends Tower{
 	
 	IceTower(int x, int y, Grid label, staticInterface interf) {
 		super(x, y, label, interf);
-		printTowerInfo();
 	}
 	
 	public void printTowerInfo() {

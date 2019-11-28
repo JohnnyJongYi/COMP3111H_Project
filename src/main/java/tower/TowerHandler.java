@@ -45,6 +45,7 @@ public class TowerHandler {
 				tower = new LaserTower(x, y, label, interf);
 				break;
 		}
+		tower.printTowerInfo();
 		
 		towerArray.add(tower);
 		setNOA(tower, x, y, 1);
@@ -102,27 +103,38 @@ public class TowerHandler {
 	}
 	
 	public static void printART() {
+		System.out.println("Tower grid:");
+		for (int y = 0; y < 12; y++) {
+			for (int x = 0; x < 12; x++) {
+				System.out.print(towerGrid[x][y] + " ");
+			}
+			System.out.println();
+		}
+		System.out.println("---------------------------------------------");
 		System.out.println("Articulation grid:");
-		for (int y = 0; y < 11; y++) {
-			for (int x = 0; x < 11; x++) {
+		for (int y = 0; y < 12; y++) {
+			for (int x = 0; x < 12; x++) {
 				System.out.print(ART[x][y] + " ");
 			}
-			System.out.println("---------------------------------------------");
+			System.out.println();
 		}
+		System.out.println("---------------------------------------------");
 		System.out.println("d grid:");
-		for (int y = 0; y < 11; y++) {
-			for (int x = 0; x < 11; x++) {
+		for (int y = 0; y < 12; y++) {
+			for (int x = 0; x < 12; x++) {
 				System.out.print(d[x][y] + " ");
 			}
-			System.out.println("---------------------------------------------");
+			System.out.println();
 		}
+		System.out.println("---------------------------------------------");
 		System.out.println("low grid:");
-		for (int y = 0; y < 11; y++) {
-			for (int x = 0; x < 11; x++) {
+		for (int y = 0; y < 12; y++) {
+			for (int x = 0; x < 12; x++) {
 				System.out.print(low[x][y] + " ");
 			}
-			System.out.println("---------------------------------------------");
+			System.out.println();
 		}
+		System.out.println("---------------------------------------------");
 	}
 	
 	protected static void setNOA(Tower tower, int locationX, int locationY, int a) {

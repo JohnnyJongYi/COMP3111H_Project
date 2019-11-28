@@ -17,7 +17,6 @@ public class BasicTower extends Tower {
 	
 	BasicTower(int x, int y, Grid label, staticInterface interf) {
 		super(x, y, label, interf);
-		printTowerInfo();
 	}
 	
 	public void printTowerInfo() {
