@@ -87,7 +87,7 @@ public abstract class Monster
 		int deltax = 0;
 		int deltay = 0;
 		
-		if(time == MonsterGenerator.timestamp-1)
+		if(time == MonsterGenerator.timestamp-1 || TowerHandler.newTowerBuilt() ) 
 		{
 			path.clear();
 			flagArray = TowerHandler.towerGrid();
@@ -95,14 +95,11 @@ public abstract class Monster
 			Collections.reverse(path);
 		}
 		
-		if(TowerHandler.newTowerBuilt())
-		{
-			path.clear();
-			flagArray = TowerHandler.towerGrid();
-			calculatePath(currentGrid);//based on current grid
-			Collections.reverse(path);
-			TowerHandler.resetNewTowerBuilt();
-		}
+		
+		for(int i = 0 ; i< 12; i++)
+		{for(int j = 0 ; j< 12; j++)
+			System.out.print(flagArray[i][j] + " "); 
+		System.out.println(""); }
 		
 		
 		for(int i = 0 ; i< path.size(); i++)
@@ -112,7 +109,6 @@ public abstract class Monster
 				nextGrid = path.get(i+1);
 			}
 		}
-		
 		
 		
 		if(nextGrid == currentGrid-1) //up

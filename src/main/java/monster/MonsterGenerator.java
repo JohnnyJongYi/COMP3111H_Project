@@ -33,6 +33,7 @@ public class MonsterGenerator
 		removeDead();
 		checkAnySlower();
 		moveAllMonsters();
+		TowerHandler.resetNewTowerBuilt();
 		if(timestamp % 20 == 0)
 		{generate(interf);}
 		timestamp++;
@@ -41,6 +42,7 @@ public class MonsterGenerator
 		{
 			forCatapult.startSearch();
 		}
+		
 	}
 	
 	private void moveAllMonsters() throws OutOfArenaException, MovedToWrongGrid
