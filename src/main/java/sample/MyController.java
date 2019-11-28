@@ -309,8 +309,8 @@ public class MyController implements staticInterface  {
 				radii = 50;
 				break;
 			}
-				
-			if (!TowerHandler.build(type, (int)target.getX()/40 , (int)target.getX()/40,target))
+		
+			if (!TowerHandler.build(type, (int)target.getX()/40 , (int)target.getY()/40,target))
 			{
 				callAlert("Not Allowed","You cannot block the monsters from reaching the end zone!");
 				return;
@@ -789,7 +789,19 @@ public class MyController implements staticInterface  {
 	}
 
 	public void monsterDie(Grid monster) {
-		changePic(monster, "collision");
+
+		
+		double height = MONSTER_SIZE;
+		Grid newLabel = new Grid();
+		newLabel.setLayoutX(monster.getX());
+		newLabel.setLayoutY(monster.getY());
+		Image image = new Image(MyController.class.getResourceAsStream("/collision.png"));
+		ImageView imageView = new ImageView(image);
+		imageView.setFitHeight(30);
+		imageView.setFitWidth(30);
+		newLabel.setGraphic(imageView);
+		paneArena.getChildren().remove(monster);
+		paneArena.getChildren().addAll(newLabel);
 		Task<Void> sleeper = new Task<Void>() {
 
 			protected Void call() throws Exception {
@@ -803,7 +815,7 @@ public class MyController implements staticInterface  {
 		sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
 			@Override
 			public void handle(WorkerStateEvent event) {
-				paneArena.getChildren().remove(monster);
+				paneArena.getChildren().remove(newLabel);
 			}
 		});
 		new Thread(sleeper).start();
