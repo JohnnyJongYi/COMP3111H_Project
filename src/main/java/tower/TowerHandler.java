@@ -49,7 +49,7 @@ public class TowerHandler {
 		tower.printTowerInfo();
 		
 		towerArray.add(tower);
-		setNOA(tower, x, y, 1);
+		setNOA(tower, 1);
 		
 		num++;
 		newTowerBuilt = true;
@@ -107,7 +107,8 @@ public class TowerHandler {
 		System.out.println("Tower grid:");
 		for (int y = 0; y < 12; y++) {
 			for (int x = 0; x < 12; x++) {
-				System.out.print(towerGrid[x][y] + " ");
+				if (towerGrid[x][y]) System.out.print("1 ");
+				else  System.out.print("0 ");
 			}
 			System.out.println();
 		}
@@ -115,7 +116,8 @@ public class TowerHandler {
 		System.out.println("Articulation grid:");
 		for (int y = 0; y < 12; y++) {
 			for (int x = 0; x < 12; x++) {
-				System.out.print(ART[x][y] + " ");
+				if (ART[x][y]) System.out.print("1 ");
+				else  System.out.print("0 ");
 			}
 			System.out.println();
 		}
@@ -137,22 +139,27 @@ public class TowerHandler {
 //		}
 //		System.out.println("---------------------------------------------");
 		System.out.println("NOA grid:");
-		for (int y = 0; y < 12; y++) {
-			for (int x = 0; x < 12; x++) {
-				System.out.print(ART[x][y] + " ");
+		for (int y = 0; y < 479; y += 10) {
+			for (int x = 0; x < 479; x += 10) {
+				System.out.print(numberOfAttack[x][y] + " ");
 			}
 			System.out.println();
 		}
 		System.out.println("---------------------------------------------");
 	}
 	
-	protected static void setNOA(Tower tower, int locationX, int locationY, int a) {
+	protected static void setNOA(Tower tower, int a) {
 		if (tower.getTowerType() == 4) return;
+		
+		int locationX = tower.getMidX();
+		int locationY = tower.getMidY();
 		
 		int maxRange = tower.getMaxRange();
 		int minRange = tower.getMinRange();
 		int maxRange2 = maxRange * maxRange;
 		int minRange2 = minRange * minRange;
+		
+		System.out.println("locationX: " + locationX +" locationY: " + locationY + " maxRange: " + maxRange + " minRange: " + minRange + " maxRange2: " + maxRange2 + " minRange2: " + minRange2);
 		
 		int x_low = Math.max(0, locationX - maxRange);
 		int x_high = Math.min(479, locationX + maxRange);
@@ -207,7 +214,7 @@ public class TowerHandler {
 	}
 	
 	public static void destroy(Tower tower, int x, int y) {
-		setNOA(tower, x, y, -1);
+		setNOA(tower, -1);
 		if (tower.getTowerType() == 3) catapultCount--;
 		towerArray.remove(tower);
 		towerGrid[x][y] = false;

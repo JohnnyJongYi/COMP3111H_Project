@@ -12,11 +12,9 @@ public class LaserTower extends Tower{
 	protected int towerType = 4;
 	protected int base_power = 10;
 	protected int power = 10;
-	protected int minRange = 0;
-	protected int maxRange = 680;
 	
 	LaserTower(int x, int y, Grid label, staticInterface interf) {
-		super(x, y, label, interf);
+		super(x, y, 0, 1000, label, interf);
 	}
 	
 	public void printTowerInfo() {

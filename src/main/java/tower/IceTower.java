@@ -11,12 +11,10 @@ public class IceTower extends Tower{
 	protected int towerType = 2;
 	protected int base_power = 0;
 	protected int power = 0;
-	protected int minRange = 0;
-	protected int maxRange = 65;
 	protected int range2 = maxRange * maxRange;
 	
 	IceTower(int x, int y, Grid label, staticInterface interf) {
-		super(x, y, label, interf);
+		super(x, y, 0, 65, label, interf);
 	}
 	
 	public void printTowerInfo() {

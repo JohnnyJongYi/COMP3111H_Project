@@ -17,9 +17,11 @@ public abstract class Tower {
 	protected Grid label;
 	protected staticInterface interf;
 	
-	Tower(int x, int y, Grid lbl, staticInterface f) {
+	Tower(int x, int y, int min, int max, Grid lbl, staticInterface f) {
 		locationX = x;
 		locationY = y;
+		minRange = min;
+		maxRange = max;
 		midX = x * 40 + 20;
 		midY = y * 40 + 20;
 		label = lbl;
@@ -60,6 +62,14 @@ public abstract class Tower {
 	
 	public int getLocationY() {
 		return locationY;
+	}
+	
+	public int getMidX() {
+		return midX;
+	}
+	
+	public int getMidY() {
+		return midY;
 	}
 	
 	public void printTowerInfo() {
