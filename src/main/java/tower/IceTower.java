@@ -38,8 +38,14 @@ public class IceTower extends Tower{
 		}
 		
 		if (target != null) {
+			System.out.println("Ice shooting target--->");
+			System.out.println("Slowing monster--->");
+			target.printMonsterInfo();
+			
 			target.takedamage(0, level); // slow the monster
 			f.ShootIce(label, target.getGrid());
+			
+			System.out.println("Ice shooting done--->");
 		}
 	}
 }

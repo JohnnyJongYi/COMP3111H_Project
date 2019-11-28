@@ -38,6 +38,8 @@ public class LaserTower extends Tower{
 		}
 		
 		if (target != null) {
+			System.out.println("Laser shooting target--->");
+			
 			//consumes some resources
 			int x = target.getLocationX(); // make a line towards the monster
 			int y = target.getLocationY();
@@ -47,11 +49,17 @@ public class LaserTower extends Tower{
 			double divider = Math.sqrt(A * A + B * B);
 			
 			for (Monster monster : monsterArray) { // loop all monster, damage all monster 3 px away from the line
-				if (Math.abs(A * monster.getLocationX() + B * monster.getLocationY() + C) / divider <= 3)
+				if (Math.abs(A * monster.getLocationX() + B * monster.getLocationY() + C) / divider <= 3) {
+					System.out.println("Damaging monster--->");
+					monster.printMonsterInfo();
+					
 					monster.takedamage(1, power);
+				}
 			}
 			
 			f.ShootLaser(label, target.getGrid());
+			
+			System.out.println("Laser shooting done--->");
 		}
 	}
 }
