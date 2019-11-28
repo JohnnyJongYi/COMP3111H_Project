@@ -38,6 +38,7 @@ public class LaserTower extends Tower{
 		}
 		
 		if (target != null) {
+			System.out.println();
 			System.out.println("Laser shooting target--->");
 			
 			//consumes some resources
@@ -60,6 +61,7 @@ public class LaserTower extends Tower{
 			f.ShootLaser(label, target.getGrid());
 			
 			System.out.println("Laser shooting done--->");
+			System.out.println();
 		}
 	}
 }

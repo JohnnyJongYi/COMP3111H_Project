@@ -61,6 +61,7 @@ public class Catapult extends Tower{
 		}
 		
 		if (max_monster > 0) {
+			System.out.println();
 			System.out.println("Catapult shooting--->");
 			System.out.println(max_monster + " monsters at (" + target_x + ", " + target_y + ")");
 			
@@ -71,6 +72,7 @@ public class Catapult extends Tower{
 			}
 			f.ShootCatapult(label, target_x, target_y);
 			System.out.println("Catapult shooting done--->");
+			System.out.println();
 		}
 	}
 }
