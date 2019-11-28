@@ -1,6 +1,5 @@
 package monster;
-import Coordinates.Location;
-import Coordinates.OutOfArenaException;
+import Coordinates.*;
 import tower.TowerHandler;
 import sample.Grid;
 import sample.staticInterface;
@@ -37,13 +36,20 @@ public abstract class Monster
 	protected Grid monsterLabel;
 	protected staticInterface interf;
 	
+	protected final int startxAlgo = 20;
+	protected final int startyAlgo = 460;
+	
+	protected final int startxGrid = startxAlgo -15;
+	protected final int startyGrid = startyAlgo - 15;
+	
 	
 	Monster(int timestamp, int mID, int type, staticInterface interf)
 	{  
-		interf = this.interf;
+		
+		this.interf =interf;
 		monsterType = type;
 		time = timestamp;
-		loc = new Location(0,479);
+		loc = new Location(startxAlgo,startyAlgo);
 		monsterID = mID;
 		alive = true;
 		isSlower = false;
@@ -56,7 +62,7 @@ public abstract class Monster
 			for(int j = 0 ; j <= 11 ; j++)
 				monsterGrid[i][j] = j*100 + i;
 		currentGrid = monsterGrid[11][0];
-		nextGrid = 0;
+		nextGrid = currentGrid;
 		path = new ArrayList<Integer>();
 		
 		isHealing = false;
@@ -81,7 +87,7 @@ public abstract class Monster
 		int deltax = 0;
 		int deltay = 0;
 		
-		if(time == MonsterGenerator.timestamp)
+		if(time == MonsterGenerator.timestamp-1)
 		{
 			path.clear();
 			flagArray = TowerHandler.towerGrid();
@@ -112,7 +118,7 @@ public abstract class Monster
 		if(nextGrid == currentGrid-1) //up
 		{
 			loc.update(0, -speed);
-			deltay = -speed;
+			deltay = speed;
 			
 		}
 		else if(nextGrid == currentGrid+100 )  // right
@@ -128,12 +134,17 @@ public abstract class Monster
 		else if (nextGrid == currentGrid +1) // down
 		{
 			loc.update(0, speed);
-			deltax = speed;
+			deltay = -speed;
 		}
 		
 		updateDistanceToEnd();
 		
-		interf.moveMonster(monsterLabel, deltax, deltay);
+		
+		
+		if(interf == null)
+			System.out.println("interf is null"); 
+		else
+			interf.moveMonster(monsterLabel, deltax, deltay);
 		
 		if(monsterType == 2 && MonsterGenerator.timestamp % 10 == 0)
 		{
@@ -249,14 +260,18 @@ public abstract class Monster
 		{
 			hp = hp - damage;
 			
-			if(isSlower)
-				interf.monsterAttackedAndSlowed(monsterLabel);
-			else
-				interf.monsterAttacked(monsterLabel);
-			
+		
 			interf.changeHP(monsterLabel, hp);
 			if ( hp <= 0)
 				die();
+			else
+			{
+				if(isSlower)
+					interf.monsterAttackedAndSlowed(monsterLabel);
+				else
+					interf.monsterAttacked(monsterLabel);
+			}
+				
 		}
 		//reduce hp by certain amount according to tower type
 	}
@@ -352,13 +367,4 @@ public abstract class Monster
 		return monsterLabel;
 	}
 	
-}
-
-class MovedToWrongGrid extends Exception
-{
-
-	public MovedToWrongGrid()
-	{
-		super("One of the monster moved to the wrong grid");
-	}
 }
