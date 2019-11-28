@@ -764,6 +764,7 @@ public class MyController implements staticInterface  {
 	};
 	
 	public void ShootLaser(Grid tower, Grid monster) {
+		TowerAttacking(tower);
 		double towerX = tower.getX() + GRID_WIDTH / 2;
 		double towerY = tower.getY() + GRID_HEIGHT / 2;
 		double monsterX = monster.getX() + MONSTER_SIZE / 2;
