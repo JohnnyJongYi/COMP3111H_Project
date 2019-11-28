@@ -29,6 +29,7 @@ public class TowerHandler {
 	public static boolean build(int type, int x, int y, Grid label) {
 		if (ART[x][y]) return false; // cannot build on articulation grid
 		
+		System.out.println("Building tower at (" + x + ", " + y + ")");
 		Tower tower = null;
 		switch(type) {
 			case 1 : 
