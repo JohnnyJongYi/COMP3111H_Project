@@ -45,7 +45,8 @@ public class Catapult extends Tower{
 			
 			for (int y = y_low; y <= y_high; y++) { // for all pixel in range
 				int dy = Math.abs(midY - y);
-				if (MonstersInRange[x][y].size() >= max_monster && dx * dx + dy * dy >= minRange2) { // find the pixel with most monster in range
+				
+				if (MonstersInRange[x][y] != null && MonstersInRange[x][y].size() >= max_monster && dx * dx + dy * dy >= minRange2) { // find the pixel with most monster in range
 					for (Monster m : MonstersInRange[x][y]) {
 						double to_end = m.getDistanceToEndpoint();
 						if (to_end < target_to_end) {
@@ -60,8 +61,16 @@ public class Catapult extends Tower{
 		}
 		
 		if (max_monster > 0) {
-			for (Monster monster : MonstersInRange[target_x][target_y]) monster.takedamage(1, power);
+			System.out.println("Catapult shooting--->");
+			System.out.println(max_monster + " monsters at (" + target_x + ", " + target_y + ")");
+			
+			for (Monster monster : MonstersInRange[target_x][target_y]) {
+				System.out.println("Damaging monster--->");
+				monster.printMonsterInfo();
+				monster.takedamage(1, power);
+			}
 			f.ShootCatapult(label, target_x, target_y);
+			System.out.println("Catapult shooting done--->");
 		}
 	}
 }

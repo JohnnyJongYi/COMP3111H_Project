@@ -39,12 +39,13 @@ public class BasicTower extends Tower {
 		
 		if (target != null) {
 			System.out.println("Basic shooting target--->");
+			System.out.println("Damaging monster--->");
 			target.printMonsterInfo();
-			System.out.println("Target takes damage--->");
-			target.takedamage(1, power); // shoot the monster
-			System.out.println("Report to GUI--->");
+			
+			target.takedamage(1, power);
 			f.ShootBasic(label, target.getGrid());
-			System.out.println("Shooting done--->");
+			
+			System.out.println("Basic shooting done--->");
 		}
 	}
 	
