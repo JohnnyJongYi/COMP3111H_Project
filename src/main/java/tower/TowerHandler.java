@@ -7,7 +7,6 @@ import sample.staticInterface;
 
 public class TowerHandler {
 	protected static ArrayList<Tower> towerArray = new ArrayList<Tower>();
-	protected static int num;
 	protected static int[][] numberOfAttack = new int[480][480];
 	protected static boolean[][] towerGrid =  new boolean[12][12];
 	protected static boolean newTowerBuilt;
@@ -49,12 +48,17 @@ public class TowerHandler {
 		tower.printTowerInfo();
 		
 		towerArray.add(tower);
-		setNOA(tower, 1);
 		
-		num++;
-		newTowerBuilt = true;
 		towerGrid[x][y] = true;
+		setNOA(tower, 1);
+		newTowerBuilt = true;
 		
+		calculateART();
+		
+		return true;
+	}
+	
+	protected static void calculateART() {
 		ART = new boolean[12][12]; // articulation prep
 		flag = new boolean[12][12];
 		time = 0;
@@ -72,8 +76,6 @@ public class TowerHandler {
 		ART[11][0] = true;
 		
 		printART();
-		
-		return true;
 	}
 	
 	protected static void articulation(int v_x, int v_y) {
@@ -113,6 +115,7 @@ public class TowerHandler {
 			System.out.println();
 		}
 		System.out.println("---------------------------------------------");
+		
 		System.out.println("Articulation grid:");
 		for (int y = 0; y < 12; y++) {
 			for (int x = 0; x < 12; x++) {
@@ -122,22 +125,7 @@ public class TowerHandler {
 			System.out.println();
 		}
 		System.out.println("---------------------------------------------");
-//		System.out.println("d grid:");
-//		for (int y = 0; y < 12; y++) {
-//			for (int x = 0; x < 12; x++) {
-//				System.out.print(d[x][y] + " ");
-//			}
-//			System.out.println();
-//		}
-//		System.out.println("---------------------------------------------");
-//		System.out.println("low grid:");
-//		for (int y = 0; y < 12; y++) {
-//			for (int x = 0; x < 12; x++) {
-//				System.out.print(low[x][y] + " ");
-//			}
-//			System.out.println();
-//		}
-//		System.out.println("---------------------------------------------");
+		
 		System.out.println("NOA grid:");
 		for (int y = 0; y < 479; y += 10) {
 			for (int x = 0; x < 479; x += 10) {
@@ -158,8 +146,6 @@ public class TowerHandler {
 		int minRange = tower.getMinRange();
 		int maxRange2 = maxRange * maxRange;
 		int minRange2 = minRange * minRange;
-		
-		System.out.println("locationX: " + locationX +" locationY: " + locationY + " maxRange: " + maxRange + " minRange: " + minRange + " maxRange2: " + maxRange2 + " minRange2: " + minRange2);
 		
 		int x_low = Math.max(0, locationX - maxRange);
 		int x_high = Math.min(479, locationX + maxRange);
@@ -213,12 +199,15 @@ public class TowerHandler {
 		return true;
 	}
 	
-	public static void destroy(Tower tower, int x, int y) {
-		setNOA(tower, -1);
+	public static void destroy(Tower tower) {
 		if (tower.getTowerType() == 3) catapultCount--;
-		towerArray.remove(tower);
-		towerGrid[x][y] = false;
+		
+		towerGrid[tower.getLocationX()][tower.getLocationY()] = false;
+		setNOA(tower, -1);
 		newTowerBuilt = true;
-		articulation(0, 11);
+		
+		calculateART();
+		
+		towerArray.remove(tower);
 	}
 }
