@@ -6,6 +6,8 @@ import sample.staticInterface;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.io.Serializable;
+import javax.persistence.*;
 
 public abstract class Monster 
 {
@@ -42,8 +44,9 @@ public abstract class Monster
 	protected final int startxGrid = startxAlgo -15;
 	protected final int startyGrid = startyAlgo - 15;
 	
+	MonsterData monsterData;
 	
-	Monster(int timestamp, int mID, int type, staticInterface interf)
+	Monster(int timestamp, int mID, int type, staticInterface interf, MonsterData data)
 	{  
 		
 		this.interf =interf;
@@ -66,7 +69,7 @@ public abstract class Monster
 		path = new ArrayList<Integer>();
 		
 		isHealing = false;
-		
+		monsterData = data;
 		
 	}
 	
@@ -95,12 +98,12 @@ public abstract class Monster
 			Collections.reverse(path);
 		}
 		
-		
-		for(int i = 0 ; i< 12; i++)
-		{for(int j = 0 ; j< 12; j++)
-			System.out.print(flagArray[i][j] + " "); 
-		System.out.println(""); }
-		
+	
+//		for(int i = 0 ; i< 12; i++)
+//		{for(int j = 0 ; j< 12; j++)
+//			System.out.print(flagArray[i][j] + " "); 
+//		System.out.println(""); }
+
 		
 		for(int i = 0 ; i< path.size(); i++)
 		{
@@ -259,7 +262,10 @@ public abstract class Monster
 		
 			interf.changeHP(monsterLabel, hp);
 			if ( hp <= 0)
+			{
 				die();
+				monsterData.dead();
+			}
 			else
 			{
 				if(isSlower)
