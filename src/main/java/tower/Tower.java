@@ -29,7 +29,7 @@ public abstract class Tower {
 	public void upgrade() {
 		level += 1;
 		power = base_power * level;
-		interf.upgradeTower(this, power, level);
+//		interf.upgradeTower(this, power, level);
 	}
 	
 	public void shoot(staticInterface f) {}
