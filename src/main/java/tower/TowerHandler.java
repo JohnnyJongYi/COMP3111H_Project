@@ -69,6 +69,8 @@ public class TowerHandler {
 		ART[0][11] = true; // cannot build on start & end grid
 		ART[11][0] = true;
 		
+		printART();
+		
 		return true;
 	}
 	
@@ -100,11 +102,26 @@ public class TowerHandler {
 	}
 	
 	public static void printART() {
+		System.out.println("Articulation grid:");
 		for (int y = 0; y < 11; y++) {
 			for (int x = 0; x < 11; x++) {
 				System.out.print(ART[x][y] + " ");
 			}
-			System.out.println();
+			System.out.println("---------------------------------------------");
+		}
+		System.out.println("d grid:");
+		for (int y = 0; y < 11; y++) {
+			for (int x = 0; x < 11; x++) {
+				System.out.print(d[x][y] + " ");
+			}
+			System.out.println("---------------------------------------------");
+		}
+		System.out.println("low grid:");
+		for (int y = 0; y < 11; y++) {
+			for (int x = 0; x < 11; x++) {
+				System.out.print(low[x][y] + " ");
+			}
+			System.out.println("---------------------------------------------");
 		}
 	}
 	
