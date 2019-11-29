@@ -33,5 +33,7 @@ public interface staticInterface {
 		
 		public boolean changeMoney(int amount);
 		
+		public void callAlert(String title, String content);
+		
 }
 

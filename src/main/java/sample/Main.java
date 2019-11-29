@@ -16,9 +16,13 @@ import tower.TowerHandler;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-import sample.AccessingDataJpaApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@SpringBootApplication
+//import sample.AccessingDataJpaApplication;
+
+//@SpringBootApplication
+
+//@EnableJpaRepositories
 public class Main extends Application {
 	
 	private long prevTime =0;
@@ -26,18 +30,21 @@ public class Main extends Application {
 	private boolean flag = true;
 	
 	
-	private MonsterGenerator monsterGenerator;
+	public static MonsterGenerator monsterGenerator;
 	private TowerHandler towerHandler;
 	
 	
     
 //	private final long id;
 //	private final String content;
+//	
+//	@Override
+//	public void init() {
+//		
+//    SpringApplication.run(AccessingDataJpaApplication.class);
+//	}
 	
-	@Override
-	public void init() {
-		SpringApplication.run(AccessingDataJpaApplication.class);
-	}
+	
 	
 	@SuppressWarnings("restriction")
 	@Override
@@ -105,8 +112,8 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
 
-        MonsterGenerator.retrieveQuery();
-        MonsterGenerator.closeDataBase();
+//        MonsterGenerator.retrieveQuery();
+//        MonsterGenerator.closeDataBase();
     }
 
     
