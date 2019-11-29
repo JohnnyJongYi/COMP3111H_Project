@@ -83,6 +83,7 @@ public abstract class Monster
 	{
 		alive = false;
 		interf.monsterDie(monsterLabel);
+		interf.giveMoneyForKill();
 	}
 	
 	protected void nextMove() throws OutOfArenaException, MovedToWrongGrid

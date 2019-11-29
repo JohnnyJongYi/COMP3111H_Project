@@ -47,10 +47,16 @@ public class Main extends Application {
     			}
     			long timeSpent = now - prevTime;
     			
-    			if (timeSpent>GenerationTime/15) {
+    			if (timeSpent>GenerationTime/15 && !MonsterGenerator.getMonsterHasReachedEnd()) {
     					if(flag) {
     						try {
 								monsterGenerator.updateMonsterEachTimestamp();
+								
+								if(MonsterGenerator.getMonsterHasReachedEnd())
+								{
+									System.out.println("______Game Over_____");
+								}
+									
 							} catch (OutOfArenaException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -71,7 +77,7 @@ public class Main extends Application {
     				prevTime = now;
     			}
     			
-    			
+
     			
     		}
         };
@@ -82,5 +88,7 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
+        MonsterGenerator.retrieveQuery();
+        MonsterGenerator.closeDataBase();
     }
 }

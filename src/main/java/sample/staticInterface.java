@@ -29,5 +29,7 @@ public interface staticInterface {
 		
 		public void upgradeTower(Grid tower, double newDamage, int newLevel);
 		
+		public void giveMoneyForKill();
+		
 }
 
