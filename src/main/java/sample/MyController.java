@@ -29,67 +29,67 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
-
+import monster.MonsterGenerator;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import sample.Grid;
 import tower.TowerHandler;
 import org.springframework.stereotype.Component;
 
+import Coordinates.MovedToWrongGrid;
+import Coordinates.OutOfArenaException;
+
 //@Component
 public class MyController implements staticInterface  {
 	@FXML
-	private Button buttonNextFrame;
+    private AnchorPane paneArena;
 
-	@FXML
-	private Button buttonSimulate;
+    @FXML
+    private Button buttonSpawn;
 
-	@FXML
-	private Button buttonPlay;
-	@FXML
-	private Button buttonUp;
+    @FXML
+    private Button buttonPause;
 
-	@FXML
-	private Button buttonDown;
+    @FXML
+    private Label labelBasicTower;
 
-	@FXML
-	private Button buttonAtt;
+    @FXML
+    private Label labelIceTower;
 
-	@FXML
-	private Button buttonSlow;
+    @FXML
+    private Label labelCatapult;
 
-	@FXML
-	private Button buttonAttandSlow;
+    @FXML
+    private Label labelLaserTower;
 
-	@FXML
-	private AnchorPane paneArena;
+    @FXML
+    private ImageView imageBasicTower;
 
-	@FXML
-	private Label labelBasicTower;
+    @FXML
+    private ImageView imageIceTower;
 
-	@FXML
-	private Label labelIceTower;
+    @FXML
+    private ImageView imageCatapult;
 
-	@FXML
-	private Label labelCatapult;
+    @FXML
+    private ImageView imageLaserTower;
 
-	@FXML
-	private Label labelLaserTower;
+    @FXML
+    private Label moneyLabel;
 
-	@FXML
-	private ImageView imageBasicTower;
+    @FXML
+    private Label scoreLabel;
 
-	@FXML
-	private ImageView imageIceTower;
+    @FXML
+    void Pause(ActionEvent event) {
 
-	@FXML
-	private ImageView imageCatapult;
+    }
 
-	@FXML
-	private ImageView imageLaserTower;
+    @FXML
+    void Spawn(ActionEvent event) {
+			Main.monsterGenerator.generate(this);
+    }
 
-	@FXML
-	private Label moneyLabel;
 
 	private static final int GRID_WIDTH = 40;
 	private static final int GRID_HEIGHT = 40;
@@ -105,7 +105,8 @@ public class MyController implements staticInterface  {
 
 	private towerType draggingTower;
 
-	private int money = 100;
+	private int money = 1000;
+	private int highScore = 0;
 
 	public void callAlert(String title, String content) {
 		Alert alert = new Alert(AlertType.ERROR);
@@ -270,7 +271,7 @@ public class MyController implements staticInterface  {
 		case("Basic Tower"):
 			range1 = 0;
 			range2 = 65;
-			buildingCost = 10;
+			buildingCost = 20;
 			damage = 10;
 			break;
 		case("Ice Tower"):
@@ -282,13 +283,13 @@ public class MyController implements staticInterface  {
 		case("Catapult Tower"):
 			range1 = 50;
 			range2 = 150;
-			buildingCost = 30;
+			buildingCost = 20;
 			damage = 10;
 			break;
 		case("Laser Tower"):
 			range1 = 0;
 			range2 = 1000;
-			buildingCost = 40;
+			buildingCost = 20;
 			damage = 10;
 			break;
 		default:
@@ -888,31 +889,12 @@ public class MyController implements staticInterface  {
 			}
 		});
 		new Thread(sleeper).start();
-
+		
+		updateScore();
 	}
 
-	@FXML
-	public void Spawn(ActionEvent event) {
-//		monster_die();
-		Random rand = new Random();
-		int ran = rand.nextInt(3);
-		String monster = "";
-		switch (ran) {
-		case 0:
-			monster = "fox";
-			break;
-		case 1:
-			monster = "unicorn";
-			break;
-		case 2:
-			monster = "penguin";
-			break;
-		default:
-			monster = "penguin";
-			break;
-
-		}
-		label1 = spawnMonster(0, 450, monster,100);
-		paneArena.getChildren().addAll(label1);
+	private void updateScore() {
+		highScore++;
+		scoreLabel.setText(String.valueOf(highScore));
 	}
 }
