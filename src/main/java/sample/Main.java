@@ -101,8 +101,8 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
 
-//        MonsterGenerator.retrieveQuery();
-//        MonsterGenerator.closeDataBase();
+        MonsterGenerator.retrieveQuery();
+        MonsterGenerator.closeDataBase();
     }
 
     

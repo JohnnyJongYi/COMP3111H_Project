@@ -7,7 +7,7 @@ import sample.staticInterface;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.io.Serializable;
-//import javax.persistence.*;
+import javax.persistence.*;
 
 public abstract class Monster 
 {
