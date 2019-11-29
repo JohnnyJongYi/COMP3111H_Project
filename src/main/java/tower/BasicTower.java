@@ -46,6 +46,8 @@ public class BasicTower extends Tower {
 			target.takedamage(1, power);
 			f.ShootBasic(label, target.getGrid());
 			
+			assert Math.pow(target.getLocationX(), 2) + Math.pow(target.getLocationY(), 2) <= range2; // Test range
+			
 			System.out.println("Basic shooting done--->");
 			System.out.println();
 		}

@@ -46,6 +46,8 @@ public class IceTower extends Tower{
 			target.takedamage(0, level); // slow the monster
 			f.ShootIce(label, target.getGrid());
 			
+			assert Math.pow(target.getLocationX(), 2) + Math.pow(target.getLocationY(), 2) <= range2; // Test range
+			
 			System.out.println("Ice shooting done--->");
 			System.out.println();
 		}

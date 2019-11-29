@@ -30,6 +30,9 @@ public class TowerHandler {
 		if (ART[x][y]) return false; // cannot build on articulation grid
 		
 		System.out.println("Building tower at (" + x + ", " + y + ")");
+		
+		int test = towerArray.size();
+		
 		Tower tower = null;
 		switch(type) {
 			case 1 : 
@@ -56,6 +59,10 @@ public class TowerHandler {
 		newTowerBuilt = true;
 		
 		calculateART();
+		
+//		interf.changeMoney(-20);
+		
+		assert towerArray.size() == test + 1; // Test build
 		
 		return true;
 	}
@@ -147,6 +154,8 @@ public class TowerHandler {
 	protected static void setNOA(Tower tower, int a) {
 		if (tower.getTowerType() == 4) return;
 		
+		int test = numberOfAttack[tower.getLocationX()][tower.getLocationY()];
+		
 		int locationX = tower.getMidX();
 		int locationY = tower.getMidY();
 		
@@ -169,10 +178,18 @@ public class TowerHandler {
 				if (dx * dx + dy * dy >= minRange2) numberOfAttack[x][y] += a;
 			}
 		}
+		
+		if (tower.getTowerType() == 3) assert numberOfAttack[tower.getLocationX()][tower.getLocationY()] == test; // Unit testing
+		else assert numberOfAttack[tower.getLocationX()][tower.getLocationY()] == test + a;
 	}
 	
 	public static void shootAll() {
 		for (Tower tower : towerArray) tower.shoot(interf);
+	}
+	
+	public static boolean upgrade(int x, int y) {
+		if (interf.changeMoney(-20)) return false;
+		findTowerGrid[x][y].upgrade();
 	}
 	
 	public static int[][] getNOA() {
@@ -195,7 +212,7 @@ public class TowerHandler {
 			else invertedFlag[y][x] = true;
 		}
 		
-		
+		assert invertedFlag[3][7] == towerGrid[7][3]; // Unit testing if the conversion is correct
 		
 		return invertedFlag;
 	}
@@ -208,6 +225,8 @@ public class TowerHandler {
 	public static void destroy(int x, int y) {
 		System.out.println("Deleting tower----------------------------------------------------------------->");
 		
+		int test = towerArray.size();
+		
 		Tower tower = findTowerGrid[x][y];
 		if (tower.getTowerType() == 3) catapultCount--;
 		
@@ -219,5 +238,7 @@ public class TowerHandler {
 		findTowerGrid[x][y] = null;
 		
 		calculateART();
+		
+		assert towerArray.size() == test - 1; // Test destroy
 	}
 }
