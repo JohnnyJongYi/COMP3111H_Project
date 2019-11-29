@@ -14,6 +14,7 @@ public abstract class Tower {
 	protected int locationY;
 	protected int midX;
 	protected int midY;
+	protected int cooldowntime = 10;
 	protected Grid label;
 	protected staticInterface interf;
 	
@@ -37,6 +38,7 @@ public abstract class Tower {
 		
 		level += 1;
 		power = base_power * level;
+		if (cooldowntime >= 1) cooldowntime -= 1;
 		System.out.print("power: " + power + " level: " + level);
 		interf.upgradeTower(label, power, level);
 		
