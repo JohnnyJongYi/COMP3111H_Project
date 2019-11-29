@@ -71,6 +71,8 @@ public class Catapult extends Tower{
 				monster.takedamage(1, power);
 			}
 			f.ShootCatapult(label, target_x, target_y);
+			assert Math.pow(target_x, 2) + Math.pow(target_y, 2) <= maxRange2; // Test range
+			
 			System.out.println("Catapult shooting done--->");
 			System.out.println();
 		}

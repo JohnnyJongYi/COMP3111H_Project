@@ -23,6 +23,8 @@ public class LaserTower extends Tower{
 	}
 	
 	public void shoot(staticInterface f) {
+		if (f.changeMoney(-20)) return;//check & consumes some resources
+		
 		ArrayList<Monster> monsterArray = MonsterGenerator.getMonsterArray();
 		if(monsterArray.size() == 0) return;
 		
