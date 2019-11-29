@@ -271,7 +271,7 @@ public class MyController implements staticInterface  {
 			range1 = 0;
 			range2 = 65;
 			buildingCost = 10;
-			damage = 40;
+			damage = 10;
 			break;
 		case("Ice Tower"):
 			range1 = 0;
@@ -283,13 +283,13 @@ public class MyController implements staticInterface  {
 			range1 = 50;
 			range2 = 150;
 			buildingCost = 30;
-			damage = 30;
+			damage = 10;
 			break;
 		case("Laser Tower"):
 			range1 = 0;
 			range2 = 1000;
 			buildingCost = 40;
-			damage = 50;
+			damage = 10;
 			break;
 		default:
 			break;
