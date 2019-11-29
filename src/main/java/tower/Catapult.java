@@ -10,6 +10,7 @@ import sample.staticInterface;
 public class Catapult extends Tower{
 	protected int minRange2 = minRange * minRange;
 	protected int maxRange2 = maxRange * maxRange;
+	protected int cooldown;
 	
 	Catapult(int power, int x, int y, Grid label, staticInterface interf) {
 		super(3, power, x, y, 50, 150, label, interf);
@@ -22,6 +23,13 @@ public class Catapult extends Tower{
 	
 	public void shoot(staticInterface f)
 	{
+		if (cooldown != 0) {
+			cooldown -= 1;
+			return;
+		}
+		
+		cooldown = cooldowntime;
+		
 		ArrayList<Monster> monsterArray = MonsterGenerator.getMonsterArray();
 		ArrayList<Monster>[][] MonstersInRange = MonsterGenerator.getMonstersInRange();
 		if (monsterArray == null || monsterArray.size() == 0 || MonstersInRange == null) return;
