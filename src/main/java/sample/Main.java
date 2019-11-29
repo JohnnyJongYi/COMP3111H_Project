@@ -25,25 +25,57 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 //@EnableJpaRepositories
 public class Main extends Application {
 	
-	private long prevTime =0;
-	private final long GenerationTime = (long)1.0e9;
-	private boolean flag = true;
+	private static long prevTime =0;
+	private final static long GenerationTime = (long)1.0e9;
+	private static boolean flag = true;
 	
 	
 	public static MonsterGenerator monsterGenerator;
 	private TowerHandler towerHandler;
 	
-	
-    
-//	private final long id;
-//	private final String content;
-//	
-//	@Override
-//	public void init() {
-//		
-//    SpringApplication.run(AccessingDataJpaApplication.class);
-//	}
-	
+	public static AnimationTimer timer = new AnimationTimer() {
+		@Override
+		public void handle(long now) {
+			if(prevTime== 0) {
+				prevTime = now;
+				return;
+			}
+			long timeSpent = now - prevTime;
+			
+			if (timeSpent>GenerationTime/15 && !MonsterGenerator.getMonsterHasReachedEnd()) {
+					if(flag) {
+						try {
+							monsterGenerator.updateMonsterEachTimestamp();
+							
+							if(MonsterGenerator.getMonsterHasReachedEnd())
+							{
+								System.out.println("______Game Over_____");
+							}
+								
+						} catch (OutOfArenaException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (MovedToWrongGrid e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						flag = false;
+					}
+					else {
+						TowerHandler.shootAll();
+						flag = true;
+					}
+////				updateMonster(myController)
+//				appController.Spawn(new ActionEvent());
+//				System.out.println(String.valueOf(counter));
+//				counter++;
+				prevTime = now;
+			}
+			
+
+			
+		}
+    };
 	
 	
 	@SuppressWarnings("restriction")
@@ -61,50 +93,7 @@ public class Main extends Application {
         monsterGenerator = new MonsterGenerator(appController);
         towerHandler = new TowerHandler(appController);
         
-        AnimationTimer timer = new AnimationTimer() {
-    		@Override
-    		public void handle(long now) {
-    			if(prevTime== 0) {
-    				prevTime = now;
-    				return;
-    			}
-    			long timeSpent = now - prevTime;
-    			
-    			if (timeSpent>GenerationTime/15 && !MonsterGenerator.getMonsterHasReachedEnd()) {
-    					if(flag) {
-    						try {
-								monsterGenerator.updateMonsterEachTimestamp();
-								
-								if(MonsterGenerator.getMonsterHasReachedEnd())
-								{
-									System.out.println("______Game Over_____");
-								}
-									
-							} catch (OutOfArenaException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} catch (MovedToWrongGrid e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-    						flag = false;
-    					}
-    					else {
-    						TowerHandler.shootAll();
-    						flag = true;
-    					}
-////    				updateMonster(myController)
-//    				appController.Spawn(new ActionEvent());
-//    				System.out.println(String.valueOf(counter));
-//    				counter++;
-    				prevTime = now;
-    			}
-    			
-
-    			
-    		}
-        };
-        timer.start();
+        
         //appController.spawnMonster(0,450,"fox");
     }
 
