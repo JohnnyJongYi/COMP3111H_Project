@@ -43,10 +43,10 @@ public class BasicTower extends Tower {
 			System.out.println("Damaging monster--->");
 			target.printMonsterInfo();
 			
+			assert Math.pow(target.getLocationX(), 2) + Math.pow(target.getLocationY(), 2) <= range2 : "Basic shooting out of range"; // Test range
+			
 			target.takedamage(1, power);
 			f.ShootBasic(label, target.getGrid());
-			
-			assert Math.pow(target.getLocationX(), 2) + Math.pow(target.getLocationY(), 2) <= range2; // Test range
 			
 			System.out.println("Basic shooting done--->");
 			System.out.println();
