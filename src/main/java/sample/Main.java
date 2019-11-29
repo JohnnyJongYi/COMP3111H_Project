@@ -13,9 +13,12 @@ import monster.MonsterGenerator;
 import Coordinates.MovedToWrongGrid;
 import sample.MyController;
 import tower.TowerHandler;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
+import sample.AccessingDataJpaApplication;
 
-
-
+@SpringBootApplication
 public class Main extends Application {
 	
 	private long prevTime =0;
@@ -25,8 +28,21 @@ public class Main extends Application {
 	
 	private MonsterGenerator monsterGenerator;
 	private TowerHandler towerHandler;
-    @Override
+	
+	
+    
+//	private final long id;
+//	private final String content;
+	
+	@Override
+	public void init() {
+		SpringApplication.run(AccessingDataJpaApplication.class);
+	}
+	
+	@SuppressWarnings("restriction")
+	@Override
     public void start(Stage primaryStage) throws Exception{
+		
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample.fxml"));
         Parent root = loader.load();
         primaryStage.setTitle("Tower Defence");
@@ -82,5 +98,10 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
+        MonsterGenerator.retrieveQuery();
+        MonsterGenerator.closeDataBase();
+        
     }
+
+    
 }
