@@ -198,6 +198,13 @@ public class MyController implements staticInterface  {
 			event.consume();
 		}
 	}
+	
+	public void giveMoneyForKill()
+	{
+		money += 5;
+		moneyLabel.setText(String.valueOf(money));
+		
+	}
 
 	private boolean updateInfo(Grid target) {
 		String message = "";
@@ -240,6 +247,7 @@ public class MyController implements staticInterface  {
 		target.setName(message);
 		return true;
 	}
+	
 
 	public void upgradeTower(Grid tower, double newDamage, int newLevel) {
 

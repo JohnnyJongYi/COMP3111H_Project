@@ -38,7 +38,7 @@ public class MonsterGenerator
 		checkAnySlower();
 		moveAllMonsters();
 		TowerHandler.resetNewTowerBuilt();
-		if(timestamp % 20 == 0)
+		if(timestamp % 20== 0)
 		{generate(interf);}
 		timestamp++;
 		
