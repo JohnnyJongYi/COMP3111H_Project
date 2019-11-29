@@ -69,9 +69,9 @@ public class Fox extends Monster
 					int sum = 0;
 					for(int r = row*40 ; r < (row+1)*40 ; r++)
 						for(int c = col*40 ; c < (col+1)*40 ; c++)
-							sum+=NOA[r][c];
+							sum+=NOA[c][r];
 					
-					foxMovesGrid[row][col] = new Vertex(col, row, sum/1600, Integer.MAX_VALUE);	
+					foxMovesGrid[row][col] = new Vertex(col, row, sum, Integer.MAX_VALUE);	
 				}
 				else
 					foxMovesGrid[row][col] = null;
@@ -89,6 +89,17 @@ public class Fox extends Monster
 	{
 		foxMovesGridGenerator();
 		
+		for(int row = 0 ; row < 12 ; row++)
+		{
+			for(int col = 0 ; col < 12 ; col++)
+				if(foxMovesGrid[row][col] != null)
+				System.out.print(foxMovesGrid[row][col].value+"   ");
+				else
+					System.out.print("nullnull   ");
+
+			System.out.println("");
+		}
+					
 		int counterX = grid / 100;
 		int counterY = grid % 100;
 		Vertex source = new Vertex();
