@@ -34,7 +34,9 @@ import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import sample.Grid;
 import tower.TowerHandler;
+import org.springframework.stereotype.Component;
 
+@Component
 public class MyController implements staticInterface  {
 	@FXML
 	private Button buttonNextFrame;
