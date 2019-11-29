@@ -82,12 +82,29 @@ public class MyController implements staticInterface  {
 
     @FXML
     void Pause(ActionEvent event) {
+    	ImageView source1 = imageBasicTower;
+		ImageView source2 = imageIceTower;
+		ImageView source3 = imageCatapult;
+		ImageView source4 = imageLaserTower;
+//        Image image1 = new Image(getClass().getResourceAsStream("basicTower.png"));
 
+//        source1.setGraphic(new ImageView(image1));
+		source1.setOnDragDetected(null);
+		source2.setOnDragDetected(null);
+		source3.setOnDragDetected(null);
+		source4.setOnDragDetected(null);
+		
+		for (int i = 0; i < MAX_V_NUM_GRID; i++)
+			for (int j = 0; j < MAX_H_NUM_GRID; j++) {
+			grids[i][j].setOnMouseClicked(null);
+			}
+		Main.timer.start();
     }
 
     @FXML
     void Spawn(ActionEvent event) {
 			Main.monsterGenerator.generate(this);
+			Main.timer.start();
     }
 
 
@@ -143,8 +160,8 @@ public class MyController implements staticInterface  {
 				newLabel.setMinHeight(GRID_HEIGHT);
 				newLabel.setMaxHeight(GRID_HEIGHT);
 				newLabel.setStyle("-fx-border-color: black;");
-				newLabel.setText(String.valueOf(Math.round(newLabel.getLayoutX())) + " "
-						+ String.valueOf(Math.round(newLabel.getLayoutY())));
+//				newLabel.setText(String.valueOf(Math.round(newLabel.getLayoutX())) + " "
+//						+ String.valueOf(Math.round(newLabel.getLayoutY())));
 //				newLabel.setText(String.valueOf(i)+" " + String.valueOf(j));
 				setDragAndDrop(newLabel);
 				grids[i][j] = newLabel;
@@ -426,8 +443,8 @@ public class MyController implements staticInterface  {
 		newLabel.setMinHeight(GRID_HEIGHT);
 		newLabel.setMaxHeight(GRID_HEIGHT);
 		newLabel.setStyle("-fx-border-color: black;");
-		newLabel.setText(String.valueOf(Math.round(newLabel.getLayoutX())) + " "
-				+ String.valueOf(Math.round(newLabel.getLayoutY())));
+//		newLabel.setText(String.valueOf(Math.round(newLabel.getLayoutX())) + " "
+//				+ String.valueOf(Math.round(newLabel.getLayoutY())));
 		setDragAndDrop(newLabel);
 		grids[i][j] = newLabel;
 
@@ -451,7 +468,7 @@ public class MyController implements staticInterface  {
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == upgradeButton)
 			upgradeTower(tower);
-		else
+		else if (result.get() == destroyButton)
 			destroyTower(tower);
 
 	}
@@ -459,6 +476,10 @@ public class MyController implements staticInterface  {
 	/**
 	 * A function that demo how drag and drop works
 	 */
+	private void stopDragAndDrop() {
+		
+
+	}
 	private void setDragAndDrop(Grid target) {
 //        Grid target = grids[3][3];
 
