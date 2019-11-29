@@ -105,9 +105,9 @@ public class MyController implements staticInterface  {
 
 	private towerType draggingTower;
 
-	private int money = 10000;
+	private int money = 100;
 
-	private void callAlert(String title, String content) {
+	public void callAlert(String title, String content) {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle(title);
 		alert.setContentText(content);
@@ -220,35 +220,35 @@ public class MyController implements staticInterface  {
 		switch (draggingTower) {
 		case BASIC:
 			message = message + "Basic Tower";
-			if (money >= 10) {
-				money -= 10;
-				moneyLabel.setText(String.valueOf(money));
-			} else
-				return false;
+//			if (money >= 10) {
+//				money -= 10;
+//				moneyLabel.setText(String.valueOf(money));
+//			} else
+//				return false;
 			break;
 		case ICE:
 			message = message + "Ice Tower";
-			if (money >= 20) {
-				money -= 20;
-				moneyLabel.setText(String.valueOf(money));
-			} else
-				return false;
+//			if (money >= 20) {
+//				money -= 20;
+//				moneyLabel.setText(String.valueOf(money));
+//			} else
+//				return false;
 			break;
 		case CATAPULT:
 			message = message + "Catapult Tower";
-			if (money >= 30) {
-				money -= 30;
-				moneyLabel.setText(String.valueOf(money));
-			} else
-				return false;
+//			if (money >= 30) {
+//				money -= 30;
+//				moneyLabel.setText(String.valueOf(money));
+//			} else
+//				return false;
 			break;
 		case LASER:
 			message = message + "Laser Tower";
-			if (money >= 40) {
-				money -= 40;
-				moneyLabel.setText(String.valueOf(money));
-			} else
-				return false;
+//			if (money >= 40) {
+//				money -= 40;
+//				moneyLabel.setText(String.valueOf(money));
+//			} else
+//				return false;
 			break;
 		default:
 			break;
@@ -304,7 +304,7 @@ public class MyController implements staticInterface  {
 	}
 	private void buildTower(Grid target, Image image) {
 
-		if (updateInfo(target)) {
+			updateInfo(target);
 			int type;
 			double radii;
 			boolean catapult = false;
@@ -334,7 +334,7 @@ public class MyController implements staticInterface  {
 
 			if (!TowerHandler.build(type, (int)target.getX()/40 , (int)target.getY()/40,target))
 			{
-				callAlert("Not Allowed","You cannot block the monsters from reaching the end zone!");
+				callAlert("Not Allowed","You cannot block the monsters from reaching the end zone/You don't have enough money!");
 				return;
 			}
 			ImageView imageView = new ImageView(image);
@@ -365,9 +365,7 @@ public class MyController implements staticInterface  {
 					actionOnTower(target);
 				}
 			});
-		} else
-			callAlert("Insufficient resources","You don't have enough resources to build this!");
-
+		
 //		Tower.build(target.getX(),target.getY(),draggingTower)
 
 	}
@@ -396,7 +394,19 @@ public class MyController implements staticInterface  {
 	private void upgradeTower(Grid tower) {
 //		if(money)
 		// need to implement upgrade tower logic
-		System.out.println("Not enough resource to upgrade tower.");
+		System.out.println("Not enough resource to upgrade tower.\n"
+				+ "************************************************\n"
+				+ "************************************************\n"
+				+ "************************************************\n"
+				+ "************************************************\n"
+				+ "************************************************\n"
+				+ "************************************************\n"
+				+ "************************************************\n"
+				+ "************************************************\n"
+				+ "************************************************\n"
+				+ "************************************************\n"
+				+ "************************************************\n"
+				+ "************************************************\n");
 		TowerHandler.upgrade((int)tower.getX()/40,(int)tower.getY()/40);
 	}
 
@@ -716,7 +726,7 @@ public class MyController implements staticInterface  {
 	}
 
 	public void monsterAttackedAndSlowed(Grid monster) {
-		waitAndChangePic(monster, 1000, monster.getName(), "attackedandslowed");
+		waitAndChangePic(monster, 1000, monster.getName(), "attacked");
 
 	}
 
