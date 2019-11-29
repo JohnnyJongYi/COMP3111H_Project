@@ -103,7 +103,7 @@ public class MyController implements staticInterface  {
 
     @FXML
     void Spawn(ActionEvent event) {
-			Main.monsterGenerator.generate(this);
+//			Main.monsterGenerator.generate(this);
 			Main.timer.start();
     }
 
