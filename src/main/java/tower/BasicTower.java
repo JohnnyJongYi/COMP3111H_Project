@@ -10,8 +10,8 @@ import sample.staticInterface;
 public class BasicTower extends Tower {
 	protected int range2 = maxRange * maxRange;
 	
-	BasicTower(int x, int y, Grid label, staticInterface interf) {
-		super(1, 10, x, y, 0, 65, label, interf);
+	BasicTower(int power, int x, int y, Grid label, staticInterface interf) {
+		super(1, power, x, y, 0, 65, label, interf);
 	}
 	
 	public void printTowerInfo() {
