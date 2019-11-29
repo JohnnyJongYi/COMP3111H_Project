@@ -11,7 +11,7 @@ import sample.staticInterface;
 public class LaserTower extends Tower{
 	
 	LaserTower(int x, int y, Grid label, staticInterface interf) {
-		super(4, 10, x, y, 0, 1000, label, interf);
+		super(4, 20, x, y, 0, 1000, label, interf);
 	}
 	
 	public void printTowerInfo() {
@@ -36,9 +36,13 @@ public class LaserTower extends Tower{
 		
 		if (target != null) {
 			System.out.println();
-			System.out.println("Laser shooting target--->");
 			
-			if (!f.changeMoney(-5)) return;//consumes some resources
+			if (!f.changeMoney(-1)) {
+				System.out.println("Laser lack of resources--->");
+				return;//consumes some resources
+			}
+			
+			System.out.println("Laser shooting target--->");
 			int x = target.getLocationX(); // make a line towards the monster
 			int y = target.getLocationY();
 			int A = midX - y;
