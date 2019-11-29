@@ -272,25 +272,25 @@ public class MyController implements staticInterface  {
 			range1 = 0;
 			range2 = 65;
 			buildingCost = 20;
-			damage = 10;
+			damage = TowerHandler.BASICPOWER;
 			break;
 		case("Ice Tower"):
 			range1 = 0;
 			range2 = 65;
 			buildingCost = 20;
-			damage = 0;
+			damage = TowerHandler.ICEPOWER;
 			break;
 		case("Catapult Tower"):
 			range1 = 50;
 			range2 = 150;
 			buildingCost = 20;
-			damage = 10;
+			damage = TowerHandler.CATAPULTPOWER;
 			break;
 		case("Laser Tower"):
 			range1 = 0;
 			range2 = 1000;
 			buildingCost = 20;
-			damage = 10;
+			damage = TowerHandler.LASERPOWER;
 			break;
 		default:
 			break;
