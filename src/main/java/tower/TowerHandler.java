@@ -6,6 +6,11 @@ import sample.Grid;
 import sample.staticInterface;
 
 public class TowerHandler {
+	public static final int BASICPOWER = 10;
+	public static final int ICEPOWER = 0;
+	public static final int CATAPULTPOWER = 10;
+	public static final int LASERPOWER = 30;
+	
 	protected static ArrayList<Tower> towerArray = new ArrayList<Tower>();
 	protected static Tower[][] findTowerGrid =  new Tower[12][12];
 	protected static int[][] numberOfAttack = new int[480][480];
@@ -36,17 +41,17 @@ public class TowerHandler {
 		Tower tower = null;
 		switch(type) {
 			case 1 : 
-				tower = new BasicTower(x, y, label, interf);
+				tower = new BasicTower(BASICPOWER, x, y, label, interf);
 				break;
 			case 2 :
-				tower = new IceTower(x, y, label, interf);
+				tower = new IceTower(ICEPOWER, x, y, label, interf);
 				break;
 			case 3 :
-				tower = new Catapult(x, y, label, interf);
+				tower = new Catapult(CATAPULTPOWER, x, y, label, interf);
 				catapultCount++;
 				break;
 			case 4 :
-				tower = new LaserTower(x, y, label, interf);
+				tower = new LaserTower(LASERPOWER, x, y, label, interf);
 				break;
 		}
 		tower.printTowerInfo();

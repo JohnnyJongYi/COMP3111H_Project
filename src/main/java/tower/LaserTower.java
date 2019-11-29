@@ -10,8 +10,8 @@ import sample.staticInterface;
 
 public class LaserTower extends Tower{
 	
-	LaserTower(int x, int y, Grid label, staticInterface interf) {
-		super(4, 20, x, y, 0, 1000, label, interf);
+	LaserTower(int power, int x, int y, Grid label, staticInterface interf) {
+		super(4, power, x, y, 0, 1000, label, interf);
 	}
 	
 	public void printTowerInfo() {
