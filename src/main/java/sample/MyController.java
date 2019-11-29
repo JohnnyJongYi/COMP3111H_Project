@@ -397,7 +397,7 @@ public class MyController implements staticInterface  {
 //		if(money)
 		// need to implement upgrade tower logic
 		System.out.println("Not enough resource to upgrade tower.");
-		tower.tower.upgrade();
+		TowerHandler.upgrade((int)tower.getX()/40,(int)tower.getY()/40);
 	}
 
 	private void destroyTower(Grid tower) {
