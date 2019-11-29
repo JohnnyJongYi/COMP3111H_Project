@@ -8,12 +8,10 @@ import sample.Grid;
 import sample.staticInterface;
 
 public class BasicTower extends Tower {
-	protected int base_power = 10;
-	protected int power = 10;
 	protected int range2 = maxRange * maxRange;
 	
 	BasicTower(int x, int y, Grid label, staticInterface interf) {
-		super(1, x, y, 0, 65, label, interf);
+		super(1, 10, x, y, 0, 65, label, interf);
 	}
 	
 	public void printTowerInfo() {
@@ -39,7 +37,7 @@ public class BasicTower extends Tower {
 		if (target != null) {
 			System.out.println();
 			System.out.println("Basic shooting target--->");
-			System.out.println("Damaging monster--->");
+			System.out.println("Damaging monster " + power + "dmg--->");
 			target.printMonsterInfo();
 			
 			assert Math.pow(target.getLocationX(), 2) + Math.pow(target.getLocationY(), 2) <= range2 : "Basic shooting out of range"; // Test range

@@ -8,13 +8,11 @@ import sample.Grid;
 import sample.staticInterface;
 
 public class Catapult extends Tower{
-	protected int base_power = 10;
-	protected int power = 10;
 	protected int minRange2 = minRange * minRange;
 	protected int maxRange2 = maxRange * maxRange;
 	
 	Catapult(int x, int y, Grid label, staticInterface interf) {
-		super(3, x, y, 50, 150, label, interf);
+		super(3, 10, x, y, 50, 150, label, interf);
 	}
 	
 	public void printTowerInfo() {
@@ -25,9 +23,8 @@ public class Catapult extends Tower{
 	public void shoot(staticInterface f)
 	{
 		ArrayList<Monster> monsterArray = MonsterGenerator.getMonsterArray();
-		if (monsterArray.size() == 0) return;
-		
 		ArrayList<Monster>[][] MonstersInRange = MonsterGenerator.getMonstersInRange();
+		if (monsterArray == null || monsterArray.size() == 0 || MonstersInRange == null) return;
 		
 		int target_x = 0;
 		int target_y = 0;
@@ -67,7 +64,7 @@ public class Catapult extends Tower{
 			assert Math.pow(target_x, 2) + Math.pow(target_y, 2) <= maxRange2 : "Catapult shooting out of range"; // Test range
 			
 			for (Monster monster : MonstersInRange[target_x][target_y]) {
-				System.out.println("Damaging monster--->");
+				System.out.println("Damaging monster " + power + "dmg--->");
 				monster.printMonsterInfo();
 				monster.takedamage(1, power);
 			}
