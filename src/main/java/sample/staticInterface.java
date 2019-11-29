@@ -31,5 +31,7 @@ public interface staticInterface {
 		
 		public void giveMoneyForKill();
 		
+		public boolean changeMoney(int amount);
+		
 }
 

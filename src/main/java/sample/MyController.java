@@ -36,7 +36,7 @@ import sample.Grid;
 import tower.TowerHandler;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class MyController implements staticInterface  {
 	@FXML
 	private Button buttonNextFrame;
@@ -89,7 +89,7 @@ public class MyController implements staticInterface  {
 	private ImageView imageLaserTower;
 
 	@FXML
-	private static Label moneyLabel;
+	private Label moneyLabel;
 
 	private static final int GRID_WIDTH = 40;
 	private static final int GRID_HEIGHT = 40;
@@ -105,7 +105,7 @@ public class MyController implements staticInterface  {
 
 	private towerType draggingTower;
 
-	private static int money = 10000;
+	private int money = 10000;
 
 	private void callAlert(String title, String content) {
 		Alert alert = new Alert(AlertType.ERROR);
@@ -125,8 +125,7 @@ public class MyController implements staticInterface  {
 			for (int j = 0; j < MAX_H_NUM_GRID; j++) {
 				Grid newLabel = new Grid();
 				if (i == 0 && j == 11) {
-					newLabel.setBackground(
-							new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+					newLabel.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 					Image image = new Image(getClass().getResourceAsStream("/endzone.png"));
 					ImageView imageView = new ImageView(image);
 					imageView.setFitHeight(GRID_WIDTH);
@@ -199,7 +198,7 @@ public class MyController implements staticInterface  {
 		}
 	}
 	
-	public static boolean changeMoney(int amount) {
+	public boolean changeMoney(int amount) {
 		int moneyLeft = money + amount;
 		if(moneyLeft<0)
 			return false;
@@ -398,7 +397,7 @@ public class MyController implements staticInterface  {
 //		if(money)
 		// need to implement upgrade tower logic
 		System.out.println("Not enough resource to upgrade tower.");
-		tower.tower.upgrade();
+		TowerHandler.upgrade((int)tower.getX()/40,(int)tower.getY()/40);
 	}
 
 	private void destroyTower(Grid tower) {

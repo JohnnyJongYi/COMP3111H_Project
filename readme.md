@@ -1,3 +1,10 @@
+
+1. Ho Jong Yi () : Arena
+2. Yeoh Choon Hong (20461951) : Tower
+3. Bae Ju Young (20378582) : Monster
+
+
+
 # COMP3111 Project - Tower Defense
 Created by: Dr. Kevin Wang (kevinw@cse.ust.hk)
 
