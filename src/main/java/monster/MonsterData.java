@@ -1,8 +1,8 @@
 package monster;
 import java.io.Serializable;
-import javax.persistence.*;
+//import javax.persistence.*;
 
-@Entity
+//@Entity
 public class MonsterData 
 {
 	String monsterType;

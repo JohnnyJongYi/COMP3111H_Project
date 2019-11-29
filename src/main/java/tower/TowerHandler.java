@@ -27,7 +27,7 @@ public class TowerHandler {
 	}
 	
 	public static boolean build(int type, int x, int y, Grid label) {
-		if (ART[x][y]) return false; // cannot build on articulation grid
+		if (!interf.changeMoney(-20) || ART[x][y]) return false; // cannot build on articulation grid
 		
 		System.out.println("Building tower at (" + x + ", " + y + ")");
 		
@@ -55,12 +55,13 @@ public class TowerHandler {
 		findTowerGrid[x][y] = tower;
 		
 		towerGrid[x][y] = true;
+		System.out.println("Tower Type: " + tower.getTowerType());
 		setNOA(tower, 1);
 		newTowerBuilt = true;
 		
 		calculateART();
 		
-//		interf.changeMoney(-20);
+		interf.changeMoney(-20);
 		
 		assert towerArray.size() == test + 1 : "Failed to build"; // Test build
 		
@@ -154,6 +155,7 @@ public class TowerHandler {
 	protected static void setNOA(Tower tower, int a) {
 		if (tower.getTowerType() == 4) return;
 		
+		System.out.println("Setting NOA " + a + " by " + tower.getTowerType());
 		int test = numberOfAttack[tower.getLocationX()][tower.getLocationY()];
 		
 		int locationX = tower.getMidX();
@@ -184,11 +186,12 @@ public class TowerHandler {
 	}
 	
 	public static void shootAll() {
+//		System.out.println("All " + towerArray.size() + " shoot.....");
 		for (Tower tower : towerArray) tower.shoot(interf);
 	}
 	
 	public static boolean upgrade(int x, int y) {
-		if (interf.changeMoney(-20)) return false;
+		if (!interf.changeMoney(-20)) return false;
 		findTowerGrid[x][y].upgrade();
 		return true;
 	}

@@ -17,7 +17,8 @@ public abstract class Tower {
 	protected Grid label;
 	protected staticInterface interf;
 	
-	Tower(int x, int y, int min, int max, Grid lbl, staticInterface f) {
+	Tower(int type, int x, int y, int min, int max, Grid lbl, staticInterface f) {
+		towerType = type;
 		locationX = x;
 		locationY = y;
 		minRange = min;
@@ -29,10 +30,12 @@ public abstract class Tower {
 	}
 
 	public void upgrade() {
+		System.out.print("Upgrading tower--->");
 		int test = power;
 		
 		level += 1;
 		power = base_power * level;
+		System.out.print("power: " + power + " level: " + level);
 		interf.upgradeTower(label, power, level);
 		
 		assert power == test + base_power : "Failed to upgrade";

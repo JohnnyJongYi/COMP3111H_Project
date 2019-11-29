@@ -9,12 +9,11 @@ import sample.Grid;
 import sample.staticInterface;
 
 public class LaserTower extends Tower{
-	protected int towerType = 4;
 	protected int base_power = 10;
 	protected int power = 10;
 	
 	LaserTower(int x, int y, Grid label, staticInterface interf) {
-		super(x, y, 0, 1000, label, interf);
+		super(4, x, y, 0, 1000, label, interf);
 	}
 	
 	public void printTowerInfo() {
@@ -23,8 +22,6 @@ public class LaserTower extends Tower{
 	}
 	
 	public void shoot(staticInterface f) {
-		if (f.changeMoney(-20)) return;//check & consumes some resources
-		
 		ArrayList<Monster> monsterArray = MonsterGenerator.getMonsterArray();
 		if(monsterArray.size() == 0) return;
 		
@@ -43,7 +40,7 @@ public class LaserTower extends Tower{
 			System.out.println();
 			System.out.println("Laser shooting target--->");
 			
-			//consumes some resources
+			if (!f.changeMoney(-5)) return;//consumes some resources
 			int x = target.getLocationX(); // make a line towards the monster
 			int y = target.getLocationY();
 			int A = midX - y;
