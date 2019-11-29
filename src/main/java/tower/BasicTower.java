@@ -8,13 +8,12 @@ import sample.Grid;
 import sample.staticInterface;
 
 public class BasicTower extends Tower {
-	protected int towerType = 1;
 	protected int base_power = 10;
 	protected int power = 10;
 	protected int range2 = maxRange * maxRange;
 	
 	BasicTower(int x, int y, Grid label, staticInterface interf) {
-		super(x, y, 0, 65, label, interf);
+		super(1, x, y, 0, 65, label, interf);
 	}
 	
 	public void printTowerInfo() {

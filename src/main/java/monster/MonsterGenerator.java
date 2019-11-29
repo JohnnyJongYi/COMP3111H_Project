@@ -1,7 +1,7 @@
 package monster;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.*;
+//import javax.persistence.*;
 import sample.staticInterface;
 import Coordinates.*;
 import tower.TowerHandler;
@@ -17,8 +17,8 @@ public class MonsterGenerator
 	protected static ArrayList<Monster> deadMonsters;
 	protected staticInterface interf;
 	
-	static EntityManagerFactory emf = Persistence.createEntityManagerFactory("$objectdb/db/points.odb");
-	static EntityManager em = emf.createEntityManager();
+//	static EntityManagerFactory emf = Persistence.createEntityManagerFactory("$objectdb/db/points.odb");
+//	static EntityManager em = emf.createEntityManager();
 	
 	public MonsterGenerator(staticInterface interf) 
 	{
@@ -57,7 +57,7 @@ public class MonsterGenerator
 	
 	public void generate(staticInterface interf)
 	{
-		em.getTransaction().begin();
+//		em.getTransaction().begin();
 		int type = (int)(Math.random() * 3 + 1);
 		// Randomly choose monster type
 		MonsterData newMonster = null;
@@ -67,45 +67,45 @@ public class MonsterGenerator
 				newMonster = new MonsterData(type, monsterIDCounter);
 				monsterArray.add(new Unicorn(timestamp,monsterIDCounter,type, interf,newMonster));
 				monsterIDCounter++;
-				em.persist(newMonster);
+//				em.persist(newMonster);
 				break;
 			case 2 : 
 				newMonster = new MonsterData(type, monsterIDCounter);
 				monsterArray.add(new Penguin(timestamp,monsterIDCounter,type, interf,newMonster));
 				monsterIDCounter++;
-				em.persist(newMonster);
+//				em.persist(newMonster);
 				break;
 			case 3 : 
 				newMonster = new MonsterData(type, monsterIDCounter);
 				monsterArray.add(new Fox(timestamp,monsterIDCounter,type, interf,newMonster));
 				monsterIDCounter++;
-				em.persist(newMonster);
+//				em.persist(newMonster);
 				break;		
 		}
-		em.getTransaction().commit();
+//		em.getTransaction().commit();
 	}
 	
-	public static void closeDataBase()
-	{	
-		emf.close();
-		em.clear();
-	}
-	
-	public static void retrieveQuery()
-	{	
-		
-		TypedQuery<MonsterData> query = em.createQuery("SELECT m FROM MonsterData m", MonsterData.class);
-		List<MonsterData> results =  query.getResultList();
-	
-		System.out.println(results.size());
-		
-		for(int i = 0 ; i< results.size();i++)
-		{
-			if(results.get(i).getID()==0)
-				System.out.println("______________________New Game______________________");
-			printStatus(results.get(i).getType(), results.get(i).getID(), results.get(i).getStatus());
-		}
-	}
+//	public static void closeDataBase()
+//	{	
+//		emf.close();
+//		em.clear();
+//	}
+//	
+//	public static void retrieveQuery()
+//	{	
+//		
+//		TypedQuery<MonsterData> query = em.createQuery("SELECT m FROM MonsterData m", MonsterData.class);
+//		List<MonsterData> results =  query.getResultList();
+//	
+//		System.out.println(results.size());
+//		
+//		for(int i = 0 ; i< results.size();i++)
+//		{
+//			if(results.get(i).getID()==0)
+//				System.out.println("______________________New Game______________________");
+//			printStatus(results.get(i).getType(), results.get(i).getID(), results.get(i).getStatus());
+//		}
+//	}
 	
 	
 	static void printStatus(String type, int id, boolean status)
