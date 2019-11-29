@@ -89,7 +89,7 @@ public class MyController implements staticInterface  {
 	private ImageView imageLaserTower;
 
 	@FXML
-	private Label moneyLabel;
+	private static Label moneyLabel;
 
 	private static final int GRID_WIDTH = 40;
 	private static final int GRID_HEIGHT = 40;
@@ -105,7 +105,7 @@ public class MyController implements staticInterface  {
 
 	private towerType draggingTower;
 
-	private int money = 10000;
+	private static int money = 10000;
 
 	private void callAlert(String title, String content) {
 		Alert alert = new Alert(AlertType.ERROR);
@@ -197,6 +197,16 @@ public class MyController implements staticInterface  {
 
 			event.consume();
 		}
+	}
+	
+	public static boolean changeMoney(int amount) {
+		int moneyLeft = money + amount;
+		if(moneyLeft<0)
+			return false;
+		else 
+			money = moneyLeft;
+		moneyLabel.setText(String.valueOf(money));
+		return true;
 	}
 	
 	public void giveMoneyForKill()
