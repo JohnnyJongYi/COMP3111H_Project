@@ -17,8 +17,10 @@ public abstract class Tower {
 	protected Grid label;
 	protected staticInterface interf;
 	
-	Tower(int type, int x, int y, int min, int max, Grid lbl, staticInterface f) {
+	Tower(int type, int p, int x, int y, int min, int max, Grid lbl, staticInterface f) {
 		towerType = type;
+		base_power = p;
+		power = base_power;
 		locationX = x;
 		locationY = y;
 		minRange = min;

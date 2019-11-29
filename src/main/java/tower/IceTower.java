@@ -8,12 +8,10 @@ import sample.Grid;
 import sample.staticInterface;
 
 public class IceTower extends Tower{
-	protected int base_power = 0;
-	protected int power = 0;
 	protected int range2 = maxRange * maxRange;
 	
 	IceTower(int x, int y, Grid label, staticInterface interf) {
-		super(2, x, y, 0, 65, label, interf);
+		super(2, 0, x, y, 0, 65, label, interf);
 	}
 	
 	public void printTowerInfo() {

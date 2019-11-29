@@ -61,8 +61,6 @@ public class TowerHandler {
 		
 		calculateART();
 		
-		interf.changeMoney(-20);
-		
 		assert towerArray.size() == test + 1 : "Failed to build"; // Test build
 		
 		return true;

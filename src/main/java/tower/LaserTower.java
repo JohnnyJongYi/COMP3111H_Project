@@ -9,11 +9,9 @@ import sample.Grid;
 import sample.staticInterface;
 
 public class LaserTower extends Tower{
-	protected int base_power = 10;
-	protected int power = 10;
 	
 	LaserTower(int x, int y, Grid label, staticInterface interf) {
-		super(4, x, y, 0, 1000, label, interf);
+		super(4, 10, x, y, 0, 1000, label, interf);
 	}
 	
 	public void printTowerInfo() {
