@@ -20,15 +20,14 @@
       <RowConstraints />
    </rowConstraints>
    <children>
-      <SplitPane dividerPositions="0.8095238095238095" prefHeight="516.0" prefWidth="611.0">
+      <SplitPane dividerPositions="0.5" prefHeight="516.0" prefWidth="611.0">
         <items>
           <AnchorPane fx:id="paneArena" maxHeight="480.0" maxWidth="480.0" minHeight="480.0" minWidth="480.0" />
           <AnchorPane maxHeight="480.0" maxWidth="120.0" minHeight="480.0" minWidth="120.0" prefHeight="480.0" prefWidth="120.0">
                <children>
-                  <Button fx:id="buttonNextFrame" layoutX="4.0" layoutY="24.0" mnemonicParsing="false" onAction="#Spawn" text="Spawn" />
-                  <Button fx:id="buttonSimulate" layoutX="5.0" layoutY="65.0" mnemonicParsing="false" onAction="#Shoot" text="Shoot" />
-                  <Button fx:id="buttonPlay" layoutX="6.0" layoutY="108.0" mnemonicParsing="false" onAction="#rotate" text="Rotate" />
-                  <Label fx:id="labelBasicTower" layoutX="36.0" layoutY="257.0" minWidth="80.0" style="-fx-border-color: black;" text="Basic Tower">
+                  <Button fx:id="buttonSpawn" layoutX="4.0" layoutY="24.0" mnemonicParsing="false" onAction="#Spawn" text="Spawn" />
+                  <Button fx:id="buttonPause" layoutX="5.0" layoutY="65.0" mnemonicParsing="false" onAction="#Pause" text="Pause" />
+                  <Label fx:id="labelBasicTower" layoutX="38.0" layoutY="189.0" minWidth="80.0" style="-fx-border-color: black;" text="Basic Tower">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
@@ -39,7 +38,7 @@
                         <Insets left="10.0" />
                      </padding>
                   </Label>
-                  <Label fx:id="labelIceTower" layoutX="36.0" layoutY="283.0" minWidth="80.0" style="-fx-border-color: black;" text="Ice Tower">
+                  <Label fx:id="labelIceTower" layoutX="38.0" layoutY="215.0" minWidth="80.0" style="-fx-border-color: black;" text="Ice Tower">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -47,7 +46,7 @@
                         <Insets left="10.0" />
                      </padding>
                   </Label>
-                  <Label fx:id="labelCatapult" layoutX="38.0" layoutY="309.0" minWidth="80.0" style="-fx-border-color: black;" text="Catapult">
+                  <Label fx:id="labelCatapult" layoutX="40.0" layoutY="241.0" minWidth="80.0" style="-fx-border-color: black;" text="Catapult">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -55,7 +54,7 @@
                         <Insets left="10.0" />
                      </padding>
                   </Label>
-                  <Label fx:id="labelLaserTower" layoutX="38.0" layoutY="337.0" minWidth="80.0" style="-fx-border-color: black;" text="Laser Tower">
+                  <Label fx:id="labelLaserTower" layoutX="40.0" layoutY="269.0" minWidth="80.0" style="-fx-border-color: black;" text="Laser Tower">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -63,33 +62,30 @@
                         <Insets left="10.0" />
                      </padding>
                   </Label>
-                  <Label layoutX="17.0" layoutY="381.0" text="Money: " />
-                  <Button fx:id="buttonUp" layoutX="17.0" layoutY="172.0" mnemonicParsing="false" onAction="#moveUp" text="Up" />
-                  <Button fx:id="buttonDown" layoutX="17.0" layoutY="206.0" mnemonicParsing="false" onAction="#moveRight" text="Right" />
-                  <Button fx:id="buttonAtt" layoutX="66.0" layoutY="134.0" mnemonicParsing="false" onAction="#Attacked" text="A" />
-                  <Button fx:id="buttonSlow" layoutX="66.0" layoutY="172.0" mnemonicParsing="false" onAction="#Slowed" text="S" />
-                  <Button fx:id="buttonAttandSlow" layoutX="66.0" layoutY="206.0" mnemonicParsing="false" onAction="#AttackedAndSlowed" text="A&amp;S" />
-                  <ImageView fx:id="imageBasicTower" fitHeight="26.0" fitWidth="22.0" layoutX="6.0" layoutY="256.0" pickOnBounds="true" preserveRatio="true">
+                  <Label layoutX="19.0" layoutY="313.0" text="Money: " />
+                  <ImageView fx:id="imageBasicTower" fitHeight="26.0" fitWidth="22.0" layoutX="8.0" layoutY="188.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@basicTower.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="imageIceTower" fitHeight="26.0" fitWidth="22.0" layoutX="6.0" layoutY="282.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="imageIceTower" fitHeight="26.0" fitWidth="22.0" layoutX="8.0" layoutY="214.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@iceTower.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="imageCatapult" fitHeight="26.0" fitWidth="22.0" layoutX="6.0" layoutY="308.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="imageCatapult" fitHeight="26.0" fitWidth="22.0" layoutX="8.0" layoutY="240.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@catapult.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="imageLaserTower" fitHeight="26.0" fitWidth="22.0" layoutX="6.0" layoutY="336.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="imageLaserTower" fitHeight="26.0" fitWidth="22.0" layoutX="8.0" layoutY="268.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@laserTower.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="moneyLabel" layoutX="64.0" layoutY="381.0" text="0" />
+                  <Label fx:id="moneyLabel" layoutX="74.0" layoutY="313.0" text="0" />
+                  <Label layoutX="23.0" layoutY="381.0" text="Score: " />
+                  <Label fx:id="scoreLabel" layoutX="74.0" layoutY="381.0" text="0" />
                </children>
                <padding>
                   <Insets left="10.0" />
