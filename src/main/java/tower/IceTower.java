@@ -43,10 +43,10 @@ public class IceTower extends Tower{
 			System.out.println("Slowing monster--->");
 			target.printMonsterInfo();
 			
+			assert Math.pow(target.getLocationX(), 2) + Math.pow(target.getLocationY(), 2) <= range2 : "Ice shooting out of range"; // Test range
+			
 			target.takedamage(0, level); // slow the monster
 			f.ShootIce(label, target.getGrid());
-			
-			assert Math.pow(target.getLocationX(), 2) + Math.pow(target.getLocationY(), 2) <= range2; // Test range
 			
 			System.out.println("Ice shooting done--->");
 			System.out.println();

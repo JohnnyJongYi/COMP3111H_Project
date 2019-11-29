@@ -62,7 +62,7 @@ public class TowerHandler {
 		
 //		interf.changeMoney(-20);
 		
-		assert towerArray.size() == test + 1; // Test build
+		assert towerArray.size() == test + 1 : "Failed to build"; // Test build
 		
 		return true;
 	}
@@ -179,8 +179,8 @@ public class TowerHandler {
 			}
 		}
 		
-		if (tower.getTowerType() == 3) assert numberOfAttack[tower.getLocationX()][tower.getLocationY()] == test; // Unit testing
-		else assert numberOfAttack[tower.getLocationX()][tower.getLocationY()] == test + a;
+		if (tower.getTowerType() == 3) assert numberOfAttack[tower.getLocationX()][tower.getLocationY()] == test : "Failed to setNOA"; // Unit testing
+		else assert numberOfAttack[tower.getLocationX()][tower.getLocationY()] == test + a : "Failed to setNOA";
 	}
 	
 	public static void shootAll() {
@@ -190,6 +190,7 @@ public class TowerHandler {
 	public static boolean upgrade(int x, int y) {
 		if (interf.changeMoney(-20)) return false;
 		findTowerGrid[x][y].upgrade();
+		return true;
 	}
 	
 	public static int[][] getNOA() {
@@ -212,7 +213,7 @@ public class TowerHandler {
 			else invertedFlag[y][x] = true;
 		}
 		
-		assert invertedFlag[3][7] == towerGrid[7][3]; // Unit testing if the conversion is correct
+		assert invertedFlag[3][7] == towerGrid[7][3] : "Failed to convert to invertFlag"; // Unit testing if the conversion is correct
 		
 		return invertedFlag;
 	}
@@ -239,6 +240,6 @@ public class TowerHandler {
 		
 		calculateART();
 		
-		assert towerArray.size() == test - 1; // Test destroy
+		assert towerArray.size() == test - 1 : "Failed to destroy"; // Test destroy
 	}
 }

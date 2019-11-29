@@ -35,7 +35,7 @@ public abstract class Tower {
 		power = base_power * level;
 		interf.upgradeTower(label, power, level);
 		
-		assert power == test + base_power;
+		assert power == test + base_power : "Failed to upgrade";
 	}
 	
 	public void shoot(staticInterface f) {}
