@@ -145,14 +145,18 @@ public abstract class Monster
 		else
 			interf.moveMonster(monsterLabel, deltax, deltay);
 		
-		if(monsterType == 2 && MonsterGenerator.timestamp % 10 == 0)
+		if(monsterType == 2 )//&& MonsterGenerator.timestamp % 10 == 0)
 		{
 			if(maxHP - hp >0)
 			{
 				isHealing = true;
 				// GUI for heal
 				if(maxHP - hp > 2)
+				{
 					hp = hp + 2;
+					interf.changeHP(monsterLabel, hp);
+					System.out.println("****************************************************************");
+				}
 				else
 					hp = maxHP;	
 			}
@@ -209,6 +213,16 @@ public abstract class Monster
 				return true;
 			}
 		}
+		
+		if(counterY+1 <12 && flagArray[counterY+1][counterX]) // up
+		{
+			flagArray[counterY][counterX] = false;
+			if(calculatePathNonFox(monsterGrid[counterY+1][counterX]))
+			{
+				path.add(grid);
+				return true;
+			}
+		}
 	
 		if(counterX-1 >=0 && flagArray[counterY][counterX-1]) // right
 		{
@@ -220,16 +234,7 @@ public abstract class Monster
 			}
 		}
 
-		
-		if(counterY+1 <12 && flagArray[counterY+1][counterX]) // up
-		{
-			flagArray[counterY][counterX] = false;
-			if(calculatePathNonFox(monsterGrid[counterY+1][counterX]))
-			{
-				path.add(grid);
-				return true;
-			}
-		}
+	
 		
 		
 		if(grid == 1100)
