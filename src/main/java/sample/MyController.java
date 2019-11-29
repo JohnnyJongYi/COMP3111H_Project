@@ -34,7 +34,9 @@ import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import sample.Grid;
 import tower.TowerHandler;
+import org.springframework.stereotype.Component;
 
+@Component
 public class MyController implements staticInterface  {
 	@FXML
 	private Button buttonNextFrame;
@@ -87,7 +89,7 @@ public class MyController implements staticInterface  {
 	private ImageView imageLaserTower;
 
 	@FXML
-	private Label moneyLabel;
+	private static Label moneyLabel;
 
 	private static final int GRID_WIDTH = 40;
 	private static final int GRID_HEIGHT = 40;
@@ -103,7 +105,7 @@ public class MyController implements staticInterface  {
 
 	private towerType draggingTower;
 
-	private int money = 10000;
+	private static int money = 10000;
 
 	private void callAlert(String title, String content) {
 		Alert alert = new Alert(AlertType.ERROR);
@@ -168,7 +170,7 @@ public class MyController implements staticInterface  {
 //		 System.out.println(laser.get);
 
 	}
-//   
+//
 
 	class DragEventHandler implements EventHandler<MouseEvent> {
 		private ImageView source;
@@ -195,6 +197,16 @@ public class MyController implements staticInterface  {
 
 			event.consume();
 		}
+	}
+	
+	public static boolean changeMoney(int amount) {
+		int moneyLeft = money + amount;
+		if(moneyLeft<0)
+			return false;
+		else 
+			money = moneyLeft;
+		moneyLabel.setText(String.valueOf(money));
+		return true;
 	}
 	
 	public void giveMoneyForKill()
@@ -248,7 +260,7 @@ public class MyController implements staticInterface  {
 	
 
 	public void upgradeTower(Grid tower, double newDamage, int newLevel) {
-		
+
 
 		String message = tower.getName() + " " + String.valueOf(newLevel);
 		double range1 = 0;
@@ -282,7 +294,7 @@ public class MyController implements staticInterface  {
 			break;
 		default:
 			break;
-			
+
 		};
 		if(newLevel!=1)
 			damage = newDamage;
@@ -292,7 +304,7 @@ public class MyController implements staticInterface  {
 		tower.infoToolTip.setText(message);
 	}
 	private void buildTower(Grid target, Image image) {
-		
+
 		if (updateInfo(target)) {
 			int type;
 			double radii;
@@ -320,7 +332,7 @@ public class MyController implements staticInterface  {
 				radii = 50;
 				break;
 			}
-		
+
 			if (!TowerHandler.build(type, (int)target.getX()/40 , (int)target.getY()/40,target))
 			{
 				callAlert("Not Allowed","You cannot block the monsters from reaching the end zone!");
@@ -332,7 +344,7 @@ public class MyController implements staticInterface  {
 			target.setGraphic(imageView);
 			target.infoToolTip = new Tooltip();
 			target.setTooltip(target.infoToolTip);
-			
+
 			// Do the tooltip update
 			upgradeTower(target,0,1);
 			boolean newCatapult = catapult;
@@ -374,7 +386,7 @@ public class MyController implements staticInterface  {
 		target.radius.setOpacity(0.5);
 		paneArena.getChildren().addAll(target.radius);
 		target.infoToolTip.show(target, event.getScreenX(), event.getScreenY() + 15);
-//  	  
+//
 	}
 
 	private void mouseExit(Grid target) {
@@ -463,7 +475,7 @@ public class MyController implements staticInterface  {
 
 				if (db.hasImage()) {
 					buildTower(target, db.getImage());
-					
+
 					success = true;
 
 				}
@@ -530,7 +542,7 @@ public class MyController implements staticInterface  {
 			System.out.println(message);
 		}
 	}
-	
+
 	public void MonsterAttacked(Grid tower, Grid monster, boolean slowed) {
 //		TowerAttacking(tower);
 		if(slowed)
@@ -582,7 +594,7 @@ public class MyController implements staticInterface  {
 		imageView.setFitHeight(30);
 		imageView.setFitWidth(height);
 		newLabel.setGraphic(imageView);
-		
+
 		return newLabel;
 	}
 	public Grid spawnMonster(double xPosition, double yPosition, String name,double HP) {
@@ -706,7 +718,7 @@ public class MyController implements staticInterface  {
 
 	public void monsterAttackedAndSlowed(Grid monster) {
 		waitAndChangePic(monster, 1000, monster.getName(), "attackedandslowed");
-		
+
 	}
 
 	@FXML
@@ -772,13 +784,13 @@ public class MyController implements staticInterface  {
 		new Thread(sleeper).start();
 
 	}
-	
+
 	public void ShootBasic(Grid tower, Grid monster) {
 		TowerAttacking(tower);
 		Grid bam  = spawnFunc(monster.getLayoutX(),monster.getLayoutY(),"fire",100);
 		flashShootUI(bam);
 	}
-	
+
 	public void ShootCatapult(Grid tower, double locX, double locY) {
 		TowerAttacking(tower);
 		Circle circle = new Circle(locX,locY, 25.0f);
@@ -786,13 +798,13 @@ public class MyController implements staticInterface  {
 		circle.setFill(Color.ORANGERED);
 		flashShootUI(circle);
 	};
-	
+
 	public void ShootIce(Grid tower, Grid monster) {
 		TowerAttacking(tower);
 		Label iceBam = spawnFunc(monster.getLayoutX(),monster.getLayoutY(),"ice",100);
 		flashShootUI(iceBam);
 	};
-	
+
 	public void ShootLaser(Grid tower, Grid monster) {
 		TowerAttacking(tower);
 		double towerX = tower.getX() + GRID_WIDTH / 2;
@@ -810,7 +822,7 @@ public class MyController implements staticInterface  {
 			endY = 1000;
 		else
 			endY = -1000;
-		
+
 		if (towerX != monsterX) {
 			double slope = (realTowerY - realMonsterY) / (towerX - monsterX);
 			double bias = realTowerY - slope * towerX;
@@ -838,7 +850,7 @@ public class MyController implements staticInterface  {
 
 	public void monsterDie(Grid monster) {
 
-		
+
 		double height = MONSTER_SIZE;
 		Grid newLabel = new Grid();
 		newLabel.setLayoutX(monster.getX());
