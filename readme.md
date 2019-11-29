@@ -1,6 +1,6 @@
 
 1. Ho Jong Yi () : Arena
-2. Yeoh Choong Hong () : Tower
+2. Yeoh Choong Hong (20461951) : Tower
 3. Bae Ju Young (20378582) : Monster
 
 
