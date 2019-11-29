@@ -32,7 +32,15 @@ public class TowerHandler {
 	}
 	
 	public static boolean build(int type, int x, int y, Grid label) {
-		if (!interf.changeMoney(-20) || ART[x][y]) return false; // cannot build on articulation grid
+		if (!interf.changeMoney(-20)) { // not enough gold
+			interf.callAlert("Failed to build tower", "You have not enough gold");
+			return false;
+		}
+		
+		if (ART[x][y]) { // cannot build on articulation grid
+			interf.callAlert("Failed to build tower", "You can't block monster to the End");
+			return false;
+		}
 		
 		System.out.println("Building tower at (" + x + ", " + y + ")");
 		
@@ -194,7 +202,11 @@ public class TowerHandler {
 	}
 	
 	public static boolean upgrade(int x, int y) {
-		if (!interf.changeMoney(-20)) return false;
+		if (!interf.changeMoney(-20)) { // not enough gold
+			interf.callAlert("Failed to upgrade tower", "You have not enough gold");
+			return false;
+		}
+		
 		findTowerGrid[x][y].upgrade();
 		return true;
 	}
