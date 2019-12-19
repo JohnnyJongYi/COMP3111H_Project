@@ -11,9 +11,9 @@ import java.util.Comparator;
 public class Fox extends Monster 
 {
 
-	Fox(int time, int mID, int type, staticInterface interf, MonsterData mdata) 
+	Fox(int time, int mID, int type, staticInterface interf/*, MonsterData mdata*/) 
 	{
-		super(time, mID, type, interf, mdata);
+		super(time, mID, type, interf/*, mdata*/);
 		hp = 40;
 		OriginalSpeed = 22;
 		speed = OriginalSpeed;
@@ -161,10 +161,6 @@ public class Fox extends Monster
 			pathTrace= pathTrace.prev;
 		}
 
-		
-/*		for(int i = 0 ; i< path.size();i++)
-			System.out.print(path.get(i)+ "คั");
-		System.out.println("");*/
 	}
 	
 	
