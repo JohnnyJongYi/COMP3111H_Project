@@ -13,10 +13,10 @@ import monster.MonsterGenerator;
 import Coordinates.MovedToWrongGrid;
 import sample.MyController;
 import tower.TowerHandler;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+//import org.springframework.boot.SpringApplication;
+//import org.springframework.boot.autoconfigure.SpringBootApplication;
+//import org.springframework.context.ConfigurableApplicationContext;
+//import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 //import sample.AccessingDataJpaApplication;
 
@@ -101,8 +101,8 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
 
-        MonsterGenerator.retrieveQuery();
-        MonsterGenerator.closeDataBase();
+//        MonsterGenerator.retrieveQuery();
+//        MonsterGenerator.closeDataBase();
     }
 
     

@@ -5,9 +5,9 @@ import sample.staticInterface;
 public class Unicorn extends Monster 
 {
 
-	Unicorn(int time, int mID, int type, staticInterface interf, MonsterData mdata) 
+	Unicorn(int time, int mID, int type, staticInterface interf/*, MonsterData mdata*/) 
 	{
-		super(time, mID, type, interf, mdata);
+		super(time, mID, type, interf/*, mdata*/);
 		hp = 70 ;
 		OriginalSpeed = 15 ;
 		speed = OriginalSpeed;

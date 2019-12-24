@@ -34,7 +34,7 @@ import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import sample.Grid;
 import tower.TowerHandler;
-import org.springframework.stereotype.Component;
+//import org.springframework.stereotype.Component;
 
 import Coordinates.MovedToWrongGrid;
 import Coordinates.OutOfArenaException;

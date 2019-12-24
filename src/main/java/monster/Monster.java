@@ -6,8 +6,8 @@ import sample.staticInterface;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.io.Serializable;
-import javax.persistence.*;
+//import java.io.Serializable;
+//import javax.persistence.*;
 
 public abstract class Monster 
 {
@@ -44,9 +44,9 @@ public abstract class Monster
 	protected final int startxGrid = startxAlgo -15;
 	protected final int startyGrid = startyAlgo - 15;
 	
-	MonsterData monsterData;
+//	MonsterData monsterData;
 	
-	Monster(int timestamp, int mID, int type, staticInterface interf, MonsterData data)
+	Monster(int timestamp, int mID, int type, staticInterface interf/*, MonsterData data*/)
 	{  
 		
 		this.interf =interf;
@@ -69,7 +69,7 @@ public abstract class Monster
 		path = new ArrayList<Integer>();
 		
 		isHealing = false;
-		monsterData = data;
+		//monsterData = data;
 		
 	}
 	
@@ -270,7 +270,7 @@ public abstract class Monster
 			if ( hp <= 0)
 			{
 				die();
-				monsterData.dead();
+				//monsterData.dead();
 			}
 			else
 			{
