@@ -28,8 +28,6 @@ public class Catapult extends Tower{
 			return;
 		}
 		
-		cooldown = cooldowntime;
-		
 		ArrayList<Monster> monsterArray = MonsterGenerator.getMonsterArray();
 		ArrayList<Monster>[][] MonstersInRange = MonsterGenerator.getMonstersInRange();
 		if (monsterArray == null || monsterArray.size() == 0 || MonstersInRange == null) return;
@@ -69,6 +67,7 @@ public class Catapult extends Tower{
 			System.out.println("Catapult shooting--->");
 			System.out.println(max_monster + " monsters at (" + target_x + ", " + target_y + ")");
 			
+			cooldown = cooldowntime;
 			assert Math.pow(target_x, 2) + Math.pow(target_y, 2) <= maxRange2 : "Catapult shooting out of range"; // Test range
 			
 			for (Monster monster : MonstersInRange[target_x][target_y]) {
